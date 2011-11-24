@@ -1,0 +1,8 @@
+export(doKoMorph)
+export(extractNoun)
+export(MorphAnalyzer)
+export(SimplePos22)
+export(SimplePos09)
+export(is.hangul)
+export(convertHangulStringToKeyStrokes)
+import("rJava")
