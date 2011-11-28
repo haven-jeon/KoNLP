@@ -1,8 +1,16 @@
 \name{convertHangulStringToJamos}
 \alias{convertHangulStringToJamos}
-\title{convertHangulStringToJamos...}
-\usage{convertHangulStringToJamos(hangul)}
-\description{convertHangulStringToJamos}
-\details{convert Hangul sentence to Jamos(now on testing~)}
-\value{Jamo sequences}
-\arguments{\item{hangul}{hangul string}}
+\title{convertHangulStringToJamos}
+\usage{
+  convertHangulStringToJamos(hangul)
+}
+\arguments{
+  \item{hangul}{hangul string}
+}
+\value{
+  Jamo sequences
+}
+\description{
+  convert Hangul sentence to Jamos(now on testing~)
+}
+

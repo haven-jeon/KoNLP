@@ -1,8 +1,16 @@
 \name{is.hangul}
 \alias{is.hangul}
-\title{is...}
-\usage{is.hangul(sentence)}
-\description{is.hangul}
-\details{checking sentence is hangul or not}
-\value{TRUE or FALSE of sentence vector(s)}
-\arguments{\item{sentence}{input charactor}}
+\title{is.hangul}
+\usage{
+  is.hangul(sentence)
+}
+\arguments{
+  \item{sentence}{input charactor}
+}
+\value{
+  TRUE or FALSE of sentence vector(s)
+}
+\description{
+  checking sentence is hangul or not
+}
+
