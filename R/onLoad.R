@@ -12,6 +12,8 @@ DicConfPath <- ""
 #' 
 #' package loader
 #'
+#' @param libname name of library
+#' @param pkgname name of package 
 #' @rdname onLoad
 #' @import "rJava"
 .onLoad <- function(libname, pkgname) {
