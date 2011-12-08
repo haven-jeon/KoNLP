@@ -15,8 +15,6 @@ doKoMorph <- function(sentence){
   }else{
      if(!exists("KoMorphObj", envir=KoNLP:::.KoNLPEnv)){
        assign("KoMorphObj",.jnew("Ko"),KoNLP:::.KoNLPEnv)
-     }else{
-       cat("object exists!\n")
      }
      out <- .jcall(get("KoMorphObj",envir=KoNLP:::.KoNLPEnv), "[S", "KoAnalyze", sentence)
    Encoding(out) <- "UTF-8"
