@@ -3,11 +3,10 @@ Maintainer: Heewon Jeon <madjakarta@gmail.com>
 License: GPL-3
 Title: Korean NLP Package
 Author: Heewon Jeon
-Description: Korean Language Processing, An interface to Hannanum
-    korean
-    analyzer.(http://semanticweb.kaist.ac.kr/home/index.php/HanNanum),
-    An interface to Korean Lucene
-    analyzer.(http://sourceforge.net/projects/lucenekorean/), some
+Description: Korean Language Processing, An interface to Hannanum korean
+    analyzer.(http://semanticweb.kaist.ac.kr/home/index.php/HanNanum), An
+    interface to Korean Lucene
+    analyzer.(http://sourceforge.net/projects/lucenekorean/). And some other
     functions
 SystemRequirements: Java (>= 1.6)
 Version: 0.0-7.4

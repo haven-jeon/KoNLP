@@ -8,6 +8,11 @@ pkgKoNLP <- ""
 #' dic and conf path for Hannanum analyzer 
 DicConfPath <- ""
 
+
+
+.KoNLPEnv <- new.env()
+
+
 #' .onLoad
 #' 
 #' package loader
