@@ -22,7 +22,7 @@ DicConfPath <- ""
 #' @rdname onLoad
 #' @import "rJava"
 .onLoad <- function(libname, pkgname) {
-  .jinit(parameters="-Dfile.encoding=UTF-8")
+  .jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx512m"))
   .jpackage(pkgname, lib.loc = libname)
   pkgKoNLP <<- pkgname
   DicConfPath <<- paste(system.file(package=pkgKoNLP),"/dics", sep="")
