@@ -1,15 +1,3 @@
-#' pkgKoNLP
-#'
-#' global variable for internaly used 
-pkgKoNLP <- ""
-
-#' DicConPath
-#'
-#' dic and conf path for Hannanum analyzer 
-DicConfPath <- ""
-
-
-
 .KoNLPEnv <- new.env()
 
 
@@ -24,7 +12,14 @@ DicConfPath <- ""
 .onLoad <- function(libname, pkgname) {
   .jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx512m"))
   .jpackage(pkgname, lib.loc = libname)
-  pkgKoNLP <<- pkgname
-  DicConfPath <<- paste(system.file(package=pkgKoNLP),"/dics", sep="")
 }
+
+
+
+.onAttach <- function(libname, pkgname){
+  DicConfPath <- paste(system.file(package=pkgname),"/dics", sep="")
+  assign("DicConfPath", DicConfPath, KoNLP:::.KoNLPEnv)
+}
+
+
 
