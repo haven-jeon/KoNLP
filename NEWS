@@ -1,3 +1,11 @@
+Version 0.0-8.1 (2011-12-19)
+------------------------------------------------------------------------------
+  * full support Jamo and keystrokes converting
+  * add link to github wiki for examples using Hangul
+
+
+
+
 Version 0.0-8.0 (2011-12-09)
 ------------------------------------------------------------------------------
   * improved performance more than 100 times on functions which related with Hannanum Analyzer.

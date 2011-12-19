@@ -11,6 +11,8 @@
   Jamo sequences
 }
 \description{
-  convert Hangul sentence to Jamos(now on testing~)
+  convert Hangul sentence to Jamos. Example will be shown
+  in \href{https://github.com/haven-jeon/KoNLP/wiki}{github
+  wiki}.
 }
 

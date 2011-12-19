@@ -1,8 +1,7 @@
 #' doKoMorph 
 #' 
-#' morphlogical analyze the sentence.
-#' it uses lucene korean analyzer.
-#' see details in \url{http://sourceforge.net/projects/lucenekorean/}
+#' morphlogical analyze the sentence uses lucene korean analyzer.
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
 #' @return stem of sentence
@@ -24,9 +23,9 @@ doKoMorph <- function(sentence){
 
 #' extractNoun 
 #' 
-#' extract Nouns from Korean sentence. 
-#' it uses Hannanum analyzer.
-#' see detail in \url{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}
+#' extract Nouns from Korean sentence uses Hannanum analyzer.
+#' see detail in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum web}. 
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
 #' @return Noun of sentence
@@ -49,9 +48,9 @@ extractNoun <- function(sentence){
 
 #' MorphAnalyzer
 #' 
-#' Do the morphological analysis, not doing pos tagging. 
-#' it uses Hannanum analyzer.
-#' see details in \url{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}
+#' Do the morphological analysis, not doing pos tagging uses Hannanum analyzer.
+#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum web}. 
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
 #' @return result of analysis
@@ -73,13 +72,12 @@ MorphAnalyzer <- function(sentence){
 }
 #' SimplePos22 
 #' 
-#' Do pos tagging using 22 tags. 
-#' it uses Hannanum analyzer.
-#' see details in \url{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}
+#' Do pos tagging using 22 tags uses Hannanum analyzer.
+#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum web}. 
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
-#' @return result of tags
-#'
+#' @return result of analysis
 #' @export
 SimplePos22 <- function(sentence){
   if(!is.character(sentence) | nchar(sentence) == 0) {
@@ -98,9 +96,9 @@ SimplePos22 <- function(sentence){
 
 #' SimplePos09
 #' 
-#' Do pos tagging using 9 tags. 
-#' it uses Hannanum analyzer.
-#' see details in \url{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}
+#' Do pos tagging using 9 tags uses Hannanum analyzer.
+#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum web}. 
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
 #' @return Noun of sentence
@@ -124,7 +122,8 @@ SimplePos09 <- function(sentence){
 
 #' is.hangul
 #' 
-#' checking sentence is hangul or not
+#' checking sentence is hangul or not. 
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
 #' @param sentence input charactor
 #' @return TRUE or FALSE of sentence vector(s)
@@ -138,6 +137,7 @@ is.hangul <- function(sentence){
 #' convertHangulStringToJamos
 #'
 #' convert Hangul sentence to Jamos.
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
 #' @param hangul hangul string
 #' @return Jamo sequences 
@@ -156,6 +156,7 @@ convertHangulStringToJamos <- function(hangul){
 #' convertHangulStringToKeyStrokes
 #'
 #' convert Hangul String to Keystrokes, each Hangul syllable can be dilimitered by \emph{OxFF5C}.
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
 #' @param hangul hangul sentence
 #' @return Keystroke sequence 

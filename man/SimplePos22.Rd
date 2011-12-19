@@ -8,11 +8,14 @@
   \item{sentence}{input}
 }
 \value{
-  result of tags
+  result of analysis
 }
 \description{
-  Do pos tagging using 22 tags. it uses Hannanum analyzer.
-  see details in
-  \url{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}
+  Do pos tagging using 22 tags uses Hannanum analyzer. see
+  details in
+  \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum
+  web}. Example will be shown in
+  \href{https://github.com/haven-jeon/KoNLP/wiki}{github
+  wiki}.
 }
 

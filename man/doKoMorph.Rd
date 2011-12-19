@@ -11,8 +11,9 @@
   stem of sentence
 }
 \description{
-  morphlogical analyze the sentence. it uses lucene korean
-  analyzer. see details in
-  \url{http://sourceforge.net/projects/lucenekorean/}
+  morphlogical analyze the sentence uses lucene korean
+  analyzer. Example will be shown in
+  \href{https://github.com/haven-jeon/KoNLP/wiki}{github
+  wiki}.
 }
 

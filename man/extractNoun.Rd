@@ -11,8 +11,11 @@
   Noun of sentence
 }
 \description{
-  extract Nouns from Korean sentence. it uses Hannanum
+  extract Nouns from Korean sentence uses Hannanum
   analyzer. see detail in
-  \url{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}
+  \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum
+  web}. Example will be shown in
+  \href{https://github.com/haven-jeon/KoNLP/wiki}{github
+  wiki}.
 }
 
