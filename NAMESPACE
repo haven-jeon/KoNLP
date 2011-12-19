@@ -1,6 +1,7 @@
 export(MorphAnalyzer)
 export(SimplePos09)
 export(SimplePos22)
+export(convertHangulStringToJamos)
 export(convertHangulStringToKeyStrokes)
 export(doKoMorph)
 export(extractNoun)

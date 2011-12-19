@@ -234,49 +234,57 @@ public class KoHangul {
 		return jamos;
 	}
 	
-	//We assume input will be Hangul syllables.
-	protected static final String convertHangulStringToJamos(final String hangul) throws HangulException {
-		char jamos[] = new char[hangul.length() * 4];
-		int k = 0;
-		for(int i = 0; i < hangul.length();i++){
-			char jamo[] = convertHangulSyllableToJamo(hangul.charAt(i));
-			assert(jamo.length == JAMO_LEN_PER_SYLLABLE);
-			for(int j = 0; j < jamo.length; j++){
-				if((int)jamo[j] == 0){
-					continue;
-				}
-				jamos[k++] = jamo[j];
-			}
-			//insert divider at the end of each Syllable
-			jamos[k++] = DIVIDER;
-		}
-		return (new String(jamos)).trim();
-	}
-	
-	
-	public static final String convertHangulStringToKeyStrokes(final String origSyllables) {
-		char keystrokes[] = new char[origSyllables.length() * 6];
-		int keyIdx = 0;
-		for(int i = 0;i < origSyllables.length(); i++){
-			if(isHangul(origSyllables.charAt(i))){
-				char[] jamos = convertHangulSyllableToJamo(origSyllables.charAt(i));
-				for(char jamo:jamos){
-					char keys[] = getKeyfromCode(jamo).toCharArray();
-					char fwKeys[] = new char[keys.length];
-					for(int j = 0 ; j < keys.length; j++){
-						fwKeys[j] = convertHalfwidthToFullwidth(keys[j]);
-					}
-					System.arraycopy(fwKeys, 0, 
-							keystrokes, keyIdx, fwKeys.length);
-					keyIdx += fwKeys.length; 
-				}
-				keystrokes[keyIdx++] = DIVIDER;
-			}else{
-				keystrokes[keyIdx++] = origSyllables.charAt(i);
-			}
-		}
-		return new String(keystrokes,0,keyIdx);
-	}
+
+    protected static final String convertHangulStringToJamos(final String hangul, boolean div) throws HangulException {
+        StringBuffer sb = new StringBuffer(hangul.length() * 6);
+        //char jamos[] = new char[hangul.length() * 4];
+        //int k = 0;
+        for(int i = 0; i < hangul.length();i++){
+            if(!isHangul(hangul.charAt(i))){
+                sb.append(hangul.charAt(i));
+            }else{
+                char jamo[] = convertHangulSyllableToJamo(hangul.charAt(i));
+                assert(jamo.length == JAMO_LEN_PER_SYLLABLE);
+                for(int j = 0; j < jamo.length; j++){
+                    if((int)jamo[j] == 0){
+                        continue;
+                    }
+                    sb.append(jamo[j]); 
+                }
+            }
+            //insert divider at the end of each Syllable
+            if(div)
+                sb.append(DIVIDER);
+        }
+        return (new String(sb)).trim();
+    }
+    
+    
+    protected static final String convertHangulStringToKeyStrokes(final String origSyllables, boolean div) {
+        char keystrokes[] = new char[origSyllables.length() * 6];
+        int keyIdx = 0;
+        for(int i = 0;i < origSyllables.length(); i++){
+            if(isHangul(origSyllables.charAt(i))){
+                char[] jamos = convertHangulSyllableToJamo(origSyllables.charAt(i));
+                for(char jamo:jamos){
+                    char keys[] = getKeyfromCode(jamo).toCharArray();
+                    char fwKeys[] = new char[keys.length];
+                    for(int j = 0 ; j < keys.length; j++){
+                        fwKeys[j] = convertHalfwidthToFullwidth(keys[j]);
+                    }
+                    System.arraycopy(fwKeys, 0, 
+                            keystrokes, keyIdx, fwKeys.length);
+                    keyIdx += fwKeys.length; 
+                }
+            }else{
+                keystrokes[keyIdx++] = origSyllables.charAt(i);
+            }
+            if(div)
+                keystrokes[keyIdx++] = DIVIDER;
+        }
+        return new String(keystrokes,0,keyIdx);
+    }
+
 }
 
 

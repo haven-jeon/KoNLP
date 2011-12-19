@@ -26,21 +26,21 @@ public class HangulTest {
 		assertTrue(test2Res == test2);	
 	}
 	
-	@Test public void testConvertHangulStringToJamos() throws HangulException {
-		String jamos = KoHangul.convertHangulStringToJamos("전희원");
-		String expected = "ㅈㅓㄴ｜ㅎㅢ｜ㅇㅝㄴ｜";
-		//System.out.println(jamos);
-		//System.out.println(expected);
-		assertTrue(jamos.equals(expected));
-	}
-	
-	@Test public void testConvertHangulStringToKeyStrokes(){
-		//ｒｊａｔｏｒｄｐｓｗｌｓ1234abcdfr
-		//ｒｊａｔｏｒｄｐｓｄｋｗｌｓ1234abcdfr
-		String ret = KoHangul.convertHangulStringToKeyStrokes("검색엔ㅇㅏ진1234abcdfrA");
-		System.out.println(ret);
-		assertTrue(true);
-	}
+    @Test public void testConvertHangulStringToJamos() throws HangulException {
+        String jamos = KoHangul.convertHangulStringToJamos("전 희원asd", true);
+        String expected = "ㅈㅓㄴ｜ ｜ㅎㅢ｜ㅇㅝㄴ｜a｜s｜d｜";
+        System.out.println(jamos);
+        //System.out.println(expected);
+        assertTrue(jamos.equals(expected));
+    }
+    
+    @Test public void testConvertHangulStringToKeyStrokes(){
+        //ｒｊａｔｏｒｄｐｓｗｌｓ1234abcdfr
+        //ｒｊａｔｏｒｄｐｓｄｋｗｌｓ1234abcdfr
+        String ret = KoHangul.convertHangulStringToKeyStrokes("검색엔ㅇㅏ진1 234abcdfrA", true);
+        System.out.println(ret);
+        assertTrue(true);
+    
 	
 	@Test public void testStandardTokenizer() throws IOException{
 		KoHangulSepllTokenizer  tokenizer = new KoHangulSepllTokenizer(new StringReader(";;;a123a4abcd검색엔진眞;;;+a122=="));

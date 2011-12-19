@@ -137,17 +137,18 @@ is.hangul <- function(sentence){
 
 #' convertHangulStringToJamos
 #'
-#' convert Hangul sentence to Jamos(now on testing~)
+#' convert Hangul sentence to Jamos.
 #'
 #' @param hangul hangul string
 #' @return Jamo sequences 
+#' @export
 convertHangulStringToJamos <- function(hangul){
   if(!is.character(hangul) | nchar(hangul) == 0){
     warning("must input char!")
     return(hangul)
   }else{
-    jamos <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", "S","convertHangulStringToJamos",hangul)
-	  Encoding(jamos) <- "UTF-8" 
+    jamos <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", "S","convertHangulStringToJamos",hangul,TRUE)
+	Encoding(jamos) <- "UTF-8" 
     return(unlist(strsplit(jamos,intToUtf8(0xFF5C))))
   }
 }
@@ -165,9 +166,9 @@ convertHangulStringToKeyStrokes <- function(hangul){
     warning("must input char!")
     return(hangul)
   }else{
-    keystrokes <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", "S","convertHangulStringToKeyStrokes",hangul)
+    keystrokes <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", "S","convertHangulStringToKeyStrokes",hangul,TRUE)
     Encoding(keystrokes) <- "UTF-8"
-    return(keystrokes)
+    return(unlist(strsplit(keystrokes,intToUtf8(0xFF5C))))
   } 
 }
 
