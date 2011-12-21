@@ -24,7 +24,7 @@ doKoMorph <- function(sentence){
 #' extractNoun 
 #' 
 #' extract Nouns from Korean sentence uses Hannanum analyzer.
-#' see detail in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum web}. 
+#' see detail in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
@@ -49,7 +49,7 @@ extractNoun <- function(sentence){
 #' MorphAnalyzer
 #' 
 #' Do the morphological analysis, not doing pos tagging uses Hannanum analyzer.
-#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum web}. 
+#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
@@ -73,7 +73,7 @@ MorphAnalyzer <- function(sentence){
 #' SimplePos22 
 #' 
 #' Do pos tagging using 22 tags uses Hannanum analyzer.
-#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum web}. 
+#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
@@ -97,7 +97,7 @@ SimplePos22 <- function(sentence){
 #' SimplePos09
 #' 
 #' Do pos tagging using 9 tags uses Hannanum analyzer.
-#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum web}. 
+#' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
