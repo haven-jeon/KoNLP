@@ -40,7 +40,7 @@ public class HangulTest {
         String ret = KoHangul.convertHangulStringToKeyStrokes("검색엔ㅇㅏ진1 234abcdfrA", true);
         System.out.println(ret);
         assertTrue(true);
-    
+    }
 	
 	@Test public void testStandardTokenizer() throws IOException{
 		KoHangulSepllTokenizer  tokenizer = new KoHangulSepllTokenizer(new StringReader(";;;a123a4abcd검색엔진眞;;;+a122=="));
