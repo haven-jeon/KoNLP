@@ -8,9 +8,14 @@
 #'
 #' @export
 doKoMorph <- function(sentence){
+  if(Encoding(sentence) == "unknown"){
+    expectenc <- detectInputEncoding(sentence)
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  }
   if(!is.character(sentence) | nchar(sentence) == 0) {
-    warning("input must be character!")
-    return(sentence)
+    stop("Input must be legitimate character!")
   }else{
     if(!exists("KoMorphObj", envir=KoNLP:::.KoNLPEnv)){
       assign("KoMorphObj",.jnew("Ko"),KoNLP:::.KoNLPEnv)
@@ -32,14 +37,19 @@ doKoMorph <- function(sentence){
 #'
 #' @export
 extractNoun <- function(sentence){
+  if(Encoding(sentence) == "unknown"){
+    expectenc <- detectInputEncoding(sentence)
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  } 
   if(!is.character(sentence) | nchar(sentence) == 0) {
-    warning("input must be character!")
-    return(sentence)
+    stop("Input must be legitimate character!")
   }else{
     if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
-	out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
+	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
                   "[S", "extractNoun",get("DicConfPath", envir=KoNLP:::.KoNLPEnv),sentence)
     Encoding(out) <- "UTF-8"
     return(out)
@@ -57,14 +67,19 @@ extractNoun <- function(sentence){
 #'
 #' @export
 MorphAnalyzer <- function(sentence){
+  if(Encoding(sentence) == "unknown"){
+    expectenc <- detectInputEncoding(sentence)
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  } 
   if(!is.character(sentence) | nchar(sentence) == 0) {
-    warning("input must be character!")
-    return(sentence)
+    stop("Input must be legitimate character!")
   }else{
     if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
-	out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv),
+	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv),
                   "S", "MorphAnalyzer", get("DicConfPath", envir=KoNLP:::.KoNLPEnv),sentence)
     Encoding(out) <- "UTF-8"
     return(makeTagList(out))
@@ -80,14 +95,19 @@ MorphAnalyzer <- function(sentence){
 #' @return result of analysis
 #' @export
 SimplePos22 <- function(sentence){
+  if(Encoding(sentence) == "unknown"){
+    expectenc <- detectInputEncoding(sentence)
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  } 
   if(!is.character(sentence) | nchar(sentence) == 0) {
-    warning("input must be character!")
-    return(sentence)
+    stop("Input must be legitimate character!")
   }else{
     if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
-	out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
+	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
                   "S", "SimplePos22",get("DicConfPath", envir=KoNLP:::.KoNLPEnv),sentence)
     Encoding(out) <- "UTF-8"
     return(makeTagList(out))
@@ -105,24 +125,29 @@ SimplePos22 <- function(sentence){
 #'
 #' @export
 SimplePos09 <- function(sentence){
+  if(Encoding(sentence) == "unknown"){
+    expectenc <- detectInputEncoding(sentence)
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  } 
   if(!is.character(sentence) | nchar(sentence) == 0) {
-    warning("input must be character!")
-    return(sentence)
+    stop("Input must be legitimate character!")
   }else{
     if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
-	out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
+	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
                   "S", "SimplePos09",get("DicConfPath", envir=KoNLP:::.KoNLPEnv),sentence)
     Encoding(out) <- "UTF-8"
-	return(makeTagList(out))
+	  return(makeTagList(out))
   }
 }
 
 
 #' is.hangul
 #' 
-#' checking sentence is hangul or not. 
+#' checking sentence is hangul or not. Input sentence must be UTF-8 encoding char.
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
 #' @param sentence input charactor
@@ -143,12 +168,17 @@ is.hangul <- function(sentence){
 #' @return Jamo sequences 
 #' @export
 convertHangulStringToJamos <- function(hangul){
+  if(Encoding(hangul) == "unknown"){
+    expectenc <- detectInputEncoding(hangul)
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  } 
   if(!is.character(hangul) | nchar(hangul) == 0){
-    warning("must input char!")
-    return(hangul)
+    stop("Input must be legitimate character!")
   }else{
     jamos <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", "S","convertHangulStringToJamos",hangul,TRUE)
-	Encoding(jamos) <- "UTF-8" 
+	  Encoding(jamos) <- "UTF-8" 
     return(unlist(strsplit(jamos,intToUtf8(0xFF5C))))
   }
 }
@@ -163,9 +193,14 @@ convertHangulStringToJamos <- function(hangul){
 #'
 #' @export
 convertHangulStringToKeyStrokes <- function(hangul){
+  if(Encoding(hangul) == "unknown"){
+    expectenc <- detectInputEncoding(hangul)
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  } 
   if(!is.character(hangul) | nchar(hangul) == 0){
-    warning("must input char!")
-    return(hangul)
+    stop("Input must be legitimate character!")
   }else{
     keystrokes <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", "S","convertHangulStringToKeyStrokes",hangul,TRUE)
     Encoding(keystrokes) <- "UTF-8"
@@ -181,8 +216,7 @@ convertHangulStringToKeyStrokes <- function(hangul){
 #' @return taglist list object 
 makeTagList <- function(tagstr){
   if(!is.character(tagstr) | nchar(tagstr) == 0) {
-    warning("input must be character!")
-    return(list())
+    stop("Please check input encoding!")
   }
   splittedtags <- strsplit(tagstr, split="\n",fixed=T)[[1]]
   tagset <- splittedtags[which(substr(splittedtags,1,1) != "")]
@@ -205,5 +239,50 @@ makeTagList <- function(tagstr){
   names(taglist)[length(taglist)] <- h
   return(taglist)
 }
+
+
+#' detectInputEncoding
+#'
+#' function to be used for file or raw vector encodoing detection.
+#'  
+#' @param charinput charvector
+#' @return encoding names of rawinpus.
+#' @export
+#' @import bitops
+detectInputEncoding <- function(charinput){
+  BOM <- charToRaw(charinput)
+  if(length(BOM) < 4){
+    stop("rawinput must be longer than 4 bytes.")
+  }
+  if(bitAnd(BOM[1], 0xFF) == 0xEF && 
+     bitAnd(BOM[2], 0xFF) == 0xBB && 
+     bitAnd(BOM[3], 0xFF) == 0xBF){
+    return("UTF-8")
+  }
+  if(bitAnd(BOM[1], 0xFF) == 0xFE && 
+     bitAnd(BOM[2], 0xFF) == 0xFF){ 
+    return("UTF-16BE")
+  }
+  if(bitAnd(BOM[1], 0xFF) == 0xFF && 
+     bitAnd(BOM[2], 0xFF) == 0xFE){
+    return("UTF-16LE")
+  }
+  if(bitAnd(BOM[1], 0xFF) == 0x00 &&
+     bitAnd(BOM[2], 0xFF) == 0x00 &&
+     bitAnd(BOM[3], 0xFF) == 0xFE &&
+     bitAnd(BOM[4], 0xFF) == 0xFF){
+    return("UTF-32BE")
+  }
+  if(bitAnd(BOM[1], 0xFF) == 0xFF &&
+     bitAnd(BOM[2], 0xFF) == 0xFE &&
+     bitAnd(BOM[3], 0xFF) == 0x00 &&
+     bitAnd(BOM[4], 0xFF) == 0x00){
+    return("UTF-32LE")
+  }
+  return(localeToCharset()[1])
+}
+
+
+
 
 
