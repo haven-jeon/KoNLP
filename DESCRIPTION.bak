@@ -15,7 +15,6 @@ Repository: CRAN
 Date/Publication: 2011-10-12 07:49:45
 Packaged: 2011-10-12 20:53:27 UTC; tobias
 Date: 2011-10-12
-Encoding : UTF-8
 Depends:
     R (>= 2.13.1),
     rJava (>= 0.9-0),

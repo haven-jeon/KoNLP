@@ -11,8 +11,9 @@
   TRUE or FALSE of sentence vector(s)
 }
 \description{
-  checking sentence is hangul or not. Example will be shown
-  in \href{https://github.com/haven-jeon/KoNLP/wiki}{github
+  checking sentence is hangul or not. Input sentence must
+  be UTF-8 encoding char. Example will be shown in
+  \href{https://github.com/haven-jeon/KoNLP/wiki}{github
   wiki}.
 }
 
