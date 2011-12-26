@@ -21,7 +21,7 @@ public class HannanumInterface {
 	private Workflow wfMorphAnalyzer = null;
 	private Workflow wf22 = null;
 	private Workflow wf09 = null;
-
+	
 	public void reloadAllDic(){
 		wfNoun=null;
 		wfMorphAnalyzer=null;
@@ -40,10 +40,11 @@ public class HannanumInterface {
 			wfNoun.setPosTagger(new HMMTagger(), "conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
 			wfNoun.appendPosProcessor(new NounExtractor(), null);
 			try {
-				wfNoun.activateWorkflow(true);
+				wfNoun.activateWorkflow(false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				wfNoun.close();
 				wfNoun = null;
 				return null;
 			}
@@ -96,10 +97,11 @@ public class HannanumInterface {
 			wfMorphAnalyzer.appendMorphemeProcessor(new UnknownProcessor(), null);
 			//Workflow workflow = WorkflowFactory.getPredefinedWorkflow(WorkflowFactory.WORKFLOW_MORPH_ANALYZER);
 			try {
-				wfMorphAnalyzer.activateWorkflow(true);
+				wfMorphAnalyzer.activateWorkflow(false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				wfMorphAnalyzer.close();
 				wfMorphAnalyzer = null;
 				return null;
 			}
@@ -131,10 +133,11 @@ public class HannanumInterface {
 			wf22.setPosTagger(new HMMTagger(), "conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
 			wf22.appendPosProcessor(new SimplePOSResult22(), null);
 			try {
-				wf22.activateWorkflow(true);
+				wf22.activateWorkflow(false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				wf22.close();
 				wf22 = null;
 				return null;
 			}
@@ -170,10 +173,11 @@ public class HannanumInterface {
 			wf09.appendPosProcessor(new SimplePOSResult09(), null);
 			//Workflow workflow = WorkflowFactory.getPredefinedWorkflow(WorkflowFactory.WORKFLOW_POS_SIMPLE_09);
 			try {
-				wf09.activateWorkflow(true);
+				wf09.activateWorkflow(false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				wf09.close();
 				wf09 = null;
 				return null;
 			}

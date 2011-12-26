@@ -23,4 +23,4 @@ Depends:
 Collate:
     'KoAnalyzerRun.R'
     'onLoad.R'
-	'manageDic.R'
+    'manageDic.R'
