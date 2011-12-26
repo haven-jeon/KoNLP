@@ -18,6 +18,17 @@ import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.SimplePOS
 
 public class HannanumInterface {
 	private Workflow wfNoun = null;
+	private Workflow wfMorphAnalyzer = null;
+	private Workflow wf22 = null;
+	private Workflow wf09 = null;
+
+	public void reloadAllDic(){
+		wfNoun=null;
+		wfMorphAnalyzer=null;
+		wf22=null;
+		wf09=null;
+	}
+	
 	public String[] extractNoun(String basedir,String sentence){
 		if(wfNoun == null){
 			wfNoun = new Workflow(basedir);
@@ -29,7 +40,7 @@ public class HannanumInterface {
 			wfNoun.setPosTagger(new HMMTagger(), "conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
 			wfNoun.appendPosProcessor(new NounExtractor(), null);
 			try {
-				wfNoun.activateWorkflow(false);
+				wfNoun.activateWorkflow(true);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -74,7 +85,7 @@ public class HannanumInterface {
 	/**
 	 * @param args
 	 */
-	private Workflow wfMorphAnalyzer = null;
+	
 	public String MorphAnalyzer(String basedir, String sentence){
 		if(wfMorphAnalyzer == null){
 			wfMorphAnalyzer = new Workflow(basedir);
@@ -85,7 +96,7 @@ public class HannanumInterface {
 			wfMorphAnalyzer.appendMorphemeProcessor(new UnknownProcessor(), null);
 			//Workflow workflow = WorkflowFactory.getPredefinedWorkflow(WorkflowFactory.WORKFLOW_MORPH_ANALYZER);
 			try {
-				wfMorphAnalyzer.activateWorkflow(false);
+				wfMorphAnalyzer.activateWorkflow(true);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -107,7 +118,7 @@ public class HannanumInterface {
 		
 		return morphs;  	
 	}
-	private Workflow wf22 = null;
+	
 	public  String SimplePos22(String basedir,String sentence){
 		if(wf22 == null){
 			wf22 = new Workflow(basedir);
@@ -120,7 +131,7 @@ public class HannanumInterface {
 			wf22.setPosTagger(new HMMTagger(), "conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
 			wf22.appendPosProcessor(new SimplePOSResult22(), null);
 			try {
-				wf22.activateWorkflow(false);
+				wf22.activateWorkflow(true);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -145,7 +156,7 @@ public class HannanumInterface {
 		wf22.close();
 		return morphs;
 	}
-	private Workflow wf09 = null;
+	
 	public String SimplePos09(String basedir, String sentence){
 		if(wf09 == null){
 			wf09 = new Workflow(basedir);
@@ -159,7 +170,7 @@ public class HannanumInterface {
 			wf09.appendPosProcessor(new SimplePOSResult09(), null);
 			//Workflow workflow = WorkflowFactory.getPredefinedWorkflow(WorkflowFactory.WORKFLOW_POS_SIMPLE_09);
 			try {
-				wf09.activateWorkflow(false);
+				wf09.activateWorkflow(true);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -191,5 +202,6 @@ public class HannanumInterface {
 		String[] ret2 = hi.extractNoun("C:/Users/haven/Documents/R/win-library/2.14/KoNLP/dics","넥스알 데이터 분석팀");
 		for(int i = 0; i < ret2.length; i++)
 			System.out.println(ret2[i]);
+		hi.reloadAllDic();
 	}
 }
