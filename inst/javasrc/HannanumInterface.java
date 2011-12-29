@@ -199,13 +199,19 @@ public class HannanumInterface {
 	}
 	
 	public static void main(String[] args) {
-		HannanumInterface hi = new HannanumInterface();
+	/*	HannanumInterface hi = new HannanumInterface();
 		String[] ret = hi.extractNoun("C:/Users/haven/Documents/R/win-library/2.14/KoNLP/dics","죽어도 못 보내 버스 타요....장미 컵 ");
 		for(int i = 0; i < ret.length; i++)
 			System.out.println(ret[i]);
 		String[] ret2 = hi.extractNoun("C:/Users/haven/Documents/R/win-library/2.14/KoNLP/dics","넥스알 데이터 분석팀");
 		for(int i = 0; i < ret2.length; i++)
 			System.out.println(ret2[i]);
-		hi.reloadAllDic();
+		hi.reloadAllDic();*/
+		char[] a = new char[10];
+		a[0] = 'q';
+		a[1] = '1';
+		a[2] = '\0';
+		a[3] = 'c';
+		System.out.println(a);
 	}
 }
