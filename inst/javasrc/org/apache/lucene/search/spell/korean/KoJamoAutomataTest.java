@@ -34,6 +34,7 @@ public class KoJamoAutomataTest {
     public void testConvert() {
     	KoHangulAutomata auto = new KoJamoAutomata(false);
     	String expect = auto.convert("ㄱㅗㄱㅏㅁㅈㅏ");
+    	System.out.println(expect + "ㅁㄴ");
     	String actual = "고감자";
     	assertTrue(actual.equals(expect));
     	auto.clear();

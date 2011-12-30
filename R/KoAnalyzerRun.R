@@ -303,5 +303,55 @@ detectInputEncoding <- function(charinput){
 
 
 
+#' HangulAutomata
+#'
+#' function to be used for converting to complete Hangul syllables from Jamo or Keystrokes
+#'
+#' @return complete Hangul syllable
+#' @param input to be processed mostly Jamo sequences 
+#' @param isKeystroke boolean parameter to check input is keystroke or Jamo sequences
+#' @param isForceConv boolean parameter to force converting if input is not valid Jamo or keystroke sequences.
+#' @export
+HangulAutomata <- function(input, isKeystroke=F, isForceConv=F){
+  if(Encoding(input) == "unknown"){
+  expectenc <- detectInputEncoding(input)
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  }
+  if(!is.character(input) | nchar(input) == 0) {
+    stop("Input must be legitimate character!")
+  }
+  
+  #check whether keystroke input or Jamo
+  if(isKeystroke){
+    if(!exists("KoKeystrokeAutomata", envir=KoNLP:::.KoNLPEnv)){
+      assign("KoKeystrokeAutomata",.jnew("org/apache/lucene/search/spell/korean/KoKeystrokeAutomata", isForceConv),
+             KoNLP:::.KoNLPEnv)
+    }
+    keyAuto <- get("KoKeystrokeAutomata",envir=KoNLP:::.KoNLPEnv)
+    KoHangulAuto <- .jcast(keyAuto, "org/apache/lucene/search/spell/korean/KoHangulAutomata")
+  }else{
+    if(!exists("KoJamoAutomata", envir=KoNLP:::.KoNLPEnv)){
+      assign("KoJamoAutomata",.jnew("org/apache/lucene/search/spell/korean/KoJamoAutomata", isForceConv),
+             KoNLP:::.KoNLPEnv)
+    }
+    JamoAuto <- get("KoJamoAutomata",envir=KoNLP:::.KoNLPEnv)
+    KoHangulAuto <- .jcast(JamoAuto, "org/apache/lucene/search/spell/korean/KoHangulAutomata")
+  }
+
+  .jcall(KoHangulAuto, "V", "setForceConvert", isForceConv)
+  
+  out <- .jcall(KoHangulAuto, "S", "convert", input)
+  
+  #buffer clear for future use.
+  .jcall(KoHangulAuto, "V", "clear")
+  
+  Encoding(out) <- "UTF-8"
+  return(out)
+}
+
+
+
 
 

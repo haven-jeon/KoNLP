@@ -37,7 +37,12 @@
 
 .onAttach <- function(libname, pkgname){
   DicConfPath <- paste(system.file(package=pkgname),"/dics", sep="")
+  UserDic <- paste(system.file(package=pkgname),"/dics/data/kE/dic_user.txt", sep="")
+  if(!file.exists(UserDic)){ 
+    warning(sprintf("%s does not exist!\n", UserDic))
+  }
   assign("DicConfPath", DicConfPath, KoNLP:::.KoNLPEnv)
+  assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)
 }
 
 

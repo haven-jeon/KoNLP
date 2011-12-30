@@ -51,9 +51,7 @@ public abstract class KoHangulAutomata {
 		if (choSung != 0 || jwungSung != 0 || jongSung != 0) {
 			pushcomp();
 		}
-		if (forceConvert) {
-			wordValid = true;
-		}
+
 		if (!rawChar.isEmpty() || !Syllables.isEmpty()) {
 			if (wordValid) {
 				rjio.addAll(Syllables);
@@ -81,7 +79,6 @@ public abstract class KoHangulAutomata {
 		jwungSung = 0;
 		jongSung = 0;
 		forceConvert = force;
-		// need to add
 	}
 
 	public void clear() {
@@ -101,9 +98,12 @@ public abstract class KoHangulAutomata {
 		for (int i = 0; i < strKeyStroke.length(); i++) {
 			feed(strKeyStroke.charAt(i));
 		}
-
-		finalization();
-
+		
+		int isUncompleted = finalization();
+		if(isUncompleted == 1 && !forceConvert){
+			return strKeyStroke;
+		}
+			
 		Character[] hb = HangulBuffer.toArray(new Character[0]);
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < hb.length; i++) {
