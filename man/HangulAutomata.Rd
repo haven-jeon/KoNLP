@@ -18,6 +18,8 @@
 }
 \description{
   function to be used for converting to complete Hangul
-  syllables from Jamo or Keystrokes
+  syllables from Jamo or Keystrokes. Example will be shown
+  in \href{https://github.com/haven-jeon/KoNLP/wiki}{github
+  wiki}.
 }
 

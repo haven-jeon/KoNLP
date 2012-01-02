@@ -38,14 +38,14 @@ public class KoKeystrokeAutomata extends KoHangulAutomata {
 							pushcomp();
 							choSung = code;
 						} else {
-							wordValid = false;
+							wordValid = 0;
 						}
 					} else {
 						choSung = code;
 					}
 				} else if (jwungSung == 0) { // chosung 1 jwungsung 0
 					if (jongSung != 0) {
-						wordValid = false;
+						wordValid = 0;
 					} else {
 						pushcomp();
 						choSung = code;
@@ -127,7 +127,8 @@ public class KoKeystrokeAutomata extends KoHangulAutomata {
 				}
 			}
 		} else { // invalid key code
-			if (finalization() == 0) {
+			int isUncompleted =  finalization();
+			if (isUncompleted == 0 || isUncompleted == 2 ) {
 				HangulBuffer.add(ch);
 			}
 		}

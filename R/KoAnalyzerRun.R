@@ -29,6 +29,9 @@
 doKoMorph <- function(sentence){
   if(Encoding(sentence) == "unknown"){
     expectenc <- detectInputEncoding(sentence)
+    if(is.null(expectenc)){
+      return(sentence)
+    }
     if(expectenc != localeToCharset()[1]){
       stop("Please check input encoding!")
     }
@@ -58,6 +61,9 @@ doKoMorph <- function(sentence){
 extractNoun <- function(sentence){
   if(Encoding(sentence) == "unknown"){
     expectenc <- detectInputEncoding(sentence)
+    if(is.null(expectenc)){
+      return(sentence)
+    }
     if(expectenc != localeToCharset()[1]){
       stop("Please check input encoding!")
     }
@@ -88,6 +94,9 @@ extractNoun <- function(sentence){
 MorphAnalyzer <- function(sentence){
   if(Encoding(sentence) == "unknown"){
     expectenc <- detectInputEncoding(sentence)
+    if(is.null(expectenc)){
+      return(sentence)
+    }
     if(expectenc != localeToCharset()[1]){
       stop("Please check input encoding!")
     }
@@ -116,6 +125,9 @@ MorphAnalyzer <- function(sentence){
 SimplePos22 <- function(sentence){
   if(Encoding(sentence) == "unknown"){
     expectenc <- detectInputEncoding(sentence)
+    if(is.null(expectenc)){
+      return(sentence)
+    }
     if(expectenc != localeToCharset()[1]){
       stop("Please check input encoding!")
     }
@@ -146,6 +158,9 @@ SimplePos22 <- function(sentence){
 SimplePos09 <- function(sentence){
   if(Encoding(sentence) == "unknown"){
     expectenc <- detectInputEncoding(sentence)
+    if(is.null(expectenc)){
+      return(sentence)
+    }
     if(expectenc != localeToCharset()[1]){
       stop("Please check input encoding!")
     }
@@ -189,6 +204,9 @@ is.hangul <- function(sentence){
 convertHangulStringToJamos <- function(hangul){
   if(Encoding(hangul) == "unknown"){
     expectenc <- detectInputEncoding(hangul)
+    if(is.null(expectenc)){
+      return(hangul)
+    }
     if(expectenc != localeToCharset()[1]){
       stop("Please check input encoding!")
     }
@@ -214,6 +232,9 @@ convertHangulStringToJamos <- function(hangul){
 convertHangulStringToKeyStrokes <- function(hangul){
   if(Encoding(hangul) == "unknown"){
     expectenc <- detectInputEncoding(hangul)
+    if(is.null(expectenc)){
+      return(hangul)
+    }
     if(expectenc != localeToCharset()[1]){
       stop("Please check input encoding!")
     }
@@ -235,7 +256,8 @@ convertHangulStringToKeyStrokes <- function(hangul){
 #' @return taglist list object 
 makeTagList <- function(tagstr){
   if(!is.character(tagstr) | nchar(tagstr) == 0) {
-    stop("Please check input encoding!")
+    warning("Please check input encoding!")
+    return("")
   }
   splittedtags <- strsplit(tagstr, split="\n",fixed=T)[[1]]
   tagset <- splittedtags[which(substr(splittedtags,1,1) != "")]
@@ -271,7 +293,8 @@ makeTagList <- function(tagstr){
 detectInputEncoding <- function(charinput){
   BOM <- charToRaw(charinput)
   if(length(BOM) < 4){
-    stop("rawinput must be longer than 4 bytes.")
+    warning("rawinput must be longer than 4 bytes.")
+    return(NULL)
   }
   if(bitAnd(BOM[1], 0xFF) == 0xEF && 
      bitAnd(BOM[2], 0xFF) == 0xBB && 
@@ -305,7 +328,8 @@ detectInputEncoding <- function(charinput){
 
 #' HangulAutomata
 #'
-#' function to be used for converting to complete Hangul syllables from Jamo or Keystrokes
+#' function to be used for converting to complete Hangul syllables from Jamo or Keystrokes.
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
 #' @return complete Hangul syllable
 #' @param input to be processed mostly Jamo sequences 
@@ -315,7 +339,10 @@ detectInputEncoding <- function(charinput){
 HangulAutomata <- function(input, isKeystroke=F, isForceConv=F){
   if(Encoding(input) == "unknown"){
   expectenc <- detectInputEncoding(input)
-    if(expectenc != localeToCharset()[1]){
+  if(is.null(expectenc)){
+    return(input)
+  }
+  if(expectenc != localeToCharset()[1]){
       stop("Please check input encoding!")
     }
   }

@@ -21,7 +21,11 @@ package org.apache.lucene.search.spell.korean;
 import java.util.ArrayList;
 
 public abstract class KoHangulAutomata {
-	protected boolean wordValid;
+	//0, 1,2 can be value
+	//0 mean truly false
+	//1 mean truly true
+	//2 mean act as if true
+	protected short wordValid;
 	protected char choSung;
 	protected char jwungSung;
 	protected char jongSung;
@@ -38,7 +42,7 @@ public abstract class KoHangulAutomata {
 
 	protected void pushcomp() {
 		if (!(choSung != 0 && jwungSung != 0)) {
-			wordValid = false;
+			wordValid = 0;
 		}
 		char jamos[] = { choSung, jwungSung, jongSung };
 		Syllables.add(KoHangul.convertJamosToHangulSyllable(jamos));
@@ -51,17 +55,22 @@ public abstract class KoHangulAutomata {
 		if (choSung != 0 || jwungSung != 0 || jongSung != 0) {
 			pushcomp();
 		}
+		if(forceConvert){
+			wordValid = 2;
+		}
 
 		if (!rawChar.isEmpty() || !Syllables.isEmpty()) {
-			if (wordValid) {
+			if (wordValid == 1) {
 				rjio.addAll(Syllables);
 				r = 0;
+			} else if(wordValid == 2){
+				rjio.addAll(Syllables);
+				r = 2;
 			} else {
-				wordValid = true;
 				rjio.addAll(rawChar);
 				r = 1;
 			}
-
+			wordValid = 1;
 			rawChar.clear();
 			Syllables.clear();
 
@@ -74,7 +83,7 @@ public abstract class KoHangulAutomata {
 	}
 
 	public KoHangulAutomata(boolean force) {
-		wordValid = true;
+		wordValid = 1;
 		choSung = 0;
 		jwungSung = 0;
 		jongSung = 0;
@@ -85,7 +94,7 @@ public abstract class KoHangulAutomata {
 		HangulBuffer.clear();
 		rawChar.clear();
 		Syllables.clear();
-		wordValid = true;
+		wordValid = 1;
 		clearComp();
 	}
 
