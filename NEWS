@@ -1,8 +1,9 @@
 Version 0.0-8.3 (2011-12-23)
 ------------------------------------------------------------------------------
   * added input string encoding detection function(can only detect UTF-8,16,32)
-  * added Hangul automata logic, now can convert jamo sequences to Hangul syllable.
+  * added Hangul automata logic, now can convert jamo(or keystroke) sequences to Hangul syllable.
   * added user dic reloading function(for future use) 
+  * re-org jar files, reduced total package size 4.2M to 3M.
 
 
 
