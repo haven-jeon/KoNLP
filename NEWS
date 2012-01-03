@@ -1,3 +1,9 @@
+Version 0.0-9.0 (2012-01-03)
+------------------------------------------------------------------------------
+  * fixing bug on HangulAutomata function 
+  * added more test case
+
+
 Version 0.0-8.3 (2011-12-23)
 ------------------------------------------------------------------------------
   * added input string encoding detection function(can only detect UTF-8,16,32)

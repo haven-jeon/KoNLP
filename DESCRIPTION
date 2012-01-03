@@ -10,7 +10,7 @@ Description: Korean Language Processing, An interface to Hannanum korean
     functions.
 SystemRequirements: Java (>= 1.6)
 URL: https://github.com/haven-jeon/KoNLP
-Version: 0.0-8.3
+Version: 0.0-9.0
 Repository: CRAN
 Date/Publication: 2011-10-12 07:49:45
 Packaged: 2011-10-12 20:53:27 UTC; tobias

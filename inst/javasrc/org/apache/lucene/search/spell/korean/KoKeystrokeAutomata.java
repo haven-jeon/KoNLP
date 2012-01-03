@@ -102,13 +102,10 @@ public class KoKeystrokeAutomata extends KoHangulAutomata {
 					assert ((jongLen) > 0 && (jongLen < 3)); // must be 1 or 2
 																// char
 					if (jongLen > 1) {
-						final char strF[] = { jong.charAt(0), '\0' };
-						char ojong = KoHangul.getCodefromKey(new String(strF)); // ㄴㅎ
-																				// ->
-																				// ㄴ
-																				// ㅎ
-						final char strS[] = { jong.charAt(1), '\0' };
-						char ncho = KoHangul.getCodefromKey(new String(strS));
+						final char strF[] = { jong.charAt(0)};
+						char ojong = KoHangul.getCodefromKey(new String(strF, 0, 1)); 
+						final char strS[] = { jong.charAt(1)};
+						char ncho = KoHangul.getCodefromKey(new String(strS, 0, 1));
 						jongSung = ojong;
 						pushcomp();
 						choSung = ncho;
@@ -132,7 +129,7 @@ public class KoKeystrokeAutomata extends KoHangulAutomata {
 
 	public static void main(String[] args) {
 		KoHangulAutomata am = new KoKeystrokeAutomata(false);
-		System.out.println(am.convert("gmldkfa"));
+		System.out.println(am.convert("wjsgmldnjsdkfa"));
 		am.clear();
 		//System.out.println(am.convert("sksms wjdakf glaemfdj"));
 	}
