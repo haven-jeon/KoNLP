@@ -91,7 +91,6 @@ public class KoJamoAutomata extends KoHangulAutomata {
 						String jwung2nd = KoHangul.getKeyfromCode(ch);
 						System.arraycopy(jwung2nd.toCharArray(), 0, trymul,jwung.length(), jwung2nd.length());
 						String strTrymul = new String(trymul, 0, jwung.length() + jwung2nd.length());
-						System.out.println(strTrymul);
 						if (KoHangul.isInKeyCode(strTrymul)) { // multi jwungsung
 							jwungSung = KoHangul.getCodefromKey(strTrymul);
 						} else {
