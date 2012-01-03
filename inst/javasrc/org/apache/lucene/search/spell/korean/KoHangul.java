@@ -182,13 +182,13 @@ public class KoHangul {
 			put("ㄹㅍ", (char) 0x313f);
 			put("ㄹㅎ", (char) 0x3140);
 			put("ㅂㅅ", (char) 0x3144);
-			put("ㅘ", (char) 0x3158);
-			put("ㅙ", (char) 0x3159);
-			put("ㅚ", (char) 0x315a);
-			put("ㅝ", (char) 0x315d);
-			put("ㅞ", (char) 0x315e);
-			put("ㅟ", (char) 0x315f);
-			put("ㅢ", (char) 0x3162);
+			put("ㅗㅏ", (char) 0x3158);
+			put("ㅗㅐ", (char) 0x3159);
+			put("ㅗㅣ", (char) 0x315a);
+			put("ㅜㅓ", (char) 0x315d);
+			put("ㅜㅔ", (char) 0x315e);
+			put("ㅜㅣ", (char) 0x315f);
+			put("ㅡㅣ", (char) 0x3162);
 			put("", (char) 0);
 		}
 	};
