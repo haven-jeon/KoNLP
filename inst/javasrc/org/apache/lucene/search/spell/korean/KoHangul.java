@@ -425,18 +425,21 @@ public class KoHangul {
 	}
 
 	protected static final String convertHangulStringToKeyStrokes(
-			final String origSyllables, boolean div) {
+			final String origSyllables, boolean isFullwidth, boolean div) {
 		char keystrokes[] = new char[origSyllables.length() * 6];
 		int keyIdx = 0;
 		for (int i = 0; i < origSyllables.length(); i++) {
 			if (isHangul(origSyllables.charAt(i))) {
-				char[] jamos = convertHangulSyllableToJamo(origSyllables
-						.charAt(i));
+				char[] jamos = convertHangulSyllableToJamo(origSyllables.charAt(i));
 				for (char jamo : jamos) {
 					char keys[] = getKeyfromCode(jamo).toCharArray();
 					char fwKeys[] = new char[keys.length];
 					for (int j = 0; j < keys.length; j++) {
-						fwKeys[j] = convertHalfwidthToFullwidth(keys[j]);
+						if(isFullwidth){
+							fwKeys[j] = convertHalfwidthToFullwidth(keys[j]);
+						}else{
+							fwKeys[j] = keys[j];
+						}
 					}
 					System.arraycopy(fwKeys, 0, keystrokes, keyIdx,
 							fwKeys.length);

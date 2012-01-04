@@ -12,8 +12,20 @@ test_that("HangulAutomata test", {
           expect_equal(HangulAutomata("rjatordpswlls",T,T), "검색엔지ㅣㄴ")
           expect_equal(HangulAutomata("ㅈㅓㄴㅎㅡㅣㅇㅜㅓㄴ"), "전희원")
           expect_equal(HangulAutomata("ㄷㅏㄹㅁㅇㅡㄴㄲㅗㄹ"), "닮은꼴")
+          expect_warning(HangulAutomata("abc"))
           })
 
-#test_that("convertto",{})
+test_that("convertHangulStringToKeyStrokes",{
+          expect_equal(convertHangulStringToKeyStrokes("전희원"), c("ｗｊｓ" , "ｇｍｌ" , "ｄｎｊｓ"))
+          expect_equal(convertHangulStringToKeyStrokes("전희원",F), c("wjs",  "gml",  "dnjs"))
+          expect_warning(convertHangulStringToKeyStrokes("abc"))
+          #below can be error in R CMD check, because testthat reguard this source code is not UTF-8.
+          #expect_equal(convertHangulStringToKeyStrokes("저"), "ｗｊ")
+          })
+
+test_that("convertHangulStringToJamos", {
+         expect_equal(convertHangulStringToJamos("닮은꼴고감자희"), c("ㄷㅏㄻ","ㅇㅡㄴ","ㄲㅗㄹ","ㄱㅗ","ㄱㅏㅁ","ㅈㅏ","ㅎㅢ"))
+         expect_warning(convertHangulStringToJamos("abc"))
+         })
 
 

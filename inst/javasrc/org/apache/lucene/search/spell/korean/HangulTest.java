@@ -59,7 +59,7 @@ public class HangulTest {
 		// ｒｊａｔｏｒｄｐｓｗｌｓ1234abcdfr
 		// ｒｊａｔｏｒｄｐｓｄｋｗｌｓ1234abcdfr
 		String ret = KoHangul.convertHangulStringToKeyStrokes(
-				"검색엔ㅇㅏ진1 234abcdfrA", true);
+				"검색엔ㅇㅏ진1 234abcdfrA", true, false);
 		System.out.println(ret);
 		assertTrue(true);
 	}

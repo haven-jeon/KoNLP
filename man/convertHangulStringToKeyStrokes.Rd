@@ -2,10 +2,14 @@
 \alias{convertHangulStringToKeyStrokes}
 \title{convertHangulStringToKeyStrokes}
 \usage{
-  convertHangulStringToKeyStrokes(hangul)
+  convertHangulStringToKeyStrokes(hangul,
+    isFullwidth = TRUE)
 }
 \arguments{
   \item{hangul}{hangul sentence}
+
+  \item{isFullwidth}{specify returned character will be
+  Fullwidth ASCII or Halfwidth ASCII}
 }
 \value{
   Keystroke sequence

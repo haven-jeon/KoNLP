@@ -226,10 +226,11 @@ convertHangulStringToJamos <- function(hangul){
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
 #' @param hangul hangul sentence
+#' @param isFullwidth specify returned character will be Fullwidth ASCII or Halfwidth ASCII
 #' @return Keystroke sequence 
 #'
 #' @export
-convertHangulStringToKeyStrokes <- function(hangul){
+convertHangulStringToKeyStrokes <- function(hangul, isFullwidth=TRUE){
   if(Encoding(hangul) == "unknown"){
     expectenc <- detectInputEncoding(hangul)
     if(is.null(expectenc)){
@@ -242,7 +243,8 @@ convertHangulStringToKeyStrokes <- function(hangul){
   if(!is.character(hangul) | nchar(hangul) == 0){
     stop("Input must be legitimate character!")
   }else{
-    keystrokes <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", "S","convertHangulStringToKeyStrokes",hangul,TRUE)
+    keystrokes <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", 
+                         "S","convertHangulStringToKeyStrokes",hangul,isFullwidth,TRUE)
     Encoding(keystrokes) <- "UTF-8"
     return(unlist(strsplit(keystrokes,intToUtf8(0xFF5C))))
   } 
@@ -289,7 +291,7 @@ makeTagList <- function(tagstr){
 #' @param charinput charvector
 #' @return encoding names of rawinpus.
 #' @export
-#' @import bitops
+#' @import "bitops"
 detectInputEncoding <- function(charinput){
   BOM <- charToRaw(charinput)
   if(length(BOM) < 4){
