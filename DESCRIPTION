@@ -19,8 +19,7 @@ Encoding : UTF-8
 Depends:
     R (>= 2.14.0),
     rJava (>= 0.9-0),
-    bitops (>= 1.0),
-    testthat (>= 0.5)
+    bitops (>= 1.0)
 Collate:
     'KoAnalyzerRun.R'
     'onLoad.R'
