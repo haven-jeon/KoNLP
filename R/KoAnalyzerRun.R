@@ -17,6 +17,21 @@
 
 
 
+checkEncoding <- function(inputs){
+  if(Encoding(inputs) == "unknown"){
+    expectenc <- detectInputEncoding(inputs)
+    if(is.null(expectenc)){
+      return(F)
+    }
+    if(expectenc != localeToCharset()[1]){
+      stop("Please check input encoding!")
+    }
+  }  
+  return(T)
+}
+
+
+
 #' doKoMorph 
 #' 
 #' morphlogical analyze the sentence uses lucene korean analyzer.
@@ -27,14 +42,8 @@
 #'
 #' @export
 doKoMorph <- function(sentence){
-  if(Encoding(sentence) == "unknown"){
-    expectenc <- detectInputEncoding(sentence)
-    if(is.null(expectenc)){
-      return(sentence)
-    }
-    if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
+  if(!checkEncoding(sentence)){
+    return(sentence)
   }
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
@@ -59,15 +68,9 @@ doKoMorph <- function(sentence){
 #'
 #' @export
 extractNoun <- function(sentence){
-  if(Encoding(sentence) == "unknown"){
-    expectenc <- detectInputEncoding(sentence)
-    if(is.null(expectenc)){
-      return(sentence)
-    }
-    if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
-  } 
+  if(!checkEncoding(sentence)){
+    return(sentence)
+  }
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
@@ -92,14 +95,8 @@ extractNoun <- function(sentence){
 #'
 #' @export
 MorphAnalyzer <- function(sentence){
-  if(Encoding(sentence) == "unknown"){
-    expectenc <- detectInputEncoding(sentence)
-    if(is.null(expectenc)){
-      return(sentence)
-    }
-    if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
+  if(!checkEncoding(sentence)){
+    return(sentence)
   } 
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
@@ -123,15 +120,9 @@ MorphAnalyzer <- function(sentence){
 #' @return result of analysis
 #' @export
 SimplePos22 <- function(sentence){
-  if(Encoding(sentence) == "unknown"){
-    expectenc <- detectInputEncoding(sentence)
-    if(is.null(expectenc)){
-      return(sentence)
-    }
-    if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
-  } 
+  if(!checkEncoding(sentence)){
+    return(sentence)
+  }
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
@@ -156,14 +147,8 @@ SimplePos22 <- function(sentence){
 #'
 #' @export
 SimplePos09 <- function(sentence){
-  if(Encoding(sentence) == "unknown"){
-    expectenc <- detectInputEncoding(sentence)
-    if(is.null(expectenc)){
-      return(sentence)
-    }
-    if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
+  if(!checkEncoding(sentence)){
+    return(sentence)
   } 
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
@@ -179,19 +164,42 @@ SimplePos09 <- function(sentence){
 }
 
 
-#' is.hangul
+#' check if sentence is all Hangul.
 #' 
-#' checking sentence is hangul or not. Input sentence must be UTF-8 encoding char.
+#' Function checks if each charactor is Hangul or Jamo. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
-#' @param sentence input charactor
-#' @return TRUE or FALSE of sentence vector(s)
+#' @param sentenceU8 input charactors(must be UTF-8)
+#' @return TRUE or FALSE 
 #' 
 #' @export
-is.hangul <- function(sentence){
-  intVec <- sapply(sentence, utf8ToInt)
-  all(intVec >= 0xAC00  & intVec <= 0xD7A3)
+is.hangul <- function(sentenceU8){
+  intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
+  res <- sapply(intVec, function(ch){
+        .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isHangul", .jchar(ch))
+  })
+  return(all(res))  
 }
+
+
+
+#' check if sentence is all Jamo.
+#' 
+#' Function checks with each charactor is Jamo. 
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
+#'
+#' @param sentenceU8 input charactors(must be UTF-8)
+#' @return TRUE or FALSE 
+#' 
+#' @export
+is.jamo <- function(sentenceU8){
+  intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
+  res <- sapply(intVec, function(ch){
+        .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isJamo", .jchar(ch))
+  })
+  return(all(res))
+}
+
 
 #' convertHangulStringToJamos
 #'
@@ -202,15 +210,9 @@ is.hangul <- function(sentence){
 #' @return Jamo sequences 
 #' @export
 convertHangulStringToJamos <- function(hangul){
-  if(Encoding(hangul) == "unknown"){
-    expectenc <- detectInputEncoding(hangul)
-    if(is.null(expectenc)){
-      return(hangul)
-    }
-    if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
-  } 
+  if(!checkEncoding(hangul)){
+    return(hangul)
+  }
   if(!is.character(hangul) | nchar(hangul) == 0){
     stop("Input must be legitimate character!")
   }else{
@@ -231,15 +233,9 @@ convertHangulStringToJamos <- function(hangul){
 #'
 #' @export
 convertHangulStringToKeyStrokes <- function(hangul, isFullwidth=TRUE){
-  if(Encoding(hangul) == "unknown"){
-    expectenc <- detectInputEncoding(hangul)
-    if(is.null(expectenc)){
-      return(hangul)
-    }
-    if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
-  } 
+  if(!checkEncoding(hangul)){
+    return(hangul)
+  }  
   if(!is.character(hangul) | nchar(hangul) == 0){
     stop("Input must be legitimate character!")
   }else{
@@ -339,15 +335,9 @@ detectInputEncoding <- function(charinput){
 #' @param isForceConv boolean parameter to force converting if input is not valid Jamo or keystroke sequences.
 #' @export
 HangulAutomata <- function(input, isKeystroke=F, isForceConv=F){
-  if(Encoding(input) == "unknown"){
-  expectenc <- detectInputEncoding(input)
-  if(is.null(expectenc)){
+  if(!checkEncoding(input)){
     return(input)
-  }
-  if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
-  }
+  }  
   if(!is.character(input) | nchar(input) == 0) {
     stop("Input must be legitimate character!")
   }

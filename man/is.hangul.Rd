@@ -1,18 +1,18 @@
 \name{is.hangul}
 \alias{is.hangul}
-\title{is.hangul}
+\title{check if sentence is all Hangul.}
 \usage{
-  is.hangul(sentence)
+  is.hangul(sentenceU8)
 }
 \arguments{
-  \item{sentence}{input charactor}
+  \item{sentenceU8}{input charactors(must be UTF-8)}
 }
 \value{
-  TRUE or FALSE of sentence vector(s)
+  TRUE or FALSE
 }
 \description{
-  checking sentence is hangul or not. Input sentence must
-  be UTF-8 encoding char. Example will be shown in
+  Function checks if each charactor is Hangul or Jamo.
+  Example will be shown in
   \href{https://github.com/haven-jeon/KoNLP/wiki}{github
   wiki}.
 }
