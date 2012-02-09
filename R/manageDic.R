@@ -16,10 +16,10 @@
 #along with JHanNanum.  If not, see <http://www.gnu.org/licenses/>
 
 
-#' reloadAllDic
+#' reload all Hannanum analyzer dictionary 
 #'
 #' Mainly, user dictionary reloading for Hannanum Analyzer. 
-#' If you want to update uer dictionary on KoNLP_pkg_dir/inst/dics/data/kE/dic_user.txt, need to execute this function after editing dic.
+#' If you want to update user dictionary on KoNLP_pkg_dir/inst/dics/data/kE/dic_user.txt, need to execute this function after editing dic.
 #'
 #' @export
 reloadAllDic <- function(){
@@ -28,6 +28,27 @@ reloadAllDic <- function(){
   }
   .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), , "reloadAllDic")
 }
+
+
+#' tag name converter
+#' 
+#' only suppport tag convertion between KAIST and Sejong tag set.
+#' 
+#' @param fromTag tag set name to convert from
+#' @param toTag desired tag set name 
+#' @param tag tag name to search  
+#' @export
+convertTag <-function(fromTag, toTag, tag){
+  if(fromTag == toTag || (!any(c("K","S") == fromTag) || 
+      !any(c("K","S") == toTag))){
+    stop("check input parameter!")
+  }
+  dicname <- paste(fromTag,"to" ,toTag, sep="")
+  return(get(dicname)[tag])
+}
+
+
+
 
 
 

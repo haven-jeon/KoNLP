@@ -1,0 +1,18 @@
+\name{convertTag}
+\alias{convertTag}
+\title{tag name converter}
+\usage{
+  convertTag(fromTag, toTag, tag)
+}
+\arguments{
+  \item{fromTag}{tag set name to convert from}
+
+  \item{toTag}{desired tag set name}
+
+  \item{tag}{tag name to search}
+}
+\description{
+  only suppport tag convertion between KAIST and Sejong tag
+  set.
+}
+
