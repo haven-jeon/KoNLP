@@ -1,6 +1,6 @@
 \name{extractNoun}
 \alias{extractNoun}
-\title{extractNoun}
+\title{Noun extractor for Hangul}
 \usage{
   extractNoun(sentence)
 }

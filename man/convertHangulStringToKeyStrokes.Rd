@@ -1,6 +1,6 @@
 \name{convertHangulStringToKeyStrokes}
 \alias{convertHangulStringToKeyStrokes}
-\title{convertHangulStringToKeyStrokes}
+\title{convertion function Hangul string to keyStrokes}
 \usage{
   convertHangulStringToKeyStrokes(hangul,
     isFullwidth = TRUE)

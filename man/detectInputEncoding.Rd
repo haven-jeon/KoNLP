@@ -1,6 +1,6 @@
 \name{detectInputEncoding}
 \alias{detectInputEncoding}
-\title{detectInputEncoding}
+\title{Rough encoding detection function}
 \usage{
   detectInputEncoding(charinput)
 }

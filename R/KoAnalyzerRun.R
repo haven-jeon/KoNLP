@@ -32,7 +32,7 @@ checkEncoding <- function(inputs){
 
 
 
-#' doKoMorph 
+#' morphlogical analysis function for Hangul
 #' 
 #' morphlogical analyze the sentence uses lucene korean analyzer.
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
@@ -57,7 +57,7 @@ doKoMorph <- function(sentence){
   }
 }
 
-#' extractNoun 
+#' Noun extractor for Hangul
 #' 
 #' extract Nouns from Korean sentence uses Hannanum analyzer.
 #' see detail in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
@@ -84,7 +84,7 @@ extractNoun <- function(sentence){
   } 
 }
 
-#' MorphAnalyzer
+#' Hannanum morphological snslyzer interface function
 #' 
 #' Do the morphological analysis, not doing pos tagging uses Hannanum analyzer.
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
@@ -110,9 +110,9 @@ MorphAnalyzer <- function(sentence){
     return(makeTagList(out))
   } 
 }
-#' SimplePos22 
+#' POS tagging by using 22 tags
 #' 
-#' Do pos tagging using 22 tags uses Hannanum analyzer.
+#' Do POS tagging using 22 tags uses Hannanum analyzer.
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
@@ -136,7 +136,7 @@ SimplePos22 <- function(sentence){
   }
 }
 
-#' SimplePos09
+#' POS tagging by using 9 tags
 #' 
 #' Do pos tagging using 9 tags uses Hannanum analyzer.
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
@@ -164,7 +164,7 @@ SimplePos09 <- function(sentence){
 }
 
 
-#' check if sentence is all Hangul.
+#' check if sentence is all Hangul
 #' 
 #' Function checks if each charactor is Hangul or Jamo. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
@@ -183,7 +183,7 @@ is.hangul <- function(sentenceU8){
 
 
 
-#' check if sentence is all Jamo.
+#' check if sentence is all Jamo
 #' 
 #' Function checks with each charactor is Jamo. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
@@ -201,7 +201,7 @@ is.jamo <- function(sentenceU8){
 }
 
 
-#' convertHangulStringToJamos
+#' convertion function  Hangul string to Jamos
 #'
 #' convert Hangul sentence to Jamos.
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
@@ -222,7 +222,7 @@ convertHangulStringToJamos <- function(hangul){
   }
 }
 
-#' convertHangulStringToKeyStrokes
+#' convertion function Hangul string to keyStrokes
 #'
 #' Function can convert Hangul string to Keystrokes. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
@@ -246,12 +246,12 @@ convertHangulStringToKeyStrokes <- function(hangul, isFullwidth=TRUE){
   } 
 }
 
-#' makeTagList
-#'
-#' internal function to make tag list
-#'
-#' @param tagstr pos tagging format from Hannanum analyzer
-#' @return taglist list object 
+# makeTagList
+#
+# internal function to make tag list
+#
+# @param tagstr pos tagging format from Hannanum analyzer
+# @return taglist list object 
 makeTagList <- function(tagstr){
   if(!is.character(tagstr) | nchar(tagstr) == 0) {
     warning("Please check input encoding!")
@@ -280,13 +280,12 @@ makeTagList <- function(tagstr){
 }
 
 
-#' detectInputEncoding
+#' Rough encoding detection function
 #'
 #' function to be used for file or raw vector encodoing detection.
 #'  
 #' @param charinput charvector
 #' @return encoding names of rawinpus.
-#' @export
 #' @import "bitops"
 detectInputEncoding <- function(charinput){
   BOM <- charToRaw(charinput)
@@ -324,7 +323,7 @@ detectInputEncoding <- function(charinput){
 
 
 
-#' HangulAutomata
+#' do Hangul automata
 #'
 #' function to be used for converting to complete Hangul syllables from Jamo or Keystrokes.
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.

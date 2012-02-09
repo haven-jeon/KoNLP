@@ -1,6 +1,6 @@
 \name{doKoMorph}
 \alias{doKoMorph}
-\title{doKoMorph}
+\title{morphlogical analysis function for Hangul}
 \usage{
   doKoMorph(sentence)
 }

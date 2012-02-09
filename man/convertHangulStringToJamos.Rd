@@ -1,6 +1,6 @@
 \name{convertHangulStringToJamos}
 \alias{convertHangulStringToJamos}
-\title{convertHangulStringToJamos}
+\title{convertion function  Hangul string to Jamos}
 \usage{
   convertHangulStringToJamos(hangul)
 }

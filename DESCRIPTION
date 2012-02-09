@@ -3,7 +3,8 @@ Maintainer: Heewon Jeon <madjakarta@gmail.com>
 License: GPL-3
 Title: Korean NLP Package
 Author: Heewon Jeon
-Description: Korean language processing package. Morphlogical analyzer, POS tagger, Keystroke converter, Hangul automata... 
+Description: Korean language processing package. Morphlogical analyzer, POS
+    tagger, Keystroke converter, Hangul automata...
 SystemRequirements: Java (>= 1.6)
 URL: https://github.com/haven-jeon/KoNLP
 Version: 0.0-9.2

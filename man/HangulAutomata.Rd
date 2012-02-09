@@ -1,6 +1,6 @@
 \name{HangulAutomata}
 \alias{HangulAutomata}
-\title{HangulAutomata}
+\title{do Hangul automata}
 \usage{
   HangulAutomata(input, isKeystroke = F, isForceConv = F)
 }
