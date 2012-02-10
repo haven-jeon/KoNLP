@@ -29,3 +29,16 @@ test_that("convertHangulStringToJamos", {
          })
 
 
+test_that("is.jamo is.hangul", {
+         expect_equal(is.hangul("나보기가역겨워가신다면은"), TRUE)
+         expect_equal(is.hangul("사뿐히즈려밟고"), TRUE)
+         expect_equal(is.hangul("ㅈㅏㅁㅗ자모"), TRUE)
+         expect_equal(is.hangul("abcd"), FALSE)
+         expect_equal(is.hangul(" "), FALSE)
+         expect_equal(is.jamo("ㅈㅏㅁㅗ"), T)
+         expect_equal(is.jamo("자모"), F)
+         expect_equal(is.jamo("abc%##"), F)
+         })
+
+
+

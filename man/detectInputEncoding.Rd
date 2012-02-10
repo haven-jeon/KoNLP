@@ -12,6 +12,6 @@
 }
 \description{
   function to be used for file or raw vector encodoing
-  detection.
+  detection. This is for internal use.
 }
 

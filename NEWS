@@ -1,8 +1,9 @@
 Version 0.0-9.2 
 ------------------------------------------------------------------------------
   * add is.jamo() and fix is.hangul()  
-
-
+  * add tag name converter for future use
+  * add edit distance cost table for Hangul for future use
+  * fix documentation 
 
 Version 0.0-9.0 (2012-01-03)
 ------------------------------------------------------------------------------

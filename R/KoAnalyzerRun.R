@@ -282,7 +282,7 @@ makeTagList <- function(tagstr){
 
 #' Rough encoding detection function
 #'
-#' function to be used for file or raw vector encodoing detection.
+#' function to be used for file or raw vector encodoing detection. This is for internal use.
 #'  
 #' @param charinput charvector
 #' @return encoding names of rawinpus.
