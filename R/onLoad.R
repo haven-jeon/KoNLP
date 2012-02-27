@@ -37,12 +37,28 @@
 
 .onAttach <- function(libname, pkgname){
   DicConfPath <- paste(system.file(package=pkgname),"/dics", sep="")
-  UserDic <- paste(system.file(package=pkgname),"/dics/data/kE/dic_user.txt", sep="")
+  DicUser <- "dic_user.txt"
+  UserDicPath <- paste(system.file(package=pkgname),"/dics/data/kE/", sep="")
+  UserDic <- paste(UserDicPath, DicUser, sep="")
   if(!file.exists(UserDic)){ 
     warning(sprintf("%s does not exist!\n", UserDic))
   }
+  alteredUserDicPath <- paste(system.file(package=pkgname), "/../KoNLP_dic/", sep="")
+  alteredUserDic <- paste(alteredUserDicPath, DicUser, sep="")
+  #checking process for user defined dictionary
+  if(!file.exists(alteredUserDic)){
+    packageStartupMessage(sprintf("Copying %s for user defined dictionary!\n", DicUser))
+    ret <- system(sprintf("mkdir %s", alteredUserDicPath, sep=""))
+    ret2 <- system(sprintf("cp %s %s", UserDic, alteredUserDicPath))
+    if(ret != 0 && ret2 != 0){
+      warning(sprintf("Could not create %s\n", DicUser))
+      assign("UserDic", FALSE, KoNLP:::.KoNLPEnv)
+    }
+  }else{
+    packageStartupMessage("Checking user defined dictionary!\n")
+    assign("UserDic", TRUE, KoNLP:::.KoNLPEnv)
+  }
   assign("DicConfPath", DicConfPath, KoNLP:::.KoNLPEnv)
-  assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)
 }
 
 
