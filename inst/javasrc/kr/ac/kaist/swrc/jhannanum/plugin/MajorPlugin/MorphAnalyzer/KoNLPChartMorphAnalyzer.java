@@ -25,7 +25,6 @@ import kr.ac.kaist.swrc.jhannanum.comm.Eojeol;
 import kr.ac.kaist.swrc.jhannanum.comm.PlainSentence;
 import kr.ac.kaist.swrc.jhannanum.comm.SetOfSentences;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.AnalyzedDic;
-import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.ChartMorphAnalyzer;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.Connection;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.ConnectionNot;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.MorphemeChart;
@@ -40,7 +39,7 @@ import kr.ac.kaist.swrc.jhannanum.share.TagSet;
  * @author heewon jeon
  *
  */
-public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
+public class KoNLPChartMorphAnalyzer implements MorphAnalyzer {
 	/** Name of this plug-in. */
 	final static private String PLUG_IN_NAME = "KoNLPMorphAnalyzer";
 
@@ -95,6 +94,13 @@ public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
 	/** Post-processor to deal with some exceptions */
 	private PostProcessor postProc = null;
 	
+	/**
+	 * Returns the name of the morphological analysis plug-in.
+	 * @return the name of the morphological analysis plug-in.
+	 */
+	public String getName() {
+		return PLUG_IN_NAME;
+	}
 	
 	/**
 	 * It processes the input plain eojeol by analyzing it or searching the pre-analyzed dictionary.
@@ -133,14 +139,39 @@ public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
 		return eojeolList.toArray(new Eojeol[0]);
 	}
 
+	/**
+	 * Analyzes the specified plain sentence, and returns all the possible analysis results.
+	 * @return all the possible morphological analysis results
+	 */
+	public SetOfSentences morphAnalyze(PlainSentence ps) {
+		StringTokenizer st = new StringTokenizer(ps.getSentence(), " \t");
+		
+		String plainEojeol = null;
+		int eojeolNum = st.countTokens();
+		
+		ArrayList<String> plainEojeolArray = new ArrayList<String>(eojeolNum);
+		ArrayList<Eojeol[]> eojeolSetArray = new ArrayList<Eojeol[]>(eojeolNum);
+				
+		while (st.hasMoreTokens()) {
+			plainEojeol = st.nextToken();
+			
+			plainEojeolArray.add(plainEojeol);
+			eojeolSetArray.add(processEojeol(plainEojeol));
+		}
+		
+		SetOfSentences sos = new SetOfSentences(ps.getDocumentID(), ps.getSentenceID(),
+				ps.isEndOfDocument(), plainEojeolArray, eojeolSetArray);
 
+		sos = postProc.doPostProcessing(sos);
+
+		return sos;
+	}
 
 	/**
 	 * Initializes the Chart-based Morphological Analyzer plug-in.
 	 * @param baseDir - the path for base directory, which should have the 'conf' and 'data' directory
 	 * @param configFile - the path for the configuration file (relative path to the base directory)
 	 */
-	@Override
 	public void initialize(String baseDir, String configFile) throws Exception {
 		JSONReader json = new JSONReader(configFile);
 		
@@ -165,7 +196,7 @@ public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
 
 		systemDic = new Trie(Trie.DEFAULT_TRIE_BUF_SIZE_SYS);
 		systemDic.read_dic(fileDicSystem, tagSet);
-		//Why specific values are in Trie class? need to be modified..
+		//fixed points
 		userDic = new Trie(Trie.DEFAULT_TRIE_BUF_SIZE_SYS);
 		userDic.read_dic(fileDicUser, tagSet);
 
@@ -177,5 +208,11 @@ public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
 		chart = new MorphemeChart(tagSet, connection, systemDic, userDic, numDic, simti, eojeolList);
 		
 		postProc = new PostProcessor();
+	}
+
+	/**
+	 * It is called right before the work flow ends.
+	 */
+	public void shutdown() {
 	}
 }
