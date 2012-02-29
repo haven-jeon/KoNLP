@@ -24,6 +24,7 @@ import java.util.List;
 import kr.ac.kaist.swrc.jhannanum.comm.Eojeol;
 import kr.ac.kaist.swrc.jhannanum.comm.Sentence;
 import kr.ac.kaist.swrc.jhannanum.hannanum.Workflow;
+import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.KoNLPChartMorphAnalyzer;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.ChartMorphAnalyzer;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.PosTagger.HmmPosTagger.HMMTagger;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.MorphemeProcessor.UnknownMorphProcessor.UnknownProcessor;
@@ -51,7 +52,7 @@ public class HannanumInterface {
 			wfNoun = new Workflow(basedir);
 			wfNoun.appendPlainTextProcessor(new SentenceSegmentor(), null);
 			wfNoun.appendPlainTextProcessor(new InformalSentenceFilter(), null);
-			wfNoun.setMorphAnalyzer(new ChartMorphAnalyzer(),
+			wfNoun.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wfNoun.appendMorphemeProcessor(new UnknownProcessor(), null);
 
@@ -117,7 +118,7 @@ public class HannanumInterface {
 					new InformalSentenceFilter(), null);
 
 			wfMorphAnalyzer
-					.setMorphAnalyzer(new ChartMorphAnalyzer(),
+					.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 							"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wfMorphAnalyzer.appendMorphemeProcessor(new UnknownProcessor(),
 					null);
@@ -154,7 +155,7 @@ public class HannanumInterface {
 			wf22.appendPlainTextProcessor(new SentenceSegmentor(), null);
 			wf22.appendPlainTextProcessor(new InformalSentenceFilter(), null);
 
-			wf22.setMorphAnalyzer(new ChartMorphAnalyzer(),
+			wf22.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wf22.appendMorphemeProcessor(new UnknownProcessor(), null);
 
@@ -196,7 +197,7 @@ public class HannanumInterface {
 			wf09.appendPlainTextProcessor(new SentenceSegmentor(), null);
 			wf09.appendPlainTextProcessor(new InformalSentenceFilter(), null);
 
-			wf09.setMorphAnalyzer(new ChartMorphAnalyzer(),
+			wf09.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wf09.appendMorphemeProcessor(new UnknownProcessor(), null);
 
