@@ -48,9 +48,9 @@
   #checking process for user defined dictionary
   if(!file.exists(alteredUserDic)){
     packageStartupMessage(sprintf("Copying %s for user defined dictionary!\n", DicUser))
-    ret <- system(sprintf("mkdir %s", alteredUserDicPath, sep=""))
-    ret2 <- system(sprintf("cp %s %s", UserDic, alteredUserDicPath))
-    if(ret != 0 && ret2 != 0){
+    ret <- dir.create(alteredUserDicPath, )
+    ret2 <- file.copy(UserDic, alteredUserDicPath)
+    if(ret != T && ret2 != T){
       warning(sprintf("Could not create %s\n", DicUser))
       assign("UserDic", FALSE, KoNLP:::.KoNLPEnv)
     }
