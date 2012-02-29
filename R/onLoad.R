@@ -29,7 +29,7 @@
 #' @rdname onLoad
 #' @import "rJava"
 .onLoad <- function(libname, pkgname) {
-  .jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx512m"))
+  .jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx1024m"))
   .jpackage(pkgname, lib.loc = libname)
 }
 
