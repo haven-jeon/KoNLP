@@ -37,7 +37,7 @@ import kr.ac.kaist.swrc.jhannanum.share.JSONReader;
 import kr.ac.kaist.swrc.jhannanum.share.TagSet;
 
 /**
- * @author haven
+ * @author heewon jeon
  *
  */
 public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
@@ -95,13 +95,6 @@ public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
 	/** Post-processor to deal with some exceptions */
 	private PostProcessor postProc = null;
 	
-	/**
-	 * Returns the name of the morphological analysis plug-in.
-	 * @return the name of the morphological analysis plug-in.
-	 */
-	public String getName() {
-		return PLUG_IN_NAME;
-	}
 	
 	/**
 	 * It processes the input plain eojeol by analyzing it or searching the pre-analyzed dictionary.
@@ -140,34 +133,7 @@ public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
 		return eojeolList.toArray(new Eojeol[0]);
 	}
 
-	/**
-	 * Analyzes the specified plain sentence, and returns all the possible analysis results.
-	 * @return all the possible morphological analysis results
-	 */
-	@Override
-	public SetOfSentences morphAnalyze(PlainSentence ps) {
-		StringTokenizer st = new StringTokenizer(ps.getSentence(), " \t");
-		
-		String plainEojeol = null;
-		int eojeolNum = st.countTokens();
-		
-		ArrayList<String> plainEojeolArray = new ArrayList<String>(eojeolNum);
-		ArrayList<Eojeol[]> eojeolSetArray = new ArrayList<Eojeol[]>(eojeolNum);
-				
-		while (st.hasMoreTokens()) {
-			plainEojeol = st.nextToken();
-			
-			plainEojeolArray.add(plainEojeol);
-			eojeolSetArray.add(processEojeol(plainEojeol));
-		}
-		
-		SetOfSentences sos = new SetOfSentences(ps.getDocumentID(), ps.getSentenceID(),
-				ps.isEndOfDocument(), plainEojeolArray, eojeolSetArray);
 
-		sos = postProc.doPostProcessing(sos);
-
-		return sos;
-	}
 
 	/**
 	 * Initializes the Chart-based Morphological Analyzer plug-in.
@@ -211,12 +177,5 @@ public class KoNLPChartMorphAnalyzer extends ChartMorphAnalyzer {
 		chart = new MorphemeChart(tagSet, connection, systemDic, userDic, numDic, simti, eojeolList);
 		
 		postProc = new PostProcessor();
-	}
-
-	/**
-	 * It is called right before the work flow ends.
-	 */
-	@Override
-	public void shutdown() {
 	}
 }
