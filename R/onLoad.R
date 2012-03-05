@@ -41,7 +41,7 @@
   UserDicPath <- paste(system.file(package=pkgname),"/dics/data/kE/", sep="")
   UserDic <- paste(UserDicPath, DicUser, sep="")
   if(!file.exists(UserDic)){ 
-    warning(sprintf("%s does not exist!\n", UserDic))
+    error(sprintf("%s does not exist!\nRe-install KoNLP package.\n", UserDic))
   }
   alteredUserDicPath <- paste(system.file(package=pkgname), "/../KoNLP_dic/", sep="")
   alteredUserDic <- paste(alteredUserDicPath, DicUser, sep="")
@@ -52,13 +52,15 @@
     ret2 <- file.copy(UserDic, alteredUserDicPath)
     if(ret != T && ret2 != T){
       warning(sprintf("Could not create %s\n", DicUser))
-      assign("UserDic", FALSE, KoNLP:::.KoNLPEnv)
+      assign("CopyedUserDic", FALSE, KoNLP:::.KoNLPEnv)
     }
   }else{
     packageStartupMessage("Checking user defined dictionary!\n")
-    assign("UserDic", TRUE, KoNLP:::.KoNLPEnv)
+    assign("CopyedUserDic", TRUE, KoNLP:::.KoNLPEnv)
   }
   assign("DicConfPath", DicConfPath, KoNLP:::.KoNLPEnv)
+  assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)
+  assign("backupUserDic", alteredUserDic, KoNLP:::.KoNLPEnv)
 }
 
 
