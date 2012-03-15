@@ -16,11 +16,34 @@
 #along with JHanNanum.  If not, see <http://www.gnu.org/licenses/>
 
 
+
+# additional noun dictionary from Sejong project
+#
+# This dictionary extracted from 21th centry Sejong project. Dictionary can be merged with current user dictionary(dic_usr.txt), but it requires a lot more total memory to safy use in KoNLP. 
+#
+# @name extra_dic
+# @docType data
+# @author Heewon Jeon \email{madjakarta@@gmail.com}
+# @references \url{www.sejong.or.kr}
+# @keywords dictionary
+
+
+
 #' reload all Hannanum analyzer dictionary 
 #'
 #' Mainly, user dictionary reloading for Hannanum Analyzer. 
 #' If you want to update user dictionary on KoNLP_pkg_dir/inst/dics/data/kE/dic_user.txt, need to execute this function after editing dic.
 #'
+#' @examples
+#' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' newdic <- read.table(dicpath, sep="\t")
+#' mergeUserDic(newdic)
+#' ## backup merged new dictionary
+#' backupUsrDic()
+#' ## restore from backup directory
+#' restoreUsrDic()
+#' ## reloading new dictionary
+#' reloadAllDic()}
 #' @export
 reloadAllDic <- function(){
   if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
@@ -49,16 +72,100 @@ convertTag <-function(fromTag, toTag, tag){
 
 
 
+#' use for backup current dic_user.txt
+#'  
+#' Utility function for backup dic_user.txt file to backup directory.
+#'
+#' @examples
+#' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' newdic <- read.table(dicpath, sep="\t")
+#' mergeUserDic(newdic)
+#' ## backup merged new dictionary
+#' backupUsrDic()
+#' ## restore from backup directory
+#' restoreUsrDic()
+#' ## reloading new dictionary
+#' reloadAllDic()}
+#' @export
+backupUsrDic <- function(){
+  UserDicPath <- get("UserDic",envir=KoNLP:::.KoNLPEnv)
+  alteredUserDicPath <- get("backupUserDic", KoNLP:::.KoNLPEnv)
+  
+  cat("Would you backup your current 'dic_user.txt' file to backup directory? (Y/n): ")
+  stdinf <- file("stdin")
+  response <- readLines(stdinf,1)
+  close(stdinf) 
+  ret <- T
+  if(response == "Y"){
+    ret <- file.copy(UserDicPath, alteredUserDicPath,overwrite=T)
+    if(ret){
+      cat("finidhed backup!\n")  
+    }else{
+      warning(sprintf("Could not copy %s\n", UserDicPath))
+      assign("CopyedUserDic", FALSE, KoNLP:::.KoNLPEnv)
+    }
+  }
+}
 
-#' "dic_usr.txt" editor function
+
+
+#' use for restoring backuped dic_user.txt
+#' 
+#' Utility function for restoring dic_user.txt file to dictionary directory.
 #'
-#'  merging or replacing current dic_user.txt file.
+#' @examples
+#' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' newdic <- read.table(dicpath, sep="\t")
+#' mergeUserDic(newdic)
+#' ## backup merged new dictionary
+#' backupUsrDic()
+#' ## restore from backup directory
+#' restoreUsrDic()
+#' ## reloading new dictionary
+#' reloadAllDic()}
+#' @export
+restoreUsrDic <- function(){
+  if(!get("CopyedUserDic", KoNLP:::.KoNLPEnv)){
+    stop("There is no backuped dic_user.txt!\n")
+  }
+  UserDicPath <- get("UserDic",envir=KoNLP:::.KoNLPEnv)
+  alteredUserDicPath <- get("backupUserDic", KoNLP:::.KoNLPEnv)
+
+  cat("Would you restore your backuped 'dic_user.txt' file to current dictionary directory? (Y/n): ")
+  stdinf <- file("stdin")
+  response <- readLines(stdinf,1)
+  close(stdinf)
+  ret <- T
+  if(response == "Y"){
+    ret <- file.copy(alteredUserDicPath, UserDicPath, overwrite=T)
+    if(ret){
+      cat("finidhed restoring!\n")  
+    }else{
+      warning(sprintf("Could not copy %s\n", UserDicPath))
+    }
+  }
+}
+
+
+#' "dic_usr.txt" merging function
 #'
+#' merging current dic_user.txt with new dictionary.
+#'
+#' @examples
+#' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' newdic <- read.table(dicpath, sep="\t")
+#' mergeUserDic(newdic)
+#' ## backup merged new dictionary
+#' backupUsrDic()
+#' ## restore from backup directory
+#' restoreUsrDic()
+#' ## reloading new dictionary
+#' reloadAllDic()}
 #' @param newUserDic new user dictionary as data.frame
 #' @param append append or replacing 
 #' @param verbose see detail error logs
 #' @export
-buildUserDic <- function(newUserDic, append=TRUE, verbose=FALSE){
+mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE){
   if(!is.data.frame(newUserDic)){
     stop("newUserDic must be data frame object!\n")
   }
@@ -75,19 +182,14 @@ buildUserDic <- function(newUserDic, append=TRUE, verbose=FALSE){
   }
   #combine with current dic_user.txt or replace them all.   
   UserDicPath <- get("UserDic",envir=KoNLP:::.KoNLPEnv)
-  oldUserDic <- read.table(UserDicPath, sep="\t")
-  names(newUserDic) <- c("V1", "V2")
+  oldUserDic <- read.table(UserDicPath, sep="\t", encoding="UTF-8")
   if(append){
     newestUserDic <- rbind(oldUserDic, newUserDic)
   }else{
     newestUserDic <- newUserDic
   }
-  write.table(newestUserDic,file=UserDicPath,quote=F,row.names=F)
-  #copy current new dic to backup dir
-  ret <- file.copy(UserDicPath, get("backupUserDic", KoNLP:::.KoNLPEnv), overwrite=T)
-  if(ret != T){
-    warning("Could not copy user_dic.txt to backup directory!\n")
-  }
+  write.table(newestUserDic,file=UserDicPath,quote=F,row.names=F, sep="\t", col.names=F)
+  cat(sprintf("%s words were added to dic_usr.txt.\n", nrow(newUserDic)))
 }
 
 

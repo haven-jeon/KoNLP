@@ -20,14 +20,6 @@
 .KoNLPEnv <- new.env()
 
 
-#' .onLoad
-#' 
-#' package loader
-#'
-#' @param libname name of library
-#' @param pkgname name of package 
-#' @rdname onLoad
-#' @import "rJava"
 .onLoad <- function(libname, pkgname) {
   .jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx1024m"))
   .jpackage(pkgname, lib.loc = libname)
@@ -41,13 +33,13 @@
   UserDicPath <- paste(system.file(package=pkgname),"/dics/data/kE/", sep="")
   UserDic <- paste(UserDicPath, DicUser, sep="")
   if(!file.exists(UserDic)){ 
-    error(sprintf("%s does not exist!\nRe-install KoNLP package.\n", UserDic))
+    stop(sprintf("%s does not exist!\nRe-install KoNLP package.\n", UserDic))
   }
   alteredUserDicPath <- paste(system.file(package=pkgname), "/../KoNLP_dic/", sep="")
   alteredUserDic <- paste(alteredUserDicPath, DicUser, sep="")
   #checking process for user defined dictionary
   if(!file.exists(alteredUserDic)){
-    packageStartupMessage(sprintf("Copying %s for user defined dictionary!\n", DicUser))
+    packageStartupMessage(sprintf("Copying %s to backup directory!\n", DicUser))
     ret <- dir.create(alteredUserDicPath, )
     ret2 <- file.copy(UserDic, alteredUserDicPath)
     if(ret != T && ret2 != T){
@@ -62,6 +54,8 @@
   assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)
   assign("backupUserDic", alteredUserDic, KoNLP:::.KoNLPEnv)
 }
+
+
 
 
 

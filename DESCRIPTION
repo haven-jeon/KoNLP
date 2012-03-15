@@ -5,9 +5,9 @@ Title: Korean NLP Package
 Author: Heewon Jeon
 Description: Korean language processing package. Morphlogical analyzer, POS
     tagger, Keystroke converter, Hangul automata...
-SystemRequirements: Java (>= 1.6)
+SystemRequirements: Java (>= 1.5)
 URL: https://github.com/haven-jeon/KoNLP
-Version: 0.0-9.3
+Version: 0.7
 Repository: CRAN
 Date/Publication: 2011-10-12 07:49:45
 Packaged: 2011-10-12 20:53:27 UTC; tobias

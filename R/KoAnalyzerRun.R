@@ -84,7 +84,7 @@ extractNoun <- function(sentence){
   } 
 }
 
-#' Hannanum morphological snslyzer interface function
+#' Hannanum morphological analyzer interface function
 #' 
 #' Do the morphological analysis, not doing pos tagging uses Hannanum analyzer.
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
@@ -110,7 +110,7 @@ MorphAnalyzer <- function(sentence){
     return(makeTagList(out))
   } 
 }
-#' POS tagging by using 22 tags
+#' POS tagging by using 22 KAIST tags
 #' 
 #' Do POS tagging using 22 tags uses Hannanum analyzer.
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
@@ -136,7 +136,7 @@ SimplePos22 <- function(sentence){
   }
 }
 
-#' POS tagging by using 9 tags
+#' POS tagging by using 9 KAIST tags
 #' 
 #' Do pos tagging using 9 tags uses Hannanum analyzer.
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 

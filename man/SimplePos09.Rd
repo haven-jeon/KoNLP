@@ -1,6 +1,6 @@
 \name{SimplePos09}
 \alias{SimplePos09}
-\title{POS tagging by using 9 tags}
+\title{POS tagging by using 9 KAIST tags}
 \usage{
   SimplePos09(sentence)
 }

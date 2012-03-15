@@ -1,14 +1,12 @@
-\name{reloadAllDic}
-\alias{reloadAllDic}
-\title{reload all Hannanum analyzer dictionary}
+\name{restoreUsrDic}
+\alias{restoreUsrDic}
+\title{use for restoring backuped dic_user.txt}
 \usage{
-  reloadAllDic()
+  restoreUsrDic()
 }
 \description{
-  Mainly, user dictionary reloading for Hannanum Analyzer.
-  If you want to update user dictionary on
-  KoNLP_pkg_dir/inst/dics/data/kE/dic_user.txt, need to
-  execute this function after editing dic.
+  Utility function for restoring dic_user.txt file to
+  dictionary directory.
 }
 \examples{
 \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")

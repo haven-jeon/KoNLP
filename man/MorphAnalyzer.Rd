@@ -1,6 +1,6 @@
 \name{MorphAnalyzer}
 \alias{MorphAnalyzer}
-\title{Hannanum morphological snslyzer interface function}
+\title{Hannanum morphological analyzer interface function}
 \usage{
   MorphAnalyzer(sentence)
 }
