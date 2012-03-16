@@ -1,6 +1,6 @@
 \name{mergeUserDic}
 \alias{mergeUserDic}
-\title{"dic_usr.txt" merging function}
+\title{"dic_user.txt" merging function}
 \usage{
   mergeUserDic(newUserDic, append = TRUE, verbose = FALSE)
 }
