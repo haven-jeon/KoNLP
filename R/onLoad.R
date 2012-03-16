@@ -40,7 +40,7 @@
   #checking process for user defined dictionary
   if(!file.exists(alteredUserDic)){
     packageStartupMessage(sprintf("Copying %s to backup directory!\n", DicUser))
-    ret <- dir.create(alteredUserDicPath, )
+    ret <- dir.create(alteredUserDicPath)
     ret2 <- file.copy(UserDic, alteredUserDicPath)
     if(ret != T && ret2 != T){
       warning(sprintf("Could not create %s\n", DicUser))
@@ -53,6 +53,7 @@
   assign("DicConfPath", DicConfPath, KoNLP:::.KoNLPEnv)
   assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)
   assign("backupUserDic", alteredUserDic, KoNLP:::.KoNLPEnv)
+  assign("backupUserDicPath", alteredUserDicPath, KoNLP:::.KoNLPEnv)
 }
 
 

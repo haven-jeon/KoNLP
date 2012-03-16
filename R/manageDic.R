@@ -39,9 +39,9 @@
 #' newdic <- read.table(dicpath, sep="\t")
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
-#' backupUsrDic()
+#' backupUsrDic(ask=FALSE)
 #' ## restore from backup directory
-#' restoreUsrDic()
+#' restoreUsrDic(ask=FALSE)
 #' ## reloading new dictionary
 #' reloadAllDic()}
 #' @export
@@ -77,28 +77,35 @@ convertTag <-function(fromTag, toTag, tag){
 #' Utility function for backup dic_user.txt file to backup directory.
 #'
 #' @examples
-#' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t")
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
-#' backupUsrDic()
+#' backupUsrDic(ask=FALSE)
 #' ## restore from backup directory
-#' restoreUsrDic()
+#' restoreUsrDic(ask=FALSE)
 #' ## reloading new dictionary
-#' reloadAllDic()}
+#' reloadAllDic()
+#' @param ask ask to confirm backup
 #' @export
-backupUsrDic <- function(){
+backupUsrDic <- function(ask=TRUE){
   UserDicPath <- get("UserDic",envir=KoNLP:::.KoNLPEnv)
   alteredUserDicPath <- get("backupUserDic", KoNLP:::.KoNLPEnv)
-  
-  cat("Would you backup your current 'dic_user.txt' file to backup directory? (Y/n): ")
-  stdinf <- file("stdin")
-  response <- readLines(stdinf,1)
-  close(stdinf) 
-  ret <- T
+  response <- "Y"
+  if(ask){
+    cat("Would you backup your current 'dic_user.txt' file to backup directory? (Y/n): ")
+    stdinf <- file("stdin")
+    response <- readLines(stdinf,1)
+    close(stdinf) 
+  }
   if(response == "Y"){
-    ret <- file.copy(UserDicPath, alteredUserDicPath,overwrite=T)
-    if(ret){
+    dicpath <- get("backupUserDicPath",KoNLP:::.KoNLPEnv)
+    ret1 <- TRUE
+    if(!file.exists(dicpath)){
+      ret1 <- dir.create(dicpath)
+    }
+    ret2 <- file.copy(UserDicPath, alteredUserDicPath,overwrite=T)
+    if(ret1 && ret2){
       cat("finidhed backup!\n")  
     }else{
       warning(sprintf("Could not copy %s\n", UserDicPath))
@@ -114,28 +121,33 @@ backupUsrDic <- function(){
 #' Utility function for restoring dic_user.txt file to dictionary directory.
 #'
 #' @examples
-#' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t")
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
-#' backupUsrDic()
+#' backupUsrDic(ask=FALSE)
 #' ## restore from backup directory
-#' restoreUsrDic()
+#' restoreUsrDic(ask=FALSE)
 #' ## reloading new dictionary
-#' reloadAllDic()}
+#' reloadAllDic()
+#' @param ask ask to confirm backup
 #' @export
-restoreUsrDic <- function(){
+restoreUsrDic <- function(ask=TRUE){
   if(!get("CopyedUserDic", KoNLP:::.KoNLPEnv)){
     stop("There is no backuped dic_user.txt!\n")
   }
+  if(!file.exists(get("backupUserDic", KoNLP:::.KoNLPEnv))){
+    stop("There is no backuped dic_user.txt to restore!\n")
+  }
   UserDicPath <- get("UserDic",envir=KoNLP:::.KoNLPEnv)
   alteredUserDicPath <- get("backupUserDic", KoNLP:::.KoNLPEnv)
-
-  cat("Would you restore your backuped 'dic_user.txt' file to current dictionary directory? (Y/n): ")
-  stdinf <- file("stdin")
-  response <- readLines(stdinf,1)
-  close(stdinf)
-  ret <- T
+  response <- "Y"
+  if(ask){
+    cat("Would you restore your backuped 'dic_user.txt' file to current dictionary directory? (Y/n): ")
+    stdinf <- file("stdin")
+    response <- readLines(stdinf,1)
+    close(stdinf)
+  }
   if(response == "Y"){
     ret <- file.copy(alteredUserDicPath, UserDicPath, overwrite=T)
     if(ret){
@@ -152,15 +164,15 @@ restoreUsrDic <- function(){
 #' merging current dic_user.txt with new dictionary.
 #'
 #' @examples
-#' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t")
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
-#' backupUsrDic()
+#' backupUsrDic(ask=FALSE)
 #' ## restore from backup directory
-#' restoreUsrDic()
+#' restoreUsrDic(ask=FALSE)
 #' ## reloading new dictionary
-#' reloadAllDic()}
+#' reloadAllDic()
 #' @param newUserDic new user dictionary as data.frame
 #' @param append append or replacing 
 #' @param verbose see detail error logs

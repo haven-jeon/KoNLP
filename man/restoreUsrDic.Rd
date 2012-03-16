@@ -2,21 +2,24 @@
 \alias{restoreUsrDic}
 \title{use for restoring backuped dic_user.txt}
 \usage{
-  restoreUsrDic()
+  restoreUsrDic(ask = TRUE)
+}
+\arguments{
+  \item{ask}{ask to confirm backup}
 }
 \description{
   Utility function for restoring dic_user.txt file to
   dictionary directory.
 }
 \examples{
-\dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
 newdic <- read.table(dicpath, sep="\\t")
 mergeUserDic(newdic)
 ## backup merged new dictionary
-backupUsrDic()
+backupUsrDic(ask=FALSE)
 ## restore from backup directory
-restoreUsrDic()
+restoreUsrDic(ask=FALSE)
 ## reloading new dictionary
-reloadAllDic()}
+reloadAllDic()
 }
 

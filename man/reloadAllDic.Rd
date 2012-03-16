@@ -15,9 +15,9 @@
 newdic <- read.table(dicpath, sep="\\t")
 mergeUserDic(newdic)
 ## backup merged new dictionary
-backupUsrDic()
+backupUsrDic(ask=FALSE)
 ## restore from backup directory
-restoreUsrDic()
+restoreUsrDic(ask=FALSE)
 ## reloading new dictionary
 reloadAllDic()}
 }
