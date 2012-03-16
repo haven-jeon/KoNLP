@@ -36,7 +36,7 @@
 #'
 #' @examples
 #' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
-#' newdic <- read.table(dicpath, sep="\t")
+#' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
 #' backupUsrDic(ask=FALSE)
@@ -78,7 +78,7 @@ convertTag <-function(fromTag, toTag, tag){
 #'
 #' @examples
 #' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
-#' newdic <- read.table(dicpath, sep="\t")
+#' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
 #' backupUsrDic(ask=FALSE)
@@ -122,7 +122,7 @@ backupUsrDic <- function(ask=TRUE){
 #'
 #' @examples
 #' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
-#' newdic <- read.table(dicpath, sep="\t")
+#' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
 #' backupUsrDic(ask=FALSE)
@@ -165,7 +165,7 @@ restoreUsrDic <- function(ask=TRUE){
 #'
 #' @examples
 #' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
-#' newdic <- read.table(dicpath, sep="\t")
+#' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
 #' backupUsrDic(ask=FALSE)
@@ -194,13 +194,27 @@ mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE){
   }
   #combine with current dic_user.txt or replace them all.   
   UserDicPath <- get("UserDic",envir=KoNLP:::.KoNLPEnv)
-  oldUserDic <- read.table(UserDicPath, sep="\t", encoding="UTF-8")
+  oldUserDic <- read.table(UserDicPath, sep="\t", header=F, fileEncoding="UTF-8", stringsAsFactors=F)
+
+  newDicEnc <- unique(Encoding(newUserDic[,1]))
+  if(length(newDicEnc) > 1){
+    stop("check newUserDic encodings!\n")
+  }
+  #encoding problems 
+  localCharset <- localeToCharset()[1]
+  if(localCharset != "UTF-8"){
+    if(newDicEnc != "UTF-8"){
+      newUserDic <- as.data.frame(apply(newUserDic, 2, iconv, from=localCharset, to="UTF-8"))
+    }
+    oldUserDic <- as.data.frame(apply(oldUserDic, 2, iconv, from=localCharset, to="UTF-8"))
+  }
+
   if(append){
     newestUserDic <- rbind(oldUserDic, newUserDic)
   }else{
     newestUserDic <- newUserDic
   }
-  write.table(newestUserDic,file=UserDicPath,quote=F,row.names=F, sep="\t", col.names=F)
+  write.table(newestUserDic,file=UserDicPath,quote=F,row.names=F, sep="\t", col.names=F,fileEncoding="UTF-8")  
   cat(sprintf("%s words were added to dic_usr.txt.\n", nrow(newUserDic)))
 }
 
