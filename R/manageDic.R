@@ -93,12 +93,9 @@ backupUsrDic <- function(ask=TRUE){
   alteredUserDicPath <- get("backupUserDic", KoNLP:::.KoNLPEnv)
   response <- "Y"
   if(ask){
-    cat("Would you backup your current 'dic_user.txt' file to backup directory? (Y/n): ")
-    stdinf <- file("stdin")
-    response <- readLines(stdinf,1)
-    close(stdinf) 
+    response <- readline("Would you backup your current 'dic_user.txt' file to backup directory? (Y/n): ")
   }
-  if(response == "Y"){
+  if(substr(response,1,1) == "Y"){
     dicpath <- get("backupUserDicPath",KoNLP:::.KoNLPEnv)
     ret1 <- TRUE
     if(!file.exists(dicpath)){
@@ -143,12 +140,9 @@ restoreUsrDic <- function(ask=TRUE){
   alteredUserDicPath <- get("backupUserDic", KoNLP:::.KoNLPEnv)
   response <- "Y"
   if(ask){
-    cat("Would you restore your backuped 'dic_user.txt' file to current dictionary directory? (Y/n): ")
-    stdinf <- file("stdin")
-    response <- readLines(stdinf,1)
-    close(stdinf)
+    response <- readline("Would you restore your backuped 'dic_user.txt' file to current dictionary directory? (Y/n): ")
   }
-  if(response == "Y"){
+  if(substr(response,1,1) == "Y"){
     ret <- file.copy(alteredUserDicPath, UserDicPath, overwrite=T)
     if(ret){
       cat("finidhed restoring!\n")  
