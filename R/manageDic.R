@@ -19,7 +19,7 @@
 
 # additional noun dictionary from Sejong project
 #
-# This dictionary extracted from 21th centry Sejong project. Dictionary can be merged with current user dictionary(dic_usr.txt), but it requires a lot more total memory to safy use in KoNLP. 
+# This dictionary extracted from 21th centry Sejong project. Dictionary can be merged with current user dictionary(dic_user.txt), but it requires a lot more total memory to safy use in KoNLP. 
 #
 # @name extra_dic
 # @docType data
@@ -153,7 +153,7 @@ restoreUsrDic <- function(ask=TRUE){
 }
 
 
-#' "dic_usr.txt" merging function
+#' "dic_user.txt" merging function
 #'
 #' merging current dic_user.txt with new dictionary.
 #'
@@ -209,7 +209,7 @@ mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE){
     newestUserDic <- newUserDic
   }
   write.table(newestUserDic,file=UserDicPath,quote=F,row.names=F, sep="\t", col.names=F,fileEncoding="UTF-8")  
-  cat(sprintf("%s words were added to dic_usr.txt.\n", nrow(newUserDic)))
+  cat(sprintf("%s words were added to dic_user.txt.\n", nrow(newUserDic)))
 }
 
 
