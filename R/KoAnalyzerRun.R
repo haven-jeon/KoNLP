@@ -65,7 +65,7 @@ doKoMorph <- function(sentence){
 #' 
 #' @param sentence input
 #' @return Noun of sentence
-#'
+#' @import "rJava"
 #' @export
 extractNoun <- function(sentence){
   if(!checkEncoding(sentence)){
