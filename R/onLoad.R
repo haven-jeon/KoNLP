@@ -58,6 +58,9 @@
   assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)
   assign("backupUserDic", alteredUserDic, KoNLP:::.KoNLPEnv)
   assign("backupUserDicPath", alteredUserDicPath, KoNLP:::.KoNLPEnv)
+  if(all((localeToCharset()[1] == c("UTF-8", "CP949", "EUC-KR")) == FALSE)){
+    packageStartupMessage("This R shell doesn't contain any Hangul encoding.\nFor fully use, any of 'UTF-8', 'CP949', 'EUC-KR' needs to be used for R shell encoding.")
+  }
 }
 
 
