@@ -1,7 +1,7 @@
 Version 0.7
 ------------------------------------------------------------------------------
   * new dictionary added which from Sejong projects
-  * added example 
+  * added example(but can not be run on Windows which doesn't have Hangul encoding) 
 
 
 Version 0.0-9.3

@@ -35,7 +35,9 @@
 #' If you want to update user dictionary on KoNLP_pkg_dir/inst/dics/data/kE/dic_user.txt, need to execute this function after editing dic.
 #'
 #' @examples
-#' \dontrun{dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' \dontrun{
+#' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8).  
+#' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
@@ -77,6 +79,8 @@ convertTag <-function(fromTag, toTag, tag){
 #' Utility function for backup dic_user.txt file to backup directory.
 #'
 #' @examples
+#' \dontrun{
+#' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
@@ -85,7 +89,7 @@ convertTag <-function(fromTag, toTag, tag){
 #' ## restore from backup directory
 #' restoreUsrDic(ask=FALSE)
 #' ## reloading new dictionary
-#' reloadAllDic()
+#' reloadAllDic()}
 #' @param ask ask to confirm backup
 #' @export
 backupUsrDic <- function(ask=TRUE){
@@ -118,6 +122,8 @@ backupUsrDic <- function(ask=TRUE){
 #' Utility function for restoring dic_user.txt file to dictionary directory.
 #'
 #' @examples
+#' \dontrun{
+#' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
@@ -126,7 +132,7 @@ backupUsrDic <- function(ask=TRUE){
 #' ## restore from backup directory
 #' restoreUsrDic(ask=FALSE)
 #' ## reloading new dictionary
-#' reloadAllDic()
+#' reloadAllDic()}
 #' @param ask ask to confirm backup
 #' @export
 restoreUsrDic <- function(ask=TRUE){
@@ -158,6 +164,8 @@ restoreUsrDic <- function(ask=TRUE){
 #' merging current dic_user.txt with new dictionary.
 #'
 #' @examples
+#' \dontrun{
+#' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
@@ -166,7 +174,7 @@ restoreUsrDic <- function(ask=TRUE){
 #' ## restore from backup directory
 #' restoreUsrDic(ask=FALSE)
 #' ## reloading new dictionary
-#' reloadAllDic()
+#' reloadAllDic()}
 #' @param newUserDic new user dictionary as data.frame
 #' @param append append or replacing 
 #' @param verbose see detail error logs
