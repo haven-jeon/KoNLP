@@ -1,7 +1,9 @@
 Version 0.7
 ------------------------------------------------------------------------------
   * new dictionary added which from Sejong projects
-  * added example(but can not be run on Windows which doesn't have Hangul encoding) 
+  * added example 
+  * Set "dontrun" on example code because Windows encoding problems.
+  * Warning message may appear if system doesn't have Hangul encoding ability(no warning on UTF-8).
 
 
 Version 0.0-9.3
