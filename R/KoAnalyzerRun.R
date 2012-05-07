@@ -74,6 +74,7 @@ extractNoun <- function(sentence){
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
+    sentence <- gsub("[[:space:]]", " ", sentence)
     if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
@@ -101,6 +102,7 @@ MorphAnalyzer <- function(sentence){
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
+    sentence <- gsub("[[:space:]]", " ", sentence)
     if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
@@ -126,6 +128,7 @@ SimplePos22 <- function(sentence){
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
+    sentence <- gsub("[[:space:]]", " ", sentence)
     if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
@@ -153,6 +156,7 @@ SimplePos09 <- function(sentence){
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
+    sentence <- gsub("[[:space:]]", " ", sentence)
     if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
