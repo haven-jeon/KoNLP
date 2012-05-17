@@ -107,7 +107,7 @@ backupUsrDic <- function(ask=TRUE){
     }
     ret2 <- file.copy(UserDicPath, alteredUserDicPath,overwrite=T)
     if(ret1 && ret2){
-      cat("finidhed backup!\n")  
+      cat("Backup was just finished!\n")  
     }else{
       warning(sprintf("Could not copy %s\n", UserDicPath))
       assign("CopyedUserDic", FALSE, KoNLP:::.KoNLPEnv)
