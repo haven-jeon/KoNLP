@@ -178,6 +178,10 @@ SimplePos09 <- function(sentence){
 #' 
 #' @export
 is.hangul <- function(sentenceU8){
+  if(!(Encoding(sentenceU8) == "UTF-8" | 
+    (localeToCharset()[1] == "UTF-8" & Encoding(sentenceU8) == "unknown" ))){
+    stop("Input must be 'UTF-8' encoding!")
+  }
   intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
   res <- sapply(intVec, function(ch){
         .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isHangul", .jchar(ch))
@@ -197,6 +201,10 @@ is.hangul <- function(sentenceU8){
 #' 
 #' @export
 is.jamo <- function(sentenceU8){
+  if(!(Encoding(sentenceU8) == "UTF-8" | 
+    (localeToCharset()[1] == "UTF-8" & Encoding(sentenceU8) == "unknown" ))){
+    stop("Input must be 'UTF-8' encoding!")
+  }
   intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
   res <- sapply(intVec, function(ch){
         .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isJamo", .jchar(ch))
