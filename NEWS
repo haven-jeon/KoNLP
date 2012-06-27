@@ -1,3 +1,9 @@
+Version 0.73
+------------------------------------------------------------------------------
+  * add messages on is.hangul and is.jamo if input is UTF-8.
+  * set -Xmx512m when the time user system is poor on memory. 
+
+
 Version 0.7
 ------------------------------------------------------------------------------
   * new dictionary added which from Sejong projects
