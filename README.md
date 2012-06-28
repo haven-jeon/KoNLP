@@ -9,4 +9,17 @@ This package lets you do text mining with Korean morphological analyzer on R.
 
 Some of Korean tutorials are on [my blog](http://freesearch.pe.kr), English pages are mainly on [wiki](https://github.com/haven-jeon/KoNLP/wiki).
 
+To install from CRAN, use
+
+    install.packages('KoNLP')
+
+To install from GitHub, use
+
+    install.packages('devtools')
+    library(devtools)
+    install_github('KoNLP', 'haven-jeon')
+
+
+
+
 
