@@ -15,7 +15,7 @@ test_that("HangulAutomata test", {
           expect_warning(HangulAutomata("abc"))
           })
 
-test_that("convertHangulStringToKeyStrokes",{
+test_that("convertHangulStringToKeyStrokes test",{
           expect_equal(convertHangulStringToKeyStrokes("전희원"), c("ｗｊｓ" , "ｇｍｌ" , "ｄｎｊｓ"))
           expect_equal(convertHangulStringToKeyStrokes("전희원",F), c("wjs",  "gml",  "dnjs"))
           expect_warning(convertHangulStringToKeyStrokes("abc"))
@@ -23,13 +23,13 @@ test_that("convertHangulStringToKeyStrokes",{
           #expect_equal(convertHangulStringToKeyStrokes("저"), "ｗｊ")
           })
 
-test_that("convertHangulStringToJamos", {
+test_that("convertHangulStringToJamos test", {
          expect_equal(convertHangulStringToJamos("닮은꼴고감자희"), c("ㄷㅏㄻ","ㅇㅡㄴ","ㄲㅗㄹ","ㄱㅗ","ㄱㅏㅁ","ㅈㅏ","ㅎㅢ"))
          expect_warning(convertHangulStringToJamos("abc"))
          })
 
 
-test_that("is.jamo is.hangul", {
+test_that("is.jamo is.hangul test", {
          expect_equal(is.hangul("나보기가역겨워가신다면은"), TRUE)
          expect_equal(is.hangul("사뿐히즈려밟고"), TRUE)
          expect_equal(is.hangul("ㅈㅏㅁㅗ자모"), TRUE)
@@ -40,5 +40,7 @@ test_that("is.jamo is.hangul", {
          expect_equal(is.jamo("abc%##"), F)
          })
 
-
+test_that("Hannanum test", {
+        expect_error(extractNoun("굉장히긴문장을넣었을때에러를내놓아야된다."))
+         })
 
