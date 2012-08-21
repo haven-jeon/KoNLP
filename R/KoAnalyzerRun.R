@@ -176,6 +176,21 @@ SimplePos09 <- function(sentence){
   }
 }
 
+#' Rough UTF-8 checking function.
+#'
+#' function to be used for charactor vector encoding detection. This is for internal use.
+#'  
+#' @param sentenceU8 charactor vector
+#' @return TRUE or FALSE
+is.utf8 <- function (sentenceU8) {
+  if(!(Encoding(sentenceU8) == "UTF-8" | 
+    (localeToCharset()[1] == "UTF-8" & Encoding(sentenceU8) == "unknown" ))){
+    return(FALSE)
+  }else{
+    return(TRUE)
+  }
+}
+
 
 #' check if sentence is all Hangul
 #' 
@@ -187,8 +202,7 @@ SimplePos09 <- function(sentence){
 #' 
 #' @export
 is.hangul <- function(sentenceU8){
-  if(!(Encoding(sentenceU8) == "UTF-8" | 
-    (localeToCharset()[1] == "UTF-8" & Encoding(sentenceU8) == "unknown" ))){
+  if(!is.utf8(sentenceU8)){
     stop("Input must be 'UTF-8' encoding!")
   }
   intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
@@ -210,8 +224,7 @@ is.hangul <- function(sentenceU8){
 #' 
 #' @export
 is.jamo <- function(sentenceU8){
-  if(!(Encoding(sentenceU8) == "UTF-8" | 
-    (localeToCharset()[1] == "UTF-8" & Encoding(sentenceU8) == "unknown" ))){
+  if(!is.utf8(sentenceU8)){
     stop("Input must be 'UTF-8' encoding!")
   }
   intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
@@ -220,6 +233,51 @@ is.jamo <- function(sentenceU8){
   })
   return(all(res))
 }
+
+
+
+#' check if sentence is all Jaeum
+#' 
+#' Function checks with each charactor is Jaeum 
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
+#'
+#' @param sentenceU8 input charactors(must be UTF-8)
+#' @return TRUE or FALSE 
+#' 
+#' @export
+is.jaeum <- function(sentenceU8){
+  if(!is.utf8(sentenceU8)){
+    stop("Input must be 'UTF-8' encoding!")
+  }
+  intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
+  res <- sapply(intVec, function(ch){
+    .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isJaeum", .jchar(ch))
+  })
+  return(all(res))
+}
+
+
+
+#' check if sentence is all Moeum
+#' 
+#' Function checks with each charactor is Moeum 
+#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
+#'
+#' @param sentenceU8 input charactors(must be UTF-8)
+#' @return TRUE or FALSE 
+#' 
+#' @export
+is.moeum <- function(sentenceU8){
+  if(!is.utf8(sentenceU8)){
+    stop("Input must be 'UTF-8' encoding!")
+  }
+  intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
+  res <- sapply(intVec, function(ch){
+    .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isMoeum", .jchar(ch))
+  })
+  return(all(res))
+}
+
 
 
 #' convertion function  Hangul string to Jamos
@@ -303,7 +361,7 @@ makeTagList <- function(tagstr){
 
 #' Rough encoding detection function
 #'
-#' function to be used for file or raw vector encodoing detection. This is for internal use.
+#' function to be used for file or raw vector encoding detection. This is for internal use.
 #'  
 #' @param charinput charvector
 #' @return encoding names of rawinpus.

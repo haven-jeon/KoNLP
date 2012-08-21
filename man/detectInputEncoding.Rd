@@ -11,7 +11,7 @@
   encoding names of rawinpus.
 }
 \description{
-  function to be used for file or raw vector encodoing
+  function to be used for file or raw vector encoding
   detection. This is for internal use.
 }
 

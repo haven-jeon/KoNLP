@@ -1,3 +1,8 @@
+Version 0.75
+------------------------------------------------------------------------------
+  * added is.jaeum, is.moeum functions.
+
+
 Version 0.73
 ------------------------------------------------------------------------------
   * add messages on is.hangul and is.jamo if input is not UTF-8.
