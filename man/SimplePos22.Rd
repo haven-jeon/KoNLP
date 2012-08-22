@@ -8,7 +8,7 @@
   \item{sentence}{input}
 }
 \value{
-  result of analysis
+  results of tagged analysis
 }
 \description{
   Do POS tagging using 22 tags uses Hannanum analyzer. see

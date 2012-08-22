@@ -8,7 +8,7 @@
   \item{sentence}{input}
 }
 \value{
-  Noun of sentence
+  results of tagged analysis
 }
 \description{
   Do pos tagging using 9 tags uses Hannanum analyzer. see
