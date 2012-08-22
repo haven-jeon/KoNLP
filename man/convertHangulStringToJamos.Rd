@@ -5,7 +5,7 @@
   convertHangulStringToJamos(hangul)
 }
 \arguments{
-  \item{hangul}{hangul string}
+  \item{hangul}{Hangul string}
 }
 \value{
   Jamo sequences

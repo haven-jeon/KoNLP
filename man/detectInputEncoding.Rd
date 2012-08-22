@@ -5,7 +5,7 @@
   detectInputEncoding(charinput)
 }
 \arguments{
-  \item{charinput}{charvector}
+  \item{charinput}{charactor vector}
 }
 \value{
   encoding names of rawinpus.

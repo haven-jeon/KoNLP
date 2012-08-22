@@ -6,7 +6,7 @@
     isFullwidth = TRUE)
 }
 \arguments{
-  \item{hangul}{hangul sentence}
+  \item{hangul}{Hangul sentence}
 
   \item{isFullwidth}{specify returned character will be
   Fullwidth ASCII or Halfwidth ASCII}
