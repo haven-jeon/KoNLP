@@ -128,7 +128,7 @@ MorphAnalyzer <- function(sentence){
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
-#' @return result of analysis
+#' @return results of tagged analysis
 #' @export
 SimplePos22 <- function(sentence){
   if(!checkEncoding(sentence)){
@@ -155,7 +155,7 @@ SimplePos22 <- function(sentence){
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
-#' @return Noun of sentence
+#' @return results of tagged analysis
 #'
 #' @export
 SimplePos09 <- function(sentence){
