@@ -20,7 +20,7 @@ Depends:
     testthat (>= 0.5),
     utils (>= 2.14.0)
 Collate:
-    'KoAnalyzerRun.R'
     'onLoad.R'
     'manageDic.R'
-    'utils.R'
+    'hangulUtils.R'
+    'koAnalyzerRun.R'

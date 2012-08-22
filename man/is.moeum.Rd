@@ -11,9 +11,6 @@
   TRUE or FALSE
 }
 \description{
-  Function checks with each charactor is Moeum Example will
-  be shown in
-  \href{https://github.com/haven-jeon/KoNLP/wiki}{github
-  wiki}.
+  Function checks with each charactor is Moeum
 }
 
