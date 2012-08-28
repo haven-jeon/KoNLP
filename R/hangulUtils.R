@@ -42,12 +42,12 @@ checkEncoding <- function(inputs){
 
 
 
-#' Rough UTF-8 checking function.
-#'
-#' function to be used for charactor vector encoding detection. This is for internal use.
-#'  
-#' @param sentenceU8 charactor vector
-#' @return TRUE or FALSE
+# Rough UTF-8 checking function.
+#
+# function to be used for charactor vector encoding detection. This is for internal use.
+#  
+# @param sentenceU8 charactor vector
+# @return TRUE or FALSE
 is.utf8 <- function (sentenceU8) {
   if(!(Encoding(sentenceU8) == "UTF-8" | 
     (localeToCharset()[1] == "UTF-8" & Encoding(sentenceU8) == "unknown" ))){
@@ -236,13 +236,13 @@ makeTagList <- function(tagstr){
 }
 
 
-#' Rough encoding detection function
-#'
-#' function to be used for file or raw vector encoding detection. This is for internal use.
-#'  
-#' @param charinput charactor vector
-#' @return encoding names of rawinpus.
-#' @import "bitops"
+# Rough encoding detection function
+#
+# function to be used for file or raw vector encoding detection. This is for internal use.
+#  
+# @param charinput charactor vector
+# @return encoding names of rawinpus.
+# @import "bitops"
 detectInputEncoding <- function(charinput){
   BOM <- charToRaw(charinput)
   if(length(BOM) < 4){
