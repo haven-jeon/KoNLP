@@ -17,6 +17,7 @@ To install from GitHub, use
 
     install.packages('devtools')
     library(devtools)
+    install_github('Sejong','haven-jeon')
     install_github('KoNLP', 'haven-jeon')
 
 
