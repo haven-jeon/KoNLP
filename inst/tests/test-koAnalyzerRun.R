@@ -1,4 +1,4 @@
-context("test KoAnalyzerRun.R")
+context("test KoNLP")
 
 
 test_that("HangulAutomata test", {
@@ -41,6 +41,12 @@ test_that("is.jamo is.hangul test", {
          })
 
 test_that("Hannanum test", {
-        expect_error(extractNoun("굉장히긴문장을넣었을때에러를내놓아야된다."))
+        expect_warning(extractNoun("굉장히긴문장을넣었을때에러를내놓아야된다."))
+        expect_warning(SimplePos09("굉장히긴문장을넣었을때에러를내놓아야된다."))
+        expect_warning(SimplePos22("굉장히긴문장을넣었을때에러를내놓아야된다."))
          })
+
+
+
+
 

@@ -19,6 +19,8 @@
 
 .KoNLPEnv <- new.env()
 
+.DicPkgName <- "Sejong"
+
 
 .onLoad <- function(libname, pkgname) {
   tryCatch(.jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx1024m")), 
@@ -32,9 +34,9 @@
 
 
 .onAttach <- function(libname, pkgname){
-  DicConfPath <- paste(system.file(package=pkgname),"/dics", sep="")
+  DicConfPath <- paste(system.file(package=.DicPkgName),"/dics", sep="")
   DicUser <- "dic_user.txt"
-  UserDicPath <- paste(system.file(package=pkgname),"/dics/data/kE/", sep="")
+  UserDicPath <- paste(system.file(package=.DicPkgName),"/dics/data/kE/", sep="")
   UserDic <- paste(UserDicPath, DicUser, sep="")
   if(!file.exists(UserDic)){ 
     stop(sprintf("%s does not exist!\nRe-install KoNLP package.\n", UserDic))

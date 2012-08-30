@@ -16,11 +16,12 @@
 #along with KoNLP.  If not, see <http://www.gnu.org/licenses/>   
 
 
+# if unable to process, this will return FALSE
 preprocessing <- function(inputs){
   newInput <- gsub("[[:space:]]", " ", inputs)
   if(nchar(newInput) > 20 & length(strsplit(newInput, " ")[[1]]) <= 3){ 
     warning(sprintf("It's not kind of right sentence : '%s'", inputs))
-    return("")
+    return(FALSE)
   }
   return(newInput)
 }
