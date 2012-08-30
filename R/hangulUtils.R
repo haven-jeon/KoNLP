@@ -74,7 +74,7 @@ is.hangul <- function(sentenceU8){
   }
   intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
   res <- sapply(intVec, function(ch){
-        .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isHangul", .jchar(ch))
+        .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isHangul", .jchar(ch))
   })
   return(all(res))  
 }
@@ -96,7 +96,7 @@ is.jamo <- function(sentenceU8){
   }
   intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
   res <- sapply(intVec, function(ch){
-        .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isJamo", .jchar(ch))
+        .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJamo", .jchar(ch))
   })
   return(all(res))
 }
@@ -115,7 +115,7 @@ is.jaeum <- function(sentenceU8){
   }
   intVec <- unlist(lapply(sentenceU8,utf8ToInt))
   res <- sapply(intVec, function(ch){
-    .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isJaeum", .jchar(ch))
+    .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJaeum", .jchar(ch))
   })
   return(all(res))
 }
@@ -135,7 +135,7 @@ is.moeum <- function(sentenceU8){
   }
   intVec <- unlist(lapply(sentenceU8,utf8ToInt))
   res <- sapply(intVec, function(ch){
-    .jcall("org/apache/lucene/search/spell/korean/KoHangul", "Z", "isMoeum", .jchar(ch))
+    .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isMoeum", .jchar(ch))
   })
   return(all(res))
 }
@@ -172,7 +172,7 @@ convertHangulStringToJamos <- function(hangul){
   if(!is.character(hangul) | nchar(hangul) == 0){
     stop("Input must be legitimate character!")
   }else{
-    jamos <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", "S","convertHangulStringToJamos",hangul,TRUE)
+    jamos <- .jcall("kr/pe/freesearch/korean/KoHangul", "S","convertHangulStringToJamos",hangul,TRUE)
 	  Encoding(jamos) <- "UTF-8" 
     return(unlist(strsplit(jamos,intToUtf8(0xFF5C))))
   }
@@ -195,7 +195,7 @@ convertHangulStringToKeyStrokes <- function(hangul, isFullwidth=TRUE){
   if(!is.character(hangul) | nchar(hangul) == 0){
     stop("Input must be legitimate character!")
   }else{
-    keystrokes <- .jcall("org/apache/lucene/search/spell/korean/KoHangul", 
+    keystrokes <- .jcall("kr/pe/freesearch/korean/KoHangul", 
                          "S","convertHangulStringToKeyStrokes",hangul,isFullwidth,TRUE)
     Encoding(keystrokes) <- "UTF-8"
     return(unlist(strsplit(keystrokes,intToUtf8(0xFF5C))))
@@ -300,18 +300,18 @@ HangulAutomata <- function(input, isKeystroke=F, isForceConv=F){
   #check whether keystroke input or Jamo
   if(isKeystroke){
     if(!exists("KoKeystrokeAutomata", envir=KoNLP:::.KoNLPEnv)){
-      assign("KoKeystrokeAutomata",.jnew("org/apache/lucene/search/spell/korean/KoKeystrokeAutomata", isForceConv),
+      assign("KoKeystrokeAutomata",.jnew("kr/pe/freesearch/korean/KoKeystrokeAutomata", isForceConv),
              KoNLP:::.KoNLPEnv)
     }
     keyAuto <- get("KoKeystrokeAutomata",envir=KoNLP:::.KoNLPEnv)
-    KoHangulAuto <- .jcast(keyAuto, "org/apache/lucene/search/spell/korean/KoHangulAutomata")
+    KoHangulAuto <- .jcast(keyAuto, "kr/pe/freesearch/korean/KoHangulAutomata")
   }else{
     if(!exists("KoJamoAutomata", envir=KoNLP:::.KoNLPEnv)){
-      assign("KoJamoAutomata",.jnew("org/apache/lucene/search/spell/korean/KoJamoAutomata", isForceConv),
+      assign("KoJamoAutomata",.jnew("kr/pe/freesearch/korean/KoJamoAutomata", isForceConv),
              KoNLP:::.KoNLPEnv)
     }
     JamoAuto <- get("KoJamoAutomata",envir=KoNLP:::.KoNLPEnv)
-    KoHangulAuto <- .jcast(JamoAuto, "org/apache/lucene/search/spell/korean/KoHangulAutomata")
+    KoHangulAuto <- .jcast(JamoAuto, "kr/pe/freesearch/korean/KoHangulAutomata")
   }
 
   .jcall(KoHangulAuto, "V", "setForceConvert", isForceConv)
