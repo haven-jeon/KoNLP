@@ -1,6 +1,7 @@
 Version 0.75
 ------------------------------------------------------------------------------
-  * added is.jaeum, is.moeum functions.
+  * added is.jaeum, is.moeum, is.ascii functions.
+  * extract out all dictionary to Sejong packages.
 
 
 Version 0.73

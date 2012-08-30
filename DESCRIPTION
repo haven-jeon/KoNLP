@@ -25,3 +25,4 @@ Collate:
     'manageDic.R'
     'hangulUtils.R'
     'koAnalyzerRun.R'
+    'tagdata.R'
