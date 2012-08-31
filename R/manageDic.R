@@ -32,12 +32,12 @@
 #' reload all Hannanum analyzer dictionary 
 #'
 #' Mainly, user dictionary reloading for Hannanum Analyzer. 
-#' If you want to update user dictionary on KoNLP_pkg_dir/inst/dics/data/kE/dic_user.txt, need to execute this function after editing dic.
+#' If you want to update user dictionary on Sejong_pkg_dir/inst/dics/data/kE/dic_user.txt, need to execute this function after editing dic.
 #'
 #' @examples
 #' \dontrun{
 #' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8).  
-#' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' dicpath <- paste(system.file(package="Sejong"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
@@ -81,7 +81,7 @@ convertTag <-function(fromTag, toTag, tag){
 #' @examples
 #' \dontrun{
 #' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
-#' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' dicpath <- paste(system.file(package="Sejong"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
@@ -124,7 +124,7 @@ backupUsrDic <- function(ask=TRUE){
 #' @examples
 #' \dontrun{
 #' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
-#' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' dicpath <- paste(system.file(package="Sejong"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
@@ -166,7 +166,7 @@ restoreUsrDic <- function(ask=TRUE){
 #' @examples
 #' \dontrun{
 #' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
-#' dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
+#' dicpath <- paste(system.file(package="Sejong"), "/dics/data/kE/dic_user2.txt", sep="")
 #' newdic <- read.table(dicpath, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
