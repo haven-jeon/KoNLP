@@ -1,7 +1,11 @@
 Version 0.75
 ------------------------------------------------------------------------------
+  * fix Windows path problem.
+
+Version 0.75
+------------------------------------------------------------------------------
   * added is.jaeum, is.moeum, is.ascii functions.
-  * extract out all dictionary to Sejong packages.
+  * extract out all dictionary to Sejong package.
   * make some error to warning for continuous processing.
 
 
