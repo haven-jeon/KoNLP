@@ -36,7 +36,7 @@
 .onAttach <- function(libname, pkgname){
   #uncompress Sejong Hannanum dictionary, if necessary
   dicpath <- paste(system.file(package=.DicPkgName),"/dics/", sep="")
-  dics <- paste(dicpath,"handic.zip", sep="")
+  dics <- paste(dicpath,"handics.zip", sep="")
   if(file.exists(dics)){
     unzip(dics,exdir=dicpath,list=F, overwrite=T)
     file.remove(dics)
