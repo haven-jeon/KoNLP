@@ -34,12 +34,10 @@
 
 
 .onAttach <- function(libname, pkgname){
-  #uncompress Sejong Hannanum dictionary, if necessary
   dicpath <- paste(system.file(package=.DicPkgName),"/dics", sep="")
   dics <- paste(dicpath,"/handics.zip", sep="")
   if(file.exists(dics)){
     unzip(dics,exdir=dicpath,list=F, overwrite=T)
-    file.remove(dics)
     packageStartupMessage("Successfully uncompressed Sejong package dictionaries.\n")
   }
 
@@ -74,6 +72,7 @@
   assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)
   assign("backupUserDic", alteredUserDic, KoNLP:::.KoNLPEnv)
   assign("backupUserDicPath", alteredUserDicPath, KoNLP:::.KoNLPEnv)
+  assign("SejongDics", dics, KoNLP:::.KoNLPEnv)
   if(all((localeToCharset()[1] == c("UTF-8", "CP949", "EUC-KR")) == FALSE)){
     packageStartupMessage("This R shell doesn't contain any Hangul encoding.\nFor fully use, any of 'UTF-8', 'CP949', 'EUC-KR' needs to be used for R shell encoding.")
   }
