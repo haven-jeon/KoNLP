@@ -99,7 +99,7 @@ MorphAnalyzer <- function(sentence){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
 	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv),
-                  "S", "MorphAnalyzer", get("DicConfPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
+                  "S", "MorphAnalyzer", get("SejongDicsPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
     Encoding(out) <- "UTF-8"
     return(makeTagList(out))
   } 
@@ -128,7 +128,7 @@ SimplePos22 <- function(sentence){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
 	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "S", "SimplePos22",get("DicConfPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
+                  "S", "SimplePos22",get("SejongDicsPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
     Encoding(out) <- "UTF-8"
     return(makeTagList(out))
   }
@@ -159,7 +159,7 @@ SimplePos09 <- function(sentence){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
 	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "S", "SimplePos09",get("DicConfPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
+                  "S", "SimplePos09",get("SejongDicsPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
     Encoding(out) <- "UTF-8"
 	  return(makeTagList(out))
   }

@@ -41,6 +41,10 @@
     packageStartupMessage("Successfully uncompressed Sejong package dictionaries.\n")
   }
 
+  # code example
+  # con <- unz("handics.zip", "data/kE/dic_user.txt")
+  # write.table(read.table(con), file="test", quote=F, sep="\t", row.names=F, col.names=F, file)
+  # close(con)
 
   DicConfPath <- paste(system.file(package=.DicPkgName),"/dics", sep="")
   DicUser <- "dic_user.txt"
