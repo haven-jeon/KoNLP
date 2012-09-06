@@ -68,7 +68,7 @@ extractNoun <- function(sentence){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
 	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "[S", "extractNoun",get("DicConfPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
+                  "[S", "extractNoun",get("SejongDicsPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
     Encoding(out) <- "UTF-8"
     return(out)
   } 

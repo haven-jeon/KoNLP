@@ -24,9 +24,8 @@ import java.util.List;
 import kr.ac.kaist.swrc.jhannanum.comm.Eojeol;
 import kr.ac.kaist.swrc.jhannanum.comm.Sentence;
 import kr.ac.kaist.swrc.jhannanum.hannanum.Workflow;
-import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.KoNLPChartMorphAnalyzer;
-import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.ChartMorphAnalyzer;
-import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.PosTagger.HmmPosTagger.HMMTagger;
+import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.KoNLPChartMorphAnalyzer;
+import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.PosTagger.HmmPosTagger.KoNLPHMMTagger;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.MorphemeProcessor.UnknownMorphProcessor.UnknownProcessor;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.InformalSentenceFilter.InformalSentenceFilter;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.SentenceSegmentor.SentenceSegmentor;
@@ -56,7 +55,7 @@ public class HannanumInterface {
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wfNoun.appendMorphemeProcessor(new UnknownProcessor(), null);
 
-			wfNoun.setPosTagger(new HMMTagger(),
+			wfNoun.setPosTagger(new KoNLPHMMTagger(),
 					"conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
 			wfNoun.appendPosProcessor(new NounExtractor(), null);
 			try {
@@ -159,7 +158,7 @@ public class HannanumInterface {
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wf22.appendMorphemeProcessor(new UnknownProcessor(), null);
 
-			wf22.setPosTagger(new HMMTagger(),
+			wf22.setPosTagger(new KoNLPHMMTagger(),
 					"conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
 			wf22.appendPosProcessor(new SimplePOSResult22(), null);
 			try {
@@ -201,7 +200,7 @@ public class HannanumInterface {
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wf09.appendMorphemeProcessor(new UnknownProcessor(), null);
 
-			wf09.setPosTagger(new HMMTagger(),
+			wf09.setPosTagger(new KoNLPHMMTagger(),
 					"conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
 			wf09.appendPosProcessor(new SimplePOSResult09(), null);
 			// Workflow workflow =
@@ -231,23 +230,20 @@ public class HannanumInterface {
 		wf09.close();
 		return morphs;
 	}
-
+/*
 	public static void main(String[] args) {
-		/*
-		 * HannanumInterface hi = new HannanumInterface(); String[] ret =
-		 * hi.extractNoun
-		 * ("C:/Users/haven/Documents/R/win-library/2.14/KoNLP/dics"
-		 * ,"죽어도 못 보내 버스 타요....장미 컵 "); for(int i = 0; i < ret.length; i++)
-		 * System.out.println(ret[i]); String[] ret2 =
-		 * hi.extractNoun("C:/Users/haven/Documents/R/win-library/2.14/KoNLP/dics"
-		 * ,"넥스알 데이터 분석팀"); for(int i = 0; i < ret2.length; i++)
-		 * System.out.println(ret2[i]); hi.reloadAllDic();
-		 */
-		char[] a = new char[10];
-		a[0] = 'q';
-		a[1] = '1';
-		a[2] = '\0';
-		a[3] = 'c';
-		System.out.println(a);
-	}
+		HannanumInterface hi = new HannanumInterface();
+		String[] ret = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "죽어도 못 보내 버스 타요....장미 컵");
+		for(int i= 0; i < ret.length; i++){
+			System.out.println(ret[i]);
+		}
+		
+		
+		System.out.println(hi.SimplePos22("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵"));
+		
+		
+		System.out.println(hi.SimplePos09("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵"));
+	
+		
+	}*/
 }
