@@ -34,18 +34,8 @@
 
 
 .onAttach <- function(libname, pkgname){
-  #if(file.exists(dics)){
-  #  unzip(dics,exdir=dicpath,list=F, overwrite=T)
-  #  packageStartupMessage("Successfully uncompressed Sejong package dictionaries.\n")
-  #}
-
-  # code example
-  # con <- unz("handics.zip", "data/kE/dic_user.txt")
-  # write.table(read.table(con), file="test", quote=F, sep="\t", row.names=F, col.names=F, file)
-  # close(con)
-
   DicConfPath <- paste(system.file(package=.DicPkgName),"/dics", sep="")
-  dics <- paste(DicConfPath,"/handics.zip", sep="")
+  dics <- paste(DicConfPath,"/handic.zip", sep="")
   DicUser <- "dic_user.txt"
   UserDic <- paste("data/kE/", DicUser, sep="")
 
@@ -54,7 +44,7 @@
   currentUserDic <- paste(CurrentUserDicPath,"/",DicUser, sep="")
   #checking process for user defined dictionary
   if(!file.exists(currentUserDic)){
-    packageStartupMessage(sprintf("Copying %s to backup directory!\n", DicUser))
+    packageStartupMessage("Consisting dictionary structure~~.\n")
     ret <- TRUE
     ret2 <- TRUE
     if(!file.exists(CurrentUserDicPath)){
@@ -63,7 +53,6 @@
     }
     write.table(readZipDic(dics, UserDic), 
                 file=currentUserDic, quote=F, sep="\t", row.names=F, col.names=F, fileEncoding="UTF-8")
-    #close(conn)
 
     if(ret != T && ret2 != T){
       warning(sprintf("Could not create %s\n", DicUser))
@@ -75,18 +64,14 @@
     assign("CopyedUserDic", TRUE, KoNLP:::.KoNLPEnv)
   }
   assign("DicRelPath", UserDic, KoNLP:::.KoNLPEnv)
-  #assign("DicConfPath", DicConfPath, KoNLP:::.KoNLPEnv)
   assign("SejongDicPath", DicConfPath, KoNLP:::.KoNLPEnv)
-  #assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)
   assign("UserDicPathinSejongZip", UserDic, KoNLP:::.KoNLPEnv)
-  #assign("backupUserDic", currentUserDic, KoNLP:::.KoNLPEnv)
   assign("CurrentUserDic", currentUserDic, KoNLP:::.KoNLPEnv)
-  #assign("backupUserDicPath", CurrentUserDicPath, KoNLP:::.KoNLPEnv)
   assign("CurrentUserDicPath", CurrentUserDicPath, KoNLP:::.KoNLPEnv)
-  
   assign("SejongDicsZip", dics, KoNLP:::.KoNLPEnv)
   assign("backupUserDicPath", backupUserDicPath, KoNLP:::.KoNLPEnv)
   assign("backupUserDic", paste(backupUserDicPath,"/", DicUser, sep=""), KoNLP:::.KoNLPEnv)
+
   if(all((localeToCharset()[1] == c("UTF-8", "CP949", "EUC-KR")) == FALSE)){
     packageStartupMessage("This R shell doesn't contain any Hangul encoding.\nFor fully use, any of 'UTF-8', 'CP949', 'EUC-KR' needs to be used for R shell encoding.")
   }
