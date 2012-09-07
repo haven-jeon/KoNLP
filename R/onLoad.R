@@ -44,7 +44,7 @@
   currentUserDic <- paste(CurrentUserDicPath,"/",DicUser, sep="")
   #checking process for user defined dictionary
   if(!file.exists(currentUserDic)){
-    packageStartupMessage("Consisting dictionary structure~~.\n")
+    packageStartupMessage("Building dictionary structures.\n")
     ret <- TRUE
     ret2 <- TRUE
     if(!file.exists(CurrentUserDicPath)){
