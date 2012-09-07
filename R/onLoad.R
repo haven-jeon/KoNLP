@@ -77,6 +77,7 @@
     packageStartupMessage("Checking user defined dictionary!\n")
     assign("CopyedUserDic", TRUE, KoNLP:::.KoNLPEnv)
   }
+  assign("DicRelPath", UserDic, KoNLP:::.KoNLPEnv)
   #assign("DicConfPath", DicConfPath, KoNLP:::.KoNLPEnv)
   assign("SejongDicPath", DicConfPath, KoNLP:::.KoNLPEnv)
   #assign("UserDic", UserDic, KoNLP:::.KoNLPEnv)

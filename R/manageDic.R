@@ -102,7 +102,43 @@ convertTag <-function(fromTag, toTag, tag){
 }
 
 
+#' use Sejong noun dictionary
+#'
+#' Retrive Sejong dictionary to use in KoNLP
+#' 
+#' @param backup will backup current dictionary?
+#' @export
+useSejongDic <- function(backup=T){
+  useDic("Sejong", backup)
+}
 
+
+# internal function to change dictionary
+useDic <- function(dicname, backup=T){
+  if(dicname == "Sejong"){
+    relpath <- "data/kE/dic_user2.txt"
+  }else if(dicname == "System"){
+    relpath <- "data/kE/dic_user.txt" 
+  }else{
+    stop("wrong dictionary name!")
+  }
+  conn <- unz(get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv), relpath)
+  newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
+  if(backup == T){
+    backupUsrDic(ask=F)
+  }
+  mergeUserDic(newdic,append=F)
+}
+
+#' use system default dictionary
+#'
+#' Retrive system default dictionary to use in KoNLP
+#' 
+#' @param backup will backup current dictionary?
+#' @export
+useSystemDic <- function(backup=T){
+  useDic("System", backup)
+}
 
 #' use for backup current dic_user.txt
 #'  
