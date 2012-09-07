@@ -14,8 +14,9 @@
 \examples{
 \dontrun{
 ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8).
-dicpath <- paste(system.file(package="KoNLP"), "/dics/data/kE/dic_user2.txt", sep="")
-newdic <- read.table(dicpath, sep="\\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
+dicpath <- paste(system.file(package="Sejong"), "/dics/handics.zip", sep="")
+conn <- unz(dicpath, "data/kE/dic_user2.txt")
+newdic <- read.table(conn, sep="\\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 mergeUserDic(newdic)
 ## backup merged new dictionary
 backupUsrDic(ask=FALSE)

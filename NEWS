@@ -1,4 +1,8 @@
-Version 0.75
+Version 0.76
+------------------------------------------------------------------------------
+  * make interface with HanNanum Analyzer for direct access to zipped dictionaries. 
+
+Version 0.75.1
 ------------------------------------------------------------------------------
   * fix Windows path problem.
 

@@ -68,7 +68,8 @@ extractNoun <- function(sentence){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
 	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "[S", "extractNoun",get("SejongDicsPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
+                  "[S", "extractNoun",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
+                  get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
     Encoding(out) <- "UTF-8"
     return(out)
   } 
@@ -99,7 +100,8 @@ MorphAnalyzer <- function(sentence){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
 	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv),
-                  "S", "MorphAnalyzer", get("SejongDicsPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
+                  "S", "MorphAnalyzer", get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
+                  get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
     Encoding(out) <- "UTF-8"
     return(makeTagList(out))
   } 
@@ -128,7 +130,8 @@ SimplePos22 <- function(sentence){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
 	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "S", "SimplePos22",get("SejongDicsPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
+                  "S", "SimplePos22",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
+                  get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
     Encoding(out) <- "UTF-8"
     return(makeTagList(out))
   }
@@ -159,7 +162,8 @@ SimplePos09 <- function(sentence){
       assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
     }
 	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "S", "SimplePos09",get("SejongDicsPath", envir=KoNLP:::.KoNLPEnv),sentence_pre)
+                  "S", "SimplePos09",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
+                  get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
     Encoding(out) <- "UTF-8"
 	  return(makeTagList(out))
   }
