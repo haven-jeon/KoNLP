@@ -17,6 +17,7 @@ along with JHanNanum.  If not, see <http://www.gnu.org/licenses/>
 */
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,13 +47,60 @@ public class HannanumInterface {
 		wf09 = null;
 	}
 
-	public String[] extractNoun(String basedir, String sentence) {
+	public int reloadUserDic(String dicPath, String work) throws IOException{
+		if(work.equals("extractNoun")){
+			if(wfNoun != null){
+				wfNoun.reloadUserDic(dicPath);
+				return 0;
+			}
+			return -1;
+		}else if(work.equals("SimplePos09")){
+			if(wf09 != null){
+				wf09.reloadUserDic(dicPath);
+				return 0;
+			}
+			return -1;
+		}else if(work.equals("SimplePos22")){
+			if(wf22 != null){
+				wf22.reloadUserDic(dicPath);
+				return 0;
+			}
+			return -1;
+		}else if(work.equals("MorphAnalyzer")){
+			if(wfMorphAnalyzer != null){
+				wfMorphAnalyzer.reloadUserDic(dicPath);
+				return 0;
+			}
+			return -1;
+		}
+		return -2;
+	}
+	
+	public void reloadUserDic(String dicPath) throws IOException{
+		if(wfNoun != null){
+			wfNoun.reloadUserDic(dicPath);
+		}
+		if(wf09 != null){
+			wf09.reloadUserDic(dicPath);
+		}
+		if(wf22 != null){
+			wf22.reloadUserDic(dicPath);
+		}
+		if(wfMorphAnalyzer != null){
+			wfMorphAnalyzer.reloadUserDic(dicPath);
+		}
+	}
+	
+	//This function is not for dictionary updating.plz use reloadUserDic functions.
+	public String[] extractNoun(String basedir, String sentence, String userDicFile) {
 		if (wfNoun == null) {
 			wfNoun = new Workflow(basedir);
 			wfNoun.appendPlainTextProcessor(new SentenceSegmentor(), null);
 			wfNoun.appendPlainTextProcessor(new InformalSentenceFilter(), null);
 			wfNoun.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
+			wfNoun.setMorphUserDic(userDicFile);
+			
 			wfNoun.appendMorphemeProcessor(new UnknownProcessor(), null);
 
 			wfNoun.setPosTagger(new KoNLPHMMTagger(),
@@ -108,7 +156,7 @@ public class HannanumInterface {
 	 * @param args
 	 */
 
-	public String MorphAnalyzer(String basedir, String sentence) {
+	public String MorphAnalyzer(String basedir, String sentence, String userDicFile) {
 		if (wfMorphAnalyzer == null) {
 			wfMorphAnalyzer = new Workflow(basedir);
 			wfMorphAnalyzer.appendPlainTextProcessor(new SentenceSegmentor(),
@@ -119,6 +167,7 @@ public class HannanumInterface {
 			wfMorphAnalyzer
 					.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 							"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
+			wfMorphAnalyzer.setMorphUserDic(userDicFile);
 			wfMorphAnalyzer.appendMorphemeProcessor(new UnknownProcessor(),
 					null);
 			// Workflow workflow =
@@ -148,7 +197,7 @@ public class HannanumInterface {
 		return morphs;
 	}
 
-	public String SimplePos22(String basedir, String sentence) {
+	public String SimplePos22(String basedir, String sentence, String userDicFile) {
 		if (wf22 == null) {
 			wf22 = new Workflow(basedir);
 			wf22.appendPlainTextProcessor(new SentenceSegmentor(), null);
@@ -156,6 +205,7 @@ public class HannanumInterface {
 
 			wf22.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
+			wf22.setMorphUserDic(userDicFile);
 			wf22.appendMorphemeProcessor(new UnknownProcessor(), null);
 
 			wf22.setPosTagger(new KoNLPHMMTagger(),
@@ -190,7 +240,7 @@ public class HannanumInterface {
 		return morphs;
 	}
 
-	public String SimplePos09(String basedir, String sentence) {
+	public String SimplePos09(String basedir, String sentence, String userDicFile) {
 		if (wf09 == null) {
 			wf09 = new Workflow(basedir);
 			wf09.appendPlainTextProcessor(new SentenceSegmentor(), null);
@@ -198,6 +248,7 @@ public class HannanumInterface {
 
 			wf09.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
+			wf09.setMorphUserDic(userDicFile);
 			wf09.appendMorphemeProcessor(new UnknownProcessor(), null);
 
 			wf09.setPosTagger(new KoNLPHMMTagger(),
@@ -230,20 +281,31 @@ public class HannanumInterface {
 		wf09.close();
 		return morphs;
 	}
-/*
-	public static void main(String[] args) {
+
+	public static void main(String[] args) throws IOException {
 		HannanumInterface hi = new HannanumInterface();
-		String[] ret = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "죽어도 못 보내 버스 타요....장미 컵");
+		String[] ret = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "성긴털제비꽃은 근무중이다.","D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt");
 		for(int i= 0; i < ret.length; i++){
 			System.out.println(ret[i]);
 		}
 		
 		
-		System.out.println(hi.SimplePos22("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵"));
+		System.out.println(hi.SimplePos22("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt"));
 		
 		
-		System.out.println(hi.SimplePos09("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵"));
+		System.out.println(hi.SimplePos09("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt"));
 	
+		int i = hi.reloadUserDic("D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt", "extractNoun");
+		System.out.println(String.valueOf(i));
 		
-	}*/
+		System.out.println("end");
+		
+		String[] ret1 = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "성긴털제비꽃은 근무중이다.", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt");
+		for(int i1= 0; i1 < ret1.length; i1++){
+			System.out.println(ret1[i1]);
+		}
+		
+	}
+	
+	
 }
