@@ -33,6 +33,7 @@ import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.Sen
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.NounExtractor.NounExtractor;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.SimplePOSResult09.SimplePOSResult09;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.SimplePOSResult22.SimplePOSResult22;
+import kr.pe.freesearch.KoNLP.KoNLPUtil;
 
 public class HannanumInterface {
 	private Workflow wfNoun = null;
@@ -283,7 +284,7 @@ public class HannanumInterface {
 	}
 
 	public static void main(String[] args) throws IOException {
-		HannanumInterface hi = new HannanumInterface();
+		/*HannanumInterface hi = new HannanumInterface();
 		String[] ret = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "성긴털제비꽃은 근무중이다.","D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt");
 		for(int i= 0; i < ret.length; i++){
 			System.out.println(ret[i]);
@@ -303,7 +304,13 @@ public class HannanumInterface {
 		String[] ret1 = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "성긴털제비꽃은 근무중이다.", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt");
 		for(int i1= 0; i1 < ret1.length; i1++){
 			System.out.println(ret1[i1]);
+		}*/
+		String[] ret1 = KoNLPUtil.readZipDic("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "data/kE/dic_user2.txt");
+		for(int i1= 0; i1 < ret1.length; i1++){
+			System.out.println(ret1[i1]);
 		}
+		
+		System.out.println("adsd".matches("[a-zA-Z]+"));
 		
 	}
 	

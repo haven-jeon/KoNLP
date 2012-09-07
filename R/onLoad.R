@@ -61,10 +61,7 @@
       ret <- dir.create(CurrentUserDicPath,recursive = TRUE)
       ret2 <- dir.create(backupUserDicPath,recursive = TRUE)
     }
-    packageStartupMessage(dics)
-    packageStartupMessage(UserDic)
-    conn <- unz(dics, UserDic, encoding="UTF-8")
-    write.table(read.table(conn, fileEncoding="UTF-8"), 
+    write.table(readZipDic(dics, UserDic), 
                 file=currentUserDic, quote=F, sep="\t", row.names=F, col.names=F, fileEncoding="UTF-8")
     #close(conn)
 

@@ -122,8 +122,7 @@ useDic <- function(dicname, backup=T){
   }else{
     stop("wrong dictionary name!")
   }
-  conn <- unz(get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv), relpath, encoding="UTF-8")
-  newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
+  newdic <- readZipDic(get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv), relpath)
   if(backup == T){
     backupUsrDic(ask=F)
   }
@@ -293,6 +292,12 @@ mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE){
 
 
 
+readZipDic <- function(zipPath, dicPath){
+  dicvector <- .jcall("kr/pe/freesearch/KoNLP/KoNLPUtil", 
+                      "[S", "readZipDic", zipPath, dicPath)
+  Encoding(dicvector) <- "UTF-8"
+  return(as.data.frame(matrix(dicvector,ncol=2,byrow=T), stringsAsFactors=F))
+}
 
 
 
