@@ -122,7 +122,7 @@ useDic <- function(dicname, backup=T){
   }else{
     stop("wrong dictionary name!")
   }
-  conn <- unz(get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv), relpath)
+  conn <- unz(get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv), relpath, encoding="UTF-8")
   newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
   if(backup == T){
     backupUsrDic(ask=F)

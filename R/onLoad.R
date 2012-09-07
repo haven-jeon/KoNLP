@@ -63,7 +63,7 @@
     }
     packageStartupMessage(dics)
     packageStartupMessage(UserDic)
-    conn <- unz(dics, UserDic)
+    conn <- unz(dics, UserDic, encoding="UTF-8")
     write.table(read.table(conn, fileEncoding="UTF-8"), 
                 file=currentUserDic, quote=F, sep="\t", row.names=F, col.names=F, fileEncoding="UTF-8")
     #close(conn)
