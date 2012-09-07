@@ -1,0 +1,13 @@
+\name{useSejongDic}
+\alias{useSejongDic}
+\title{use Sejong noun dictionary}
+\usage{
+  useSejongDic(backup = T)
+}
+\arguments{
+  \item{backup}{will backup current dictionary?}
+}
+\description{
+  Retrive Sejong dictionary to use in KoNLP
+}
+
