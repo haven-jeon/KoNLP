@@ -1,6 +1,7 @@
 Version 0.76
 ------------------------------------------------------------------------------
   * make interface with HanNanum Analyzer for direct access to zipped dictionaries. 
+  * added useSejongDic(), useSystemDic() functions.
 
 Version 0.75.1
 ------------------------------------------------------------------------------

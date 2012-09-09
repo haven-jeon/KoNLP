@@ -44,7 +44,16 @@ test_that("Hannanum test", {
         expect_warning(extractNoun("굉장히긴문장을넣었을때에러를내놓아야된다."))
         expect_warning(SimplePos09("굉장히긴문장을넣었을때에러를내놓아야된다."))
         expect_warning(SimplePos22("굉장히긴문장을넣었을때에러를내놓아야된다."))
+
+        expect_equal(extractNoun("슈퍼마켓이 판매하고 있는 흑마늘 양념 치킨이 논란이 되고 있다."), 
+                    c("슈퍼마켓","판매","흑마늘","양념","치킨","논란"))
          })
+
+test_that("dictionary function test", {
+        expect_that(useSejongDic(), prints_text("words were added to dic_user.txt"))
+        expect_that(useSystemDic(), prints_text("words were added to dic_user.txt"))
+         })
+
 
 
 
