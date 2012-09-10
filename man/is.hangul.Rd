@@ -2,10 +2,10 @@
 \alias{is.hangul}
 \title{check if sentence is all Hangul}
 \usage{
-  is.hangul(sentenceU8)
+  is.hangul(sentence)
 }
 \arguments{
-  \item{sentenceU8}{input charactors(must be UTF-8)}
+  \item{sentence}{input charactors}
 }
 \value{
   TRUE or FALSE

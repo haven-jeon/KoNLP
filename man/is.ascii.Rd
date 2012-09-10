@@ -2,10 +2,10 @@
 \alias{is.ascii}
 \title{check if sentence is all ASCII}
 \usage{
-  is.ascii(sentenceU8)
+  is.ascii(sentence)
 }
 \arguments{
-  \item{sentenceU8}{input charactors(must be UTF-8)}
+  \item{sentence}{input charactors}
 }
 \value{
   TRUE or FALSE

@@ -2,10 +2,10 @@
 \alias{is.jamo}
 \title{check if sentence is all Jamo}
 \usage{
-  is.jamo(sentenceU8)
+  is.jamo(sentence)
 }
 \arguments{
-  \item{sentenceU8}{input charactors(must be UTF-8)}
+  \item{sentence}{input charactors}
 }
 \value{
   TRUE or FALSE

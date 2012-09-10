@@ -65,19 +65,18 @@ is.utf8 <- function (sentenceU8) {
 #' Function checks if each charactor is Hangul or Jamo. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
-#' @param sentenceU8 input charactors(must be UTF-8)
+#' @param sentence input charactors
 #' @return TRUE or FALSE 
 #' 
 #' @export
-is.hangul <- function(sentenceU8){
-  if(!is.utf8(sentenceU8)){
-    stop("Input must be 'UTF-8' encoding!")
+is.hangul <- function(sentence){
+  if(!is.character(sentence) | nchar(sentence) == 0) {
+    stop("Input must be legitimate character!")
+  }else{
+    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isHangulString", sentence)
+    return(res)
   }
-  intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
-  res <- sapply(intVec, function(ch){
-        .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isHangul", .jchar(ch))
-  })
-  return(all(res))  
+  return(FALSE)  
 }
 
 
@@ -87,38 +86,36 @@ is.hangul <- function(sentenceU8){
 #' Function checks with each charactor is Jamo. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #'
-#' @param sentenceU8 input charactors(must be UTF-8)
+#' @param sentence input charactors
 #' @return TRUE or FALSE 
 #' 
 #' @export
-is.jamo <- function(sentenceU8){
-  if(!is.utf8(sentenceU8)){
-    stop("Input must be 'UTF-8' encoding!")
+is.jamo <- function(sentence){
+  if(!is.character(sentence) | nchar(sentence) == 0) {
+    stop("Input must be legitimate character!")
+  }else{
+    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJamoString", sentence)
+    return(res)
   }
-  intVec <- unlist(lapply(sentenceU8,utf8ToInt)) 
-  res <- sapply(intVec, function(ch){
-        .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJamo", .jchar(ch))
-  })
-  return(all(res))
+  return(FALSE)   
 }
 
 #' check if sentence is all Jaeum
 #' 
 #' Function checks with each charactor is Jaeum 
 #'
-#' @param sentenceU8 input charactors(must be UTF-8)
+#' @param sentence input charactors
 #' @return TRUE or FALSE 
 #' 
 #' @export
-is.jaeum <- function(sentenceU8){
-  if(!is.utf8(sentenceU8)){
-    stop("Input must be 'UTF-8' encoding!")
+is.jaeum <- function(sentence){
+  if(!is.character(sentence) | nchar(sentence) == 0) {
+    stop("Input must be legitimate character!")
+  }else{
+    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJamoString", sentence)
+    return(res)
   }
-  intVec <- unlist(lapply(sentenceU8,utf8ToInt))
-  res <- sapply(intVec, function(ch){
-    .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJaeum", .jchar(ch))
-  })
-  return(all(res))
+  return(FALSE)  
 }
 
 
@@ -126,19 +123,18 @@ is.jaeum <- function(sentenceU8){
 #' 
 #' Function checks with each charactor is Moeum 
 #'
-#' @param sentenceU8 input charactors(must be UTF-8)
+#' @param sentence input charactors
 #' @return TRUE or FALSE 
 #' 
 #' @export
-is.moeum <- function(sentenceU8){
-  if(!is.utf8(sentenceU8)){
-    stop("Input must be 'UTF-8' encoding!")
+is.moeum <- function(sentence){
+  if(!is.character(sentence) | nchar(sentence) == 0) {
+    stop("Input must be legitimate character!")
+  }else{
+    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isMoeumString", sentence)
+    return(res)
   }
-  intVec <- unlist(lapply(sentenceU8,utf8ToInt))
-  res <- sapply(intVec, function(ch){
-    .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isMoeum", .jchar(ch))
-  })
-  return(all(res))
+  return(FALSE) 
 }
 
 
@@ -146,16 +142,18 @@ is.moeum <- function(sentenceU8){
 #' 
 #' Function checks with each charactor is ASCII
 #'
-#' @param sentenceU8 input charactors(must be UTF-8)
+#' @param sentence input charactors
 #' @return TRUE or FALSE 
 #' 
 #' @export
-is.ascii <- function(sentenceU8){
-  if(!is.utf8(sentenceU8)){
-    stop("Input must be 'UTF-8' encoding!")
+is.ascii <- function(sentence){
+  if(!is.character(sentence) | nchar(sentence) == 0) {
+    stop("Input must be legitimate character!")
+  }else{
+    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isAsciiString", sentence)
+    return(res)
   }
-  intVec <- unlist(lapply(sentenceU8,utf8ToInt))
-  return(all(intVec < 128))
+  return(FALSE)   
 }
 
 #' convertion function  Hangul string to Jamos

@@ -2,10 +2,10 @@
 \alias{is.jaeum}
 \title{check if sentence is all Jaeum}
 \usage{
-  is.jaeum(sentenceU8)
+  is.jaeum(sentence)
 }
 \arguments{
-  \item{sentenceU8}{input charactors(must be UTF-8)}
+  \item{sentence}{input charactors}
 }
 \value{
   TRUE or FALSE

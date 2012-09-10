@@ -2,6 +2,7 @@ Version 0.76
 ------------------------------------------------------------------------------
   * make interface with HanNanum Analyzer for direct access to zipped dictionaries. 
   * added useSejongDic(), useSystemDic() functions.
+  * no need to use explicitly UTF-8 string on 'is.~' functions.
 
 Version 0.75.1
 ------------------------------------------------------------------------------

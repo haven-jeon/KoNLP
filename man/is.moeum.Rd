@@ -2,10 +2,10 @@
 \alias{is.moeum}
 \title{check if sentence is all Moeum}
 \usage{
-  is.moeum(sentenceU8)
+  is.moeum(sentence)
 }
 \arguments{
-  \item{sentenceU8}{input charactors(must be UTF-8)}
+  \item{sentence}{input charactors}
 }
 \value{
   TRUE or FALSE
