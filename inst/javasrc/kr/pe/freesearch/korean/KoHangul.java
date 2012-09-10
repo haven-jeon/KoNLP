@@ -42,11 +42,38 @@ public class KoHangul {
 	public static boolean isHangul(char ch) {
 		return ((HANGUL_SYLLABLE_START <= (int) ch && (int) ch <= HANGUL_SYLLABLE_END) || isJamo(ch));
 	}
+	
+	public static boolean isHangulString(String str){
+		if(str.length() == 0){
+			return false;
+		}
+		char[] strchar = str.toCharArray();
+		for(int i = 0; i < strchar.length;i++){
+			if(!isHangul(strchar[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public static boolean isJamo(char ch) {
 		return (isJaeum(ch) || isMoeum(ch));
 	}
 
+	public static boolean isJamoString(String str){
+		if(str.length() == 0){
+			return false;
+		}
+		char[] strchar = str.toCharArray();
+		for(int i = 0; i < strchar.length;i++){
+			if(!isJamo(strchar[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 	public static char convertHalfwidthToFullwidth(char ch) {
 		return (char) (((int) ch - 0x41) + 0xFF21);
 	}
@@ -339,10 +366,53 @@ public class KoHangul {
 		return jaeum_.contains(ch);
 	}
 
+	public static boolean isJaeumString(String str){
+		if(str.length() == 0){
+			return false;
+		}
+		char[] strchar = str.toCharArray();
+		for(int i = 0; i < strchar.length;i++){
+			if(!isJaeum(strchar[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean isAscii(char ch){
+		return ch < 128;
+	}
+	
+	public static boolean isAsciiString(String str){
+		if(str.length() == 0){
+			return false;
+		}
+		char[] strchar = str.toCharArray();
+		for(int i = 0; i < strchar.length;i++){
+			if(!isAscii(strchar[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static boolean isMoeum(char ch) {
 		return moeum_.contains(ch);
 	}
 
+	public static boolean isMoeumString(String str){
+		if(str.length() == 0){
+			return false;
+		}
+		char[] strchar = str.toCharArray();
+		for(int i = 0; i < strchar.length;i++){
+			if(!isMoeum(strchar[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static Integer getChosungIdx(char ch) {
 		return chosungIdx_.get(ch);
 	}
@@ -453,5 +523,6 @@ public class KoHangul {
 		}
 		return new String(keystrokes, 0, keyIdx);
 	}
+	
 
 }
