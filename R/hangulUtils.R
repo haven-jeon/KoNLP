@@ -112,7 +112,7 @@ is.jaeum <- function(sentence){
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
-    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJamoString", sentence)
+    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJaeumString", sentence)
     return(res)
   }
   return(FALSE)  
