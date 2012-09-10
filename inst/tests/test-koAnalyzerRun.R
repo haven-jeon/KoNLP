@@ -38,9 +38,15 @@ test_that("is.jamo is.hangul test", {
          expect_equal(is.jamo("ㅈㅏㅁㅗ"), T)
          expect_equal(is.jamo("자모"), F)
          expect_equal(is.jamo("abc%##"), F)
-         expect_equal(is.jaeum("ㄲ"), T)
+         expect_equal(is.jaeum("ㄲㅂㅇ"), T)
+         expect_equal(is.jaeum("ㄲㄹㅏ"), F)
+         expect_equal(is.jaeum("고감자"), F)
          expect_equal(is.moeum("ㅐ"), T)
+         expect_equal(is.moeum("ㅐㅇㄴㅇㅑ"), F)
+         expect_equal(is.moeum("고감자"), F)
          expect_equal(is.ascii("asdad"), T)
+         expect_equal(is.ascii("asdad$#$@#$$**"), T)
+         expect_equal(is.ascii("전ㄴㅇㄴㅇ"), F)
          })
 
 test_that("Hannanum test", {
