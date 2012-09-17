@@ -116,9 +116,9 @@ useSejongDic <- function(backup=T){
 # internal function to change dictionary
 useDic <- function(dicname, backup=T){
   if(dicname == "Sejong"){
-    relpath <- "data/kE/dic_user2.txt"
+    relpath <- file.path("data","kE","dic_user2.txt")
   }else if(dicname == "System"){
-    relpath <- "data/kE/dic_user.txt" 
+    relpath <- file.path("data","kE","dic_user.txt") 
   }else{
     stop("wrong dictionary name!")
   }
@@ -246,14 +246,35 @@ restoreUsrDic <- function(ask=TRUE){
 #' @param newUserDic new user dictionary as data.frame
 #' @param append append or replacing 
 #' @param verbose see detail error logs
+#' @param ask ask to backup
 #' @export
-mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE){
-  if(!is.data.frame(newUserDic)){
-    stop("newUserDic must be data frame object!\n")
+mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE, ask=FALSE){
+
+  if(is.data.frame(newUserDic) == FALSE | ncol(newUserDic) != 2 | nrow(newUserDic) == 0 ){
+    stop("check 'newUserDic'.\n")
   }
-  if(ncol(newUserDic)!= 2){
-    stop("newUserDic must be 2 column data frame!\n")
+  if(class(newUserDic[,2]) == "factor"){
+    newUserDic[,2] <- as.character(newUserDic[,2])
   }
+  if(class(newUserDic[,1]) == "factor"){
+    newUserDic[,1] <- as.character(newUserDic[,1])
+  }
+  
+  # checking belows are taking too much time.
+  #if(all(sapply(newUserDic[,2], is.ascii)) == FALSE){
+  #  stop("check 'newUserDic'.\n")
+  #}
+
+  response <- "n"
+  if(ask){
+    response <- readline("Would you backup your current 'dic_user.txt' file to backup directory? (Y/n/c): ")
+  }
+  if(substr(response,1,1) == "Y"){
+    backupUsrDic(ask=F)
+  }else if(substr(response,1,1) == "c"){
+    return()
+  }
+
   #check all the tags 
   errorTags <- Filter(function(x){is.na(tags[x])}, newUserDic[,2])
   if(length(errorTags) > 0){
@@ -278,6 +299,9 @@ mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE){
     }
     oldUserDic <- as.data.frame(apply(oldUserDic, 2, iconv, from=localCharset, to="UTF-8"))
   }
+
+  names(newUserDic) <- c("word","tag")
+  names(oldUserDic) <- c("word", "tag")
 
   if(append){
     newestUserDic <- rbind(oldUserDic, newUserDic)

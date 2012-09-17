@@ -2,7 +2,8 @@
 \alias{mergeUserDic}
 \title{"dic_user.txt" merging function}
 \usage{
-  mergeUserDic(newUserDic, append = TRUE, verbose = FALSE)
+  mergeUserDic(newUserDic, append = TRUE, verbose = FALSE,
+    ask = FALSE)
 }
 \arguments{
   \item{newUserDic}{new user dictionary as data.frame}
@@ -10,6 +11,8 @@
   \item{append}{append or replacing}
 
   \item{verbose}{see detail error logs}
+
+  \item{ask}{ask to backup}
 }
 \description{
   merging current dic_user.txt with new dictionary.
