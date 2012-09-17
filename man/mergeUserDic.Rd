@@ -1,6 +1,6 @@
 \name{mergeUserDic}
 \alias{mergeUserDic}
-\title{"dic_user.txt" merging function}
+\title{appending or replacing with new data.frame}
 \usage{
   mergeUserDic(newUserDic, append = TRUE, verbose = FALSE,
     ask = FALSE)
@@ -15,7 +15,8 @@
   \item{ask}{ask to backup}
 }
 \description{
-  merging current dic_user.txt with new dictionary.
+  appending new dictionary to current dictionary.
+  replaceing current dictionary with new dictionary.
 }
 \examples{
 \dontrun{

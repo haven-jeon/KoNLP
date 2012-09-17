@@ -226,9 +226,10 @@ restoreUsrDic <- function(ask=TRUE){
 }
 
 
-#' "dic_user.txt" merging function
+#' appending or replacing with new data.frame
 #'
-#' merging current dic_user.txt with new dictionary.
+#' appending new dictionary to current dictionary.
+#' replaceing current dictionary with new dictionary.
 #'
 #' @examples
 #' \dontrun{
@@ -295,13 +296,13 @@ mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE, ask=FALSE){
   localCharset <- localeToCharset()[1]
   if(localCharset != "UTF-8"){
     if(newDicEnc != "UTF-8"){
-      newUserDic <- as.data.frame(apply(newUserDic, 2, iconv, from=localCharset, to="UTF-8"))
+      newUserDic[,1] <- iconv(newUserDic[,1],from=localCharset, to="UTF-8")
     }
-    oldUserDic <- as.data.frame(apply(oldUserDic, 2, iconv, from=localCharset, to="UTF-8"))
+    oldUserDic[,1] <- iconv(oldUserDic[,1], from=localCharset, to="UTF-8")
   }
 
   names(newUserDic) <- c("word","tag")
-  names(oldUserDic) <- c("word", "tag")
+  names(oldUserDic) <- c("word","tag")
 
   if(append){
     newestUserDic <- rbind(oldUserDic, newUserDic)

@@ -1,3 +1,8 @@
+Version 0.76.5
+------------------------------------------------------------------------------
+  * fix path with platform independent way.
+  * make more easy mergeUserDic().  
+
 Version 0.76
 ------------------------------------------------------------------------------
   * make interface with HanNanum Analyzer for direct access to zipped dictionaries. 

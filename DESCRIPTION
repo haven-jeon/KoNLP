@@ -7,7 +7,7 @@ Description: Korean language processing package. Morphological analyzer, POS
     tagger, Keystroke converter, Hangul automata...
 SystemRequirements: Java (>= 1.6)
 URL: https://github.com/haven-jeon/KoNLP
-Version: 0.76.1
+Version: 0.76.5
 Repository: CRAN
 Date/Publication: 2011-10-12 07:49:45
 Packaged: 2011-10-12 20:53:27 UTC; gogamza
