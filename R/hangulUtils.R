@@ -70,11 +70,14 @@ is.utf8 <- function (sentenceU8) {
 #' 
 #' @export
 is.hangul <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
+  if(!is.character(sentence) | any(nchar(sentence) == 0)) {
     stop("Input must be legitimate character!")
   }else{
-    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isHangulString", sentence)
-    return(res)
+     isHangulString <- function(x){
+      .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isHangulString", x)
+     }
+     res <- sapply(sentence, isHangulString, USE.NAMES = FALSE)
+     return(res)
   }
   return(FALSE)  
 }
@@ -91,10 +94,13 @@ is.hangul <- function(sentence){
 #' 
 #' @export
 is.jamo <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
+  if(!is.character(sentence) | any(nchar(sentence) == 0)) {
     stop("Input must be legitimate character!")
   }else{
-    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJamoString", sentence)
+    isJamoString <- function(x){
+      .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJamoString", x)
+    }
+    res <- sapply(sentence, isJamoString, USE.NAMES = FALSE)
     return(res)
   }
   return(FALSE)   
@@ -109,10 +115,13 @@ is.jamo <- function(sentence){
 #' 
 #' @export
 is.jaeum <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
+  if(!is.character(sentence) | any(nchar(sentence) == 0)) {
     stop("Input must be legitimate character!")
   }else{
-    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJaeumString", sentence)
+    isJaeumString <- function(x){
+      .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isJaeumString", x)
+    }
+    res <- sapply(sentence, isJaeumString, USE.NAMES = FALSE) 
     return(res)
   }
   return(FALSE)  
@@ -128,10 +137,13 @@ is.jaeum <- function(sentence){
 #' 
 #' @export
 is.moeum <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
+  if(!is.character(sentence) | any(nchar(sentence) == 0)) {
     stop("Input must be legitimate character!")
   }else{
-    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isMoeumString", sentence)
+    isMoeumString <- function(x){
+      .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isMoeumString", x)
+    }
+    res <- sapply(sentence, isMoeumString, USE.NAMES = FALSE) 
     return(res)
   }
   return(FALSE) 
@@ -147,10 +159,13 @@ is.moeum <- function(sentence){
 #' 
 #' @export
 is.ascii <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
+  if(!is.character(sentence) | any(nchar(sentence) == 0)) {
     stop("Input must be legitimate character!")
   }else{
-    res <- .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isAsciiString", sentence)
+    isAsciiString <- function(x){
+      .jcall("kr/pe/freesearch/korean/KoHangul", "Z", "isAsciiString", x)
+    }
+    res <- sapply(sentence, isAsciiString, USE.NAMES = FALSE) 
     return(res)
   }
   return(FALSE)   
