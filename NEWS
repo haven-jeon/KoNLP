@@ -2,7 +2,7 @@ Version 0.76.5
 ------------------------------------------------------------------------------
   * fix path with platform independent way.
   * make more easy on mergeUserDic().  
-  * now support vector on is.*()s.
+  * now support vector on 'is.~()' functions.
 
 Version 0.76
 ------------------------------------------------------------------------------
