@@ -28,9 +28,6 @@
 #'
 #' @export
 doKoMorph <- function(sentence){
-  if(!checkEncoding(sentence)){
-    return(sentence)
-  }
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
@@ -54,9 +51,6 @@ doKoMorph <- function(sentence){
 #' @import "rJava"
 #' @export
 extractNoun <- function(sentence){
-  if(!checkEncoding(sentence)){
-    return(sentence)
-  }
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
@@ -86,9 +80,6 @@ extractNoun <- function(sentence){
 #'
 #' @export
 MorphAnalyzer <- function(sentence){
-  if(!checkEncoding(sentence)){
-    return(sentence)
-  } 
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
@@ -116,9 +107,6 @@ MorphAnalyzer <- function(sentence){
 #' @return results of tagged analysis
 #' @export
 SimplePos22 <- function(sentence){
-  if(!checkEncoding(sentence)){
-    return(sentence)
-  }
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
@@ -148,9 +136,6 @@ SimplePos22 <- function(sentence){
 #'
 #' @export
 SimplePos09 <- function(sentence){
-  if(!checkEncoding(sentence)){
-    return(sentence)
-  } 
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
