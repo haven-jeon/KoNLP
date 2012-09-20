@@ -28,6 +28,7 @@
 #'
 #' @export
 doKoMorph <- function(sentence){
+  warning("This function will be deprecated.\n We suggest 'MorphAnalyzer()' to use.")
   if(!is.character(sentence) | nchar(sentence) == 0) {
     stop("Input must be legitimate character!")
   }else{
@@ -51,22 +52,18 @@ doKoMorph <- function(sentence){
 #' @import "rJava"
 #' @export
 extractNoun <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
-    stop("Input must be legitimate character!")
-  }else{
-    sentence_pre <- preprocessing(sentence)
-    if(sentence_pre == FALSE){
-      return(sentence)
-    }
-    if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-      assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
-    }
-	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "[S", "extractNoun",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
-                  get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
-    Encoding(out) <- "UTF-8"
-    return(out)
-  } 
+  sentence_pre <- preprocessing(sentence)
+  if(sentence_pre == FALSE){
+    return(sentence)
+  }
+  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
+    assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
+  }
+	out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
+                "[S", "extractNoun",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
+                get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
+  Encoding(out) <- "UTF-8"
+  return(out)
 }
 
 #' Hannanum morphological analyzer interface function
@@ -80,22 +77,18 @@ extractNoun <- function(sentence){
 #'
 #' @export
 MorphAnalyzer <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
-    stop("Input must be legitimate character!")
-  }else{
-    sentence_pre <- preprocessing(sentence)
-    if(sentence_pre == FALSE){
-      return(sentence)
-    }
-    if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-      assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
-    }
-	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv),
-                  "S", "MorphAnalyzer", get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
-                  get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
-    Encoding(out) <- "UTF-8"
-    return(makeTagList(out))
-  } 
+  sentence_pre <- preprocessing(sentence)
+  if(sentence_pre == FALSE){
+    return(sentence)
+  }
+  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
+    assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
+  }
+  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv),
+                "S", "MorphAnalyzer", get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
+                get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
+  Encoding(out) <- "UTF-8"
+  return(makeTagList(out))
 }
 #' POS tagging by using 22 KAIST tags
 #' 
@@ -107,22 +100,18 @@ MorphAnalyzer <- function(sentence){
 #' @return results of tagged analysis
 #' @export
 SimplePos22 <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
-    stop("Input must be legitimate character!")
-  }else{
-    sentence_pre <- preprocessing(sentence)
-    if(sentence_pre == FALSE){
-      return(sentence)
-    }
-    if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-      assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
-    }
-	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "S", "SimplePos22",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
-                  get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
-    Encoding(out) <- "UTF-8"
-    return(makeTagList(out))
+  sentence_pre <- preprocessing(sentence)
+  if(sentence_pre == FALSE){
+    return(sentence)
   }
+  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
+    assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
+  }
+  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
+                "S", "SimplePos22",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
+                get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
+  Encoding(out) <- "UTF-8"
+  return(makeTagList(out))
 }
 
 #' POS tagging by using 9 KAIST tags
@@ -136,22 +125,18 @@ SimplePos22 <- function(sentence){
 #'
 #' @export
 SimplePos09 <- function(sentence){
-  if(!is.character(sentence) | nchar(sentence) == 0) {
-    stop("Input must be legitimate character!")
-  }else{
-    sentence_pre <- preprocessing(sentence)
-    if(sentence_pre == FALSE){
-      return(sentence)
-    }
-    if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-      assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
-    }
-	  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "S", "SimplePos09",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
-                  get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
-    Encoding(out) <- "UTF-8"
-	  return(makeTagList(out))
+  sentence_pre <- preprocessing(sentence)
+  if(sentence_pre == FALSE){
+    return(sentence)
   }
+  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
+    assign("HannanumObj",.jnew("HannanumInterface"), KoNLP:::.KoNLPEnv)
+  }
+  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
+                "S", "SimplePos09",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
+                get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
+  Encoding(out) <- "UTF-8"
+  return(makeTagList(out))
 }
 
 

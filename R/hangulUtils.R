@@ -18,6 +18,10 @@
 
 # if unable to process, this will return FALSE
 preprocessing <- function(inputs){
+  if(!is.character(inputs)) {
+    warning("Input must be legitimate character!")
+    return(FALSE)
+  }
   newInput <- gsub("[[:space:]]", " ", inputs)
   newInput <- gsub("[[:space:]]+$", "", newInput)
   newInput <- gsub("^[[:space:]]+", "", newInput)
