@@ -26,7 +26,7 @@ preprocessing <- function(inputs){
   newInput <- gsub("[[:space:]]+$", "", newInput)
   newInput <- gsub("^[[:space:]]+", "", newInput)
   if((nchar(newInput) == 0) |  
-          (nchar(newInput) > 20 & length(strsplit(newInput, " ")[[1]]) <= 3)){ 
+          (nchar(newInput) > 20 & length(strsplit(newInput, " ")[[1]]) <= 1)){ 
     warning(sprintf("It's not kind of right sentence : '%s'", inputs))
     return(FALSE)
   }
