@@ -25,7 +25,7 @@
 .onLoad <- function(libname, pkgname) {
   tryCatch(.jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx1024m")), 
     error=function(e){
-      .jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx512m"))
+      .jinit(parameters=c("-Dfile.encoding=UTF-8"))
       packageStartupMessage("Your system doesn't have much memory to run KoNLP.\nTherefore, some dictionary managing functions will not work appropreately.")
     },finally=packageStartupMessage("Java initialized.\n"))
   .jpackage(pkgname, lib.loc = libname)
