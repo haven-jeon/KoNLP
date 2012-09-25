@@ -42,10 +42,23 @@ public class HannanumInterface {
 	private Workflow wf09 = null;
 
 	public void reloadAllDic() {
-		wfNoun = null;
-		wfMorphAnalyzer = null;
-		wf22 = null;
-		wf09 = null;
+		if(wfNoun != null){
+			wfNoun.clear();
+			wfNoun = null;
+		}
+		if(wfMorphAnalyzer != null){
+			wfMorphAnalyzer.clear();
+			wfMorphAnalyzer = null;
+		}
+		
+		if(wf22 != null){
+			wf22.clear();
+			wf22 = null;
+		}
+		if(wf09 != null){
+			wf09.clear();
+			wf09 = null;
+		}
 	}
 
 	public int reloadUserDic(String dicPath, String work) throws IOException{
