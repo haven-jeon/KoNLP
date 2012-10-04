@@ -69,6 +69,7 @@ test_that("Hannanum test", {
 test_that("dictionary function test", {
         expect_that(useSejongDic(), prints_text("words were added to dic_user.txt"))
         expect_that(useSystemDic(), prints_text("words were added to dic_user.txt"))
+        expect_that(statDic(lastN=100), prints_text(c("tail", "summary", "head")))
          })
 
 
