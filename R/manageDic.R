@@ -327,3 +327,50 @@ readZipDic <- function(zipPath, dicPath){
 
 
 
+#' summary of dictionaries
+#' 
+#' show summary, head and tail of current or backup dictionaries 
+#' 
+#' @examples 
+#' ## show current dictionary's summary, head, tail 
+#' statDic("current", 10)
+#' @param which "current" or "backup" dictionary
+#' @param lastN a single integer. Size for the resulting object to view 
+#' @export
+statDic <- function(which="current", lastN=6){
+  UserDic <- ""
+
+  if(which == "current"){
+    UserDic <- get("CurrentUserDic",envir=KoNLP:::.KoNLPEnv)
+  }else if(which == "backup"){
+    UserDic <- get("backupUserDic", envir=KoNLP:::.KoNLPEnv)
+  }else{
+    stop("No dictionary to summary!")    
+  }
+  
+  if(!file.exists(UserDic)){
+    stop("No dictionary to summary!\n Please check dictionary files.")
+  }
+    
+  
+  UserDicView <- read.table(UserDic, sep="\t", header=F, fileEncoding="UTF-8", stringsAsFactors=F)
+
+  #encoding problems 
+  localCharset <- localeToCharset()[1]
+  if(localCharset != "UTF-8"){
+    UserDicView[,1] <- iconv(UserDicView[,1], from=localCharset, to="UTF-8")
+  }
+  names(UserDicView) <- c("word","tag")
+  UserDicView[,2] <- as.factor(UserDicView[,2])
+  
+  res <- list(summary=summary(UserDicView), head=head(UserDicView, n=lastN), tail=tail(UserDicView, n=lastN))
+
+  return(res)
+}
+
+
+
+
+
+
+

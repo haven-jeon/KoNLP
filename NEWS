@@ -1,7 +1,11 @@
 Version 0.76.6
 ------------------------------------------------------------------------------
-  * check more cases on raw input sentences
-  * secondary JVM option to default
+  * function to view summary of dictionary using statDic().
+
+Version 0.76.6
+------------------------------------------------------------------------------
+  * check more cases on raw input sentences.
+  * secondary JVM option to default.
 
 Version 0.76.5
 ------------------------------------------------------------------------------
