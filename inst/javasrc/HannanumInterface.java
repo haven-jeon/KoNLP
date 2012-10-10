@@ -241,7 +241,7 @@ public class HannanumInterface {
 		try {
 			wf22.analyze(sentence);
 
-			morphs = wf22.getResultOfSentence();
+			morphs = wf22.getResultOfDocument();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -284,7 +284,7 @@ public class HannanumInterface {
 		try {
 			/* Analysis using the work flow */
 			wf09.analyze(sentence);
-			morphs = wf09.getResultOfSentence();
+			morphs = wf09.getResultOfDocument();
 		} catch (Exception e) {
 			e.printStackTrace();
 			wf09.close();
@@ -297,14 +297,14 @@ public class HannanumInterface {
 	}
 
 	public static void main(String[] args) throws IOException {
-		/*HannanumInterface hi = new HannanumInterface();
-		String[] ret = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "성긴털제비꽃은 근무중이다.","D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt");
+		HannanumInterface hi = new HannanumInterface();
+		/*String[] ret = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handic.zip", "성긴털제비꽃은 근무중이다.","D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt");
 		for(int i= 0; i < ret.length; i++){
 			System.out.println(ret[i]);
-		}
+		}*/
 		
 		
-		System.out.println(hi.SimplePos22("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt"));
+		System.out.println(hi.SimplePos22("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요. 장미 그리고 술.", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt"));
 		
 		
 		System.out.println(hi.SimplePos09("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt"));
@@ -317,11 +317,11 @@ public class HannanumInterface {
 		String[] ret1 = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "성긴털제비꽃은 근무중이다.", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt");
 		for(int i1= 0; i1 < ret1.length; i1++){
 			System.out.println(ret1[i1]);
-		}*/
-		String[] ret1 = KoNLPUtil.readZipDic("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "data/kE/dic_user2.txt");
-		for(int i1= 0; i1 < ret1.length; i1++){
-			System.out.println(ret1[i1]);
 		}
+		//String[] ret2 = KoNLPUtil.readZipDic("C:/R/R-2.15.1/library/Sejong/dics/handic.zip", "data/kE/dic_user2.txt");
+		//for(int i1= 0; i1 < ret2.length; i1++){
+		//	System.out.println(ret2[i1]);
+		//}
 		
 		System.out.println("adsd".matches("[a-zA-Z]+"));
 		
