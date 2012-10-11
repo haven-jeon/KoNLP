@@ -64,6 +64,9 @@ test_that("Hannanum test", {
         expect_warning(extractNoun("          "))
         expect_warning(SimplePos09("  "))
         expect_warning(SimplePos22("   \t\t\t\t\t\t\t    "))
+        expect_equal(length(SimplePos09("검색엔진 개발자 모임. 그룹 스터디 하자!")),8)
+        expect_equal(length(SimplePos22("검색엔진 개발자 모임. 그룹 스터디 하자!")),8)
+        expect_equal(length(SimplePos22("검색엔진 개발자 모임. 그룹 스터디 하자!. 그런데 어머니께서 밥을 하셨는지 모르겠어.")), 14)
          })
 
 test_that("dictionary function test", {

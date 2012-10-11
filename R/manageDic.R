@@ -335,9 +335,9 @@ readZipDic <- function(zipPath, dicPath){
 #' ## show current dictionary's summary, head, tail 
 #' statDic("current", 10)
 #' @param which "current" or "backup" dictionary
-#' @param lastN a single integer. Size for the resulting object to view 
+#' @param n a single integer. Size for the resulting object to view 
 #' @export
-statDic <- function(which="current", lastN=6){
+statDic <- function(which="current", n=6){
   UserDic <- ""
 
   if(which == "current"){
@@ -363,7 +363,7 @@ statDic <- function(which="current", lastN=6){
   names(UserDicView) <- c("word","tag")
   UserDicView[,2] <- as.factor(UserDicView[,2])
   
-  res <- list(summary=summary(UserDicView), head=head(UserDicView, n=lastN), tail=tail(UserDicView, n=lastN))
+  res <- list(summary=summary(UserDicView), head=head(UserDicView, n=n), tail=tail(UserDicView, n=n))
 
   return(res)
 }
