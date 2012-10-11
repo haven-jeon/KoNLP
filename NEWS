@@ -1,4 +1,4 @@
-Version 0.76.6
+Version 0.76.7
 ------------------------------------------------------------------------------
   * function to view summary of dictionary using statDic().
   * fix bugs on SimplePosXX().
