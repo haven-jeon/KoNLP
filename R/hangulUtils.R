@@ -35,18 +35,18 @@ preprocessing <- function(inputs){
 
 
 
-checkEncoding <- function(inputs){
-  if(Encoding(inputs) == "unknown"){
-    expectenc <- detectInputEncoding(inputs)
-    if(is.null(expectenc)){
-      return(F)
-    }
-    if(expectenc != localeToCharset()[1]){
-      stop("Please check input encoding!")
-    }
-  }
-  return(T)
-}
+#checkEncoding <- function(inputs){
+#  if(Encoding(inputs) == "unknown"){
+#    expectenc <- detectInputEncoding(inputs)
+#    if(is.null(expectenc)){
+#      return(F)
+#    }
+#    if(expectenc != localeToCharset()[1]){
+#      stop("Please check input encoding!")
+#    }
+#  }
+#  return(T)
+#}
 
 
 
@@ -187,9 +187,6 @@ is.ascii <- function(sentence){
 #' @return Jamo sequences 
 #' @export
 convertHangulStringToJamos <- function(hangul){
-  if(!checkEncoding(hangul)){
-    return(hangul)
-  }
   if(!is.character(hangul) | nchar(hangul) == 0){
     stop("Input must be legitimate character!")
   }else{
@@ -210,9 +207,6 @@ convertHangulStringToJamos <- function(hangul){
 #'
 #' @export
 convertHangulStringToKeyStrokes <- function(hangul, isFullwidth=TRUE){
-  if(!checkEncoding(hangul)){
-    return(hangul)
-  }  
   if(!is.character(hangul) | nchar(hangul) == 0){
     stop("Input must be legitimate character!")
   }else{
@@ -264,39 +258,39 @@ makeTagList <- function(tagstr){
 # @param charinput charactor vector
 # @return encoding names of rawinpus.
 # @import "bitops"
-detectInputEncoding <- function(charinput){
-  BOM <- charToRaw(charinput)
-  if(length(BOM) < 4){
-    warning("rawinput must be longer than 4 bytes.")
-    return(NULL)
-  }
-  if(bitAnd(BOM[1], 0xFF) == 0xEF && 
-     bitAnd(BOM[2], 0xFF) == 0xBB && 
-     bitAnd(BOM[3], 0xFF) == 0xBF){
-    return("UTF-8")
-  }
-  if(bitAnd(BOM[1], 0xFF) == 0xFE && 
-     bitAnd(BOM[2], 0xFF) == 0xFF){ 
-    return("UTF-16BE")
-  }
-  if(bitAnd(BOM[1], 0xFF) == 0xFF && 
-     bitAnd(BOM[2], 0xFF) == 0xFE){
-    return("UTF-16LE")
-  }
-  if(bitAnd(BOM[1], 0xFF) == 0x00 &&
-     bitAnd(BOM[2], 0xFF) == 0x00 &&
-     bitAnd(BOM[3], 0xFF) == 0xFE &&
-     bitAnd(BOM[4], 0xFF) == 0xFF){
-    return("UTF-32BE")
-  }
-  if(bitAnd(BOM[1], 0xFF) == 0xFF &&
-     bitAnd(BOM[2], 0xFF) == 0xFE &&
-     bitAnd(BOM[3], 0xFF) == 0x00 &&
-     bitAnd(BOM[4], 0xFF) == 0x00){
-    return("UTF-32LE")
-  }
-  return(localeToCharset()[1])
-}
+#detectInputEncoding <- function(charinput){
+#  BOM <- charToRaw(charinput)
+#  if(length(BOM) < 4){
+#    warning("rawinput must be longer than 4 bytes.")
+#    return(NULL)
+#  }
+#  if(bitAnd(BOM[1], 0xFF) == 0xEF && 
+#     bitAnd(BOM[2], 0xFF) == 0xBB && 
+#     bitAnd(BOM[3], 0xFF) == 0xBF){
+#    return("UTF-8")
+#  }
+#  if(bitAnd(BOM[1], 0xFF) == 0xFE && 
+#     bitAnd(BOM[2], 0xFF) == 0xFF){ 
+#    return("UTF-16BE")
+#  }
+#  if(bitAnd(BOM[1], 0xFF) == 0xFF && 
+#     bitAnd(BOM[2], 0xFF) == 0xFE){
+#    return("UTF-16LE")
+#  }
+#  if(bitAnd(BOM[1], 0xFF) == 0x00 &&
+#     bitAnd(BOM[2], 0xFF) == 0x00 &&
+#     bitAnd(BOM[3], 0xFF) == 0xFE &&
+#     bitAnd(BOM[4], 0xFF) == 0xFF){
+#    return("UTF-32BE")
+#  }
+#  if(bitAnd(BOM[1], 0xFF) == 0xFF &&
+#     bitAnd(BOM[2], 0xFF) == 0xFE &&
+#     bitAnd(BOM[3], 0xFF) == 0x00 &&
+#     bitAnd(BOM[4], 0xFF) == 0x00){
+#    return("UTF-32LE")
+#  }
+#  return(localeToCharset()[1])
+#}
 
 
 
@@ -311,9 +305,6 @@ detectInputEncoding <- function(charinput){
 #' @param isForceConv boolean parameter to force converting if input is not valid Jamo or keystroke sequences.
 #' @export
 HangulAutomata <- function(input, isKeystroke=F, isForceConv=F){
-  if(!checkEncoding(input)){
-    return(input)
-  }  
   if(!is.character(input) | nchar(input) == 0) {
     stop("Input must be legitimate character!")
   }

@@ -12,20 +12,20 @@ test_that("HangulAutomata test", {
           expect_equal(HangulAutomata("rjatordpswlls",T,T), "검색엔지ㅣㄴ")
           expect_equal(HangulAutomata("ㅈㅓㄴㅎㅡㅣㅇㅜㅓㄴ"), "전희원")
           expect_equal(HangulAutomata("ㄷㅏㄹㅁㅇㅡㄴㄲㅗㄹ"), "닮은꼴")
-          expect_warning(HangulAutomata("abc"))
+          #expect_warning(HangulAutomata("abc"))
           })
 
 test_that("convertHangulStringToKeyStrokes test",{
           expect_equal(convertHangulStringToKeyStrokes("전희원"), c("ｗｊｓ" , "ｇｍｌ" , "ｄｎｊｓ"))
           expect_equal(convertHangulStringToKeyStrokes("전희원",F), c("wjs",  "gml",  "dnjs"))
-          expect_warning(convertHangulStringToKeyStrokes("abc"))
+          #expect_warning(convertHangulStringToKeyStrokes("abc"))
           #below can be error in R CMD check, because testthat reguard this source code is not UTF-8.
           #expect_equal(convertHangulStringToKeyStrokes("저"), "ｗｊ")
           })
 
 test_that("convertHangulStringToJamos test", {
          expect_equal(convertHangulStringToJamos("닮은꼴고감자희"), c("ㄷㅏㄻ","ㅇㅡㄴ","ㄲㅗㄹ","ㄱㅗ","ㄱㅏㅁ","ㅈㅏ","ㅎㅢ"))
-         expect_warning(convertHangulStringToJamos("abc"))
+         #expect_warning(convertHangulStringToJamos("abc"))
          })
 
 
@@ -72,7 +72,7 @@ test_that("Hannanum test", {
 test_that("dictionary function test", {
         expect_that(useSejongDic(), prints_text("words were added to dic_user.txt"))
         expect_that(useSystemDic(), prints_text("words were added to dic_user.txt"))
-        expect_that(statDic(lastN=100), prints_text(c("tail", "summary", "head")))
+        expect_that(statDic(n=100), prints_text(c("tail", "summary", "head")))
          })
 
 
