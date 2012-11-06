@@ -1,7 +1,6 @@
 export(backupUsrDic)
 export(convertHangulStringToJamos)
 export(convertHangulStringToKeyStrokes)
-export(doKoMorph)
 export(extractNoun)
 export(HangulAutomata)
 export(is.ascii)

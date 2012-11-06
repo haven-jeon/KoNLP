@@ -18,28 +18,28 @@
 
 
 
-#' morphlogical analysis function for Hangul
-#' 
-#' morphlogical analyze the sentence uses lucene korean analyzer.
-#' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
-#' 
-#' @param sentence input
-#' @return stem of sentence
-#'
-#' @export
-doKoMorph <- function(sentence){
-  warning("This function will be deprecated.\n We suggest 'MorphAnalyzer()' to use.")
-  if(!is.character(sentence) | nchar(sentence) == 0) {
-    stop("Input must be legitimate character!")
-  }else{
-    if(!exists("KoMorphObj", envir=KoNLP:::.KoNLPEnv)){
-      assign("KoMorphObj",.jnew("Ko"),KoNLP:::.KoNLPEnv)
-    }
-    out <- .jcall(get("KoMorphObj",envir=KoNLP:::.KoNLPEnv), "[S", "KoAnalyze", sentence)
-    Encoding(out) <- "UTF-8"
-    return(out)
-  }
-}
+# morphlogical analysis function for Hangul
+# 
+# morphlogical analyze the sentence uses lucene korean analyzer.
+# Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
+# 
+# @param sentence input
+# @return stem of sentence
+#
+# @export
+#doKoMorph <- function(sentence){
+#  warning("This function will be deprecated.\n We suggest 'MorphAnalyzer()' to use.")
+#  if(!is.character(sentence) | nchar(sentence) == 0) {
+#    stop("Input must be legitimate character!")
+#  }else{
+#    if(!exists("KoMorphObj", envir=KoNLP:::.KoNLPEnv)){
+#      assign("KoMorphObj",.jnew("Ko"),KoNLP:::.KoNLPEnv)
+#    }
+#    out <- .jcall(get("KoMorphObj",envir=KoNLP:::.KoNLPEnv), "[S", "KoAnalyze", sentence)
+#    Encoding(out) <- "UTF-8"
+#    return(out)
+#  }
+#}
 
 #' Noun extractor for Hangul
 #' 
