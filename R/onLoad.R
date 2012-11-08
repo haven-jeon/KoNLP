@@ -23,9 +23,12 @@
 
 
 .onLoad <- function(libname, pkgname) {
-  ret <- .jinit(parameters=c("-Dfile.encoding=UTF-8"), force.init=TRUE)
+  #options( java.parameters = c("-Dfile.encoding=UTF-8") )
+  ret <- .jinit(parameters="-Dfile.encoding=UTF-8")
   if(ret < 0){
     stop("Could not create VM.\n")
+  }else{
+    packageStartupMessage("Java initialized.\n")
   }
   .jpackage(pkgname, lib.loc = libname)
 }
