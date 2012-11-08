@@ -23,11 +23,16 @@
 
 
 .onLoad <- function(libname, pkgname) {
-  tryCatch(.jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx1024m")), 
-    error=function(e){
-      .jinit(parameters=c("-Dfile.encoding=UTF-8", getOption("java.parameters")))
-      packageStartupMessage("Your system doesn't have much memory to run KoNLP.\nTherefore, some dictionary managing functions will not work appropreately.")
-    },finally=packageStartupMessage("Java initialized.\n"))
+  ret <- .jinit(parameters=c("-Dfile.encoding=UTF-8", "-Xmx1024m"), force.init=TRUE)
+  if(ret < 0){
+    packageStartupMessage("Sufficient memories could not be allocated, but now trying to get less memories.\n")
+    ret <- .jinit(parameters=c("-Dfile.encoding=UTF-8", getOption("java.parameters")), force.init=TRUE)
+  }
+  if(ret < 0){
+    stop("Could not create VM.\n")
+  }else{
+    packageStartupMessage("Your system doesn't have much memory to run large KoNLP dictionaries.\nTherefore, be cautious when adding terms to dictionaries.")
+  }
   .jpackage(pkgname, lib.loc = libname)
 }
 
