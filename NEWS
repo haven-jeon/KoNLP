@@ -1,7 +1,8 @@
 Version 0.76.8
 ------------------------------------------------------------------------------
-  * remove unused functions.
-  * set null on -Xmx to use JVM's default optimal vaule 
+  * remove deprecated functions.
+  * decreasing package size dramatically. 
+  * set Null on -Xmx to use JVM's default optimal parameters. 
 
 Version 0.76.7
 ------------------------------------------------------------------------------
