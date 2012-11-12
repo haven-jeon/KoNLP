@@ -16,7 +16,6 @@ Encoding: UTF-8
 Depends:
     R (>= 2.14.0),
     rJava (>= 0.9-0),
-    testthat (>= 0.5),
     utils (>= 2.14.0),
     Sejong (>= 0.01)
 Collate:
