@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import org.junit.Test;
-import org.apache.lucene.analysis.*;
-import org.apache.lucene.search.spell.KoLevensteinDistance;
 
 public class HangulTest {
 	@Test
@@ -64,21 +62,6 @@ public class HangulTest {
 		assertTrue(true);
 	}
 
-	@Test
-	public void testStandardTokenizer() throws IOException {
-		KoHangulSepllTokenizer tokenizer = new KoHangulSepllTokenizer(
-				new StringReader(";;;a123a4abcd검색엔진眞;;;+a122=="));
-		Token nextTok = new Token();
-		while (tokenizer.next(nextTok) != null) {
-			System.out.println(nextTok);
-			nextTok.clear();
-		}
-	}
-
-	@Test
-	public void testKoLevensteinDistance() {
-		KoLevensteinDistance dist = new KoLevensteinDistance();
-		System.out.println(dist.getDistance("abcda", "abcd"));
-	}
+	
 
 }

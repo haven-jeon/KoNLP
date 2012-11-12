@@ -50,7 +50,7 @@
 #' @export
 reloadAllDic <- function(){
   if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-    assign("HannanumObj",.jnew("HannanumInterface"),KoNLP:::.KoNLPEnv)
+    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"),KoNLP:::.KoNLPEnv)
   }
   .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), "V", "reloadAllDic")
 }
@@ -69,7 +69,7 @@ reloadAllDic <- function(){
 # @export
 reloadUserDic <- function(whichDics){
   if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-    assign("HannanumObj",.jnew("HannanumInterface"),KoNLP:::.KoNLPEnv)
+    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"),KoNLP:::.KoNLPEnv)
   }
   if(!is.character(whichDics)){
     stop("'whichDics' must be character!")

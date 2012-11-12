@@ -1,3 +1,4 @@
+package kr.pe.freesearch.jhannanum.comm;
 /*  Copyright 2011 Heewon Jeon(madjakarta@gmail.com)
 
 This file is part of KoNLP.
