@@ -18,4 +18,8 @@
   \href{https://github.com/haven-jeon/KoNLP/wiki}{github
   wiki}.
 }
+\references{
+  Sangwon Park et al(2010). A Plug-In Component-based
+  Korean Morphological Analyzer
+}
 

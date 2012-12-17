@@ -1,5 +1,9 @@
 Version 0.76.8
 ------------------------------------------------------------------------------
+  * add references on manual. 
+
+Version 0.76.8
+------------------------------------------------------------------------------
   * remove deprecated functions.
   * decreasing package size dramatically. 
   * set Null on -Xmx to use JVM's default optimal parameters. 

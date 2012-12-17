@@ -49,6 +49,7 @@
 #' 
 #' @param sentence input
 #' @return Noun of sentence
+#' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
 #' @import "rJava"
 #' @export
 extractNoun <- function(sentence){
@@ -74,6 +75,7 @@ extractNoun <- function(sentence){
 #' 
 #' @param sentence input
 #' @return result of analysis
+#' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
 #'
 #' @export
 MorphAnalyzer <- function(sentence){
@@ -97,6 +99,7 @@ MorphAnalyzer <- function(sentence){
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
+#' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
 #' @return results of tagged analysis
 #' @export
 SimplePos22 <- function(sentence){
@@ -121,6 +124,7 @@ SimplePos22 <- function(sentence){
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
 #' @param sentence input
+#' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
 #' @return results of tagged analysis
 #'
 #' @export

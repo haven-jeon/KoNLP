@@ -107,6 +107,7 @@ convertTag <-function(fromTag, toTag, tag){
 #' Retrive Sejong dictionary to use in KoNLP
 #' 
 #' @param backup will backup current dictionary?
+#' @references \url{http://www.sejong.or.kr/}
 #' @export
 useSejongDic <- function(backup=T){
   useDic("Sejong", backup)

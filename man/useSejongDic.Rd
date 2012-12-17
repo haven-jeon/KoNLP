@@ -10,4 +10,7 @@
 \description{
   Retrive Sejong dictionary to use in KoNLP
 }
+\references{
+  \url{http://www.sejong.or.kr/}
+}
 
