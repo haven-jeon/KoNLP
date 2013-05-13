@@ -18,6 +18,9 @@ Depends:
     rJava (>= 0.9-0),
     testthat (>= 0.5),
     utils (>= 2.14.0),
+    stringr (>= 0.6.2),
+    hash (>= 2.2.6),
+    tau (>= 0.0-15),
     Sejong (>= 0.01)
 Collate:
     'onLoad.R'
@@ -25,3 +28,4 @@ Collate:
     'hangulUtils.R'
     'koAnalyzerRun.R'
     'tagdata.R'
+    'Concordances.R'
