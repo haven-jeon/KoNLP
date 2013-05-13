@@ -26,8 +26,6 @@
   ret <- .jinit(parameters="-Dfile.encoding=UTF-8")
   if(ret < 0){
     stop("Could not create VM.")
-  }else{
-    packageStartupMessage("Java initialized.")
   }
   .jpackage(pkgname, lib.loc = libname)
 }
