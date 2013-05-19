@@ -26,10 +26,12 @@
 #' @param string input text as character vector or single character
 #' @param pattern patterns of central words
 #' @param span how many character will be produced around input pattern
+#' @references Church, K. W. and Mercer, R. L. (1993). Introduction to the special issue on computational linguistics using large corpora. Computational Linguistics, 19(1):1-24.
 #' @import stringr
 #' @export
 concordance_str <- function(string, pattern, span=5){
-  str_match(string, sprintf(".{0,%d}%s.{0,%d}", span, pattern, span))
+  res <- str_match_all(string, ignore.case(sprintf(".{0,%d}%s.{0,%d}", span, pattern, span)))
+  return(Filter(function(x){length(x) != 0}, res))
 }
 
 
@@ -41,6 +43,7 @@ concordance_str <- function(string, pattern, span=5){
 #' @param filename file name
 #' @param pattern patterns of central words
 #' @param span how many character will be produced around input pattern
+#' @references Church, K. W. and Mercer, R. L. (1993). Introduction to the special issue on computational linguistics using large corpora. Computational Linguistics, 19(1):1-24.
 #' @param encoding filename's encoding
 #' @export
 concordance_file <- function(filename, pattern, encoding=getOption('encoding'), span=5){
@@ -71,6 +74,9 @@ concordance_file <- function(filename, pattern, encoding=getOption('encoding'), 
 #' @author Heewon Jeon
 #' @param text input character vector 
 #' @param method for calculations(`mutual' or `t-scores') 
+#' @param query term to get information
+#' @references Church, K. W. and Hanks, P. (1990). Word association norms, mutual information,and lexicography.Computational Linguistics, 16(1):22-29.
+#' @references Church, K. W. and Mercer, R. L. (1993). Introduction to the special issue on computational linguistics using large corpora. Computational Linguistics, 19(1):1-24.
 #' @import tau
 #' @import hash
 #' @export

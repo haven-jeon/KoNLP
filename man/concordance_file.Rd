@@ -21,4 +21,9 @@
 \author{
   Heewon Jeon
 }
+\references{
+  Church, K. W. and Mercer, R. L. (1993). Introduction to
+  the special issue on computational linguistics using
+  large corpora. Computational Linguistics, 19(1):1-24.
+}
 
