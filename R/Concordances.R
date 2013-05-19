@@ -48,18 +48,15 @@ concordance_str <- function(string, pattern, span=5){
 #' @export
 concordance_file <- function(filename, pattern, encoding=getOption('encoding'), span=5){
   f = file(filename, "r",encoding=encoding); on.exit(close(f), add = TRUE)
+  retu <- c()
   while(TRUE) {
     next_line = readLines(f, n = 1, warn=FALSE)
     if(length(next_line) == 0) {
       break
     }
     ret <- concordance_str(next_line, pattern, span)
-    if(!is.na(ret)){
-      if(exists("retu")){
-        retu <- rbind(retu, ret)
-      }else{
-        retu <- ret
-      }
+    if(length(ret) != 0){
+        retu <- c(retu, unlist(ret))
     }
   }
   return(retu)
