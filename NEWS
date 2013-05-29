@@ -1,6 +1,9 @@
-Version 0.76.8
+Version 0.76.9
 ------------------------------------------------------------------------------
-  * add references on manual. 
+  * new functions added(concordance_*, mutualinformation).
+  * fix OutOfMemoryError on mac osx with R 3.0.x.
+  * added references on manual. 
+  * supress one NOTE.
 
 Version 0.76.8
 ------------------------------------------------------------------------------
