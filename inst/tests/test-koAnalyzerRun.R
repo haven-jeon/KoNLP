@@ -1,6 +1,8 @@
 context("test KoNLP")
 
 
+print("HangulAutomata test")
+
 test_that("HangulAutomata test", {
           expect_equal(HangulAutomata("ㅂㅐㅍㅗ ㅈㅗㄱㅓㄴㅇㅢ ㅅㅏㅇㅅㅔㅎㅏㄴㄱㅓㅅㅇㅔ ㄷㅐㅎㅐㅅㅓㄴㅡㄴ 'license()'",F,F),
             "배포 조건의 상세한것에 대해서는 'license()'")
@@ -15,6 +17,8 @@ test_that("HangulAutomata test", {
           #expect_warning(HangulAutomata("abc"))
           })
 
+print("convertHangulStringToKeyStrokes test")
+
 test_that("convertHangulStringToKeyStrokes test",{
           expect_equal(convertHangulStringToKeyStrokes("전희원"), c("ｗｊｓ" , "ｇｍｌ" , "ｄｎｊｓ"))
           expect_equal(convertHangulStringToKeyStrokes("전희원",F), c("wjs",  "gml",  "dnjs"))
@@ -23,11 +27,14 @@ test_that("convertHangulStringToKeyStrokes test",{
           #expect_equal(convertHangulStringToKeyStrokes("저"), "ｗｊ")
           })
 
+print("convertHangulStringToJamos test")
+
 test_that("convertHangulStringToJamos test", {
          expect_equal(convertHangulStringToJamos("닮은꼴고감자희"), c("ㄷㅏㄻ","ㅇㅡㄴ","ㄲㅗㄹ","ㄱㅗ","ㄱㅏㅁ","ㅈㅏ","ㅎㅢ"))
          #expect_warning(convertHangulStringToJamos("abc"))
          })
 
+print("is.jamo is.hangul test")
 
 test_that("is.jamo is.hangul test", {
          expect_equal(is.hangul("나보기가역겨워가신다면은"), TRUE)
@@ -54,11 +61,12 @@ test_that("is.jamo is.hangul test", {
          expect_equal(is.ascii(c("12323", "asdvdf", "ㅈㄷㅈㄱ", "ㄷㄳㄱ", "고감자")), c(T,T,F,F,F))
          })
 
+print("Hannanum test")
+
 test_that("Hannanum test", {
         expect_warning(extractNoun("굉장히긴문장을넣었을때에러를내놓아야된다."))
         expect_warning(SimplePos09("굉장히긴문장을넣었을때에러를내놓아야된다."))
         expect_warning(SimplePos22("굉장히긴문장을넣었을때에러를내놓아야된다."))
-        
         expect_equal(extractNoun("슈퍼마켓이 판매하고 있는 흑마늘 양념 치킨이 논란이 되고 있다."), 
                     c("슈퍼마켓","판매","흑마늘","양념","치킨","논란"))
         expect_warning(extractNoun("          "))
@@ -68,6 +76,8 @@ test_that("Hannanum test", {
         expect_equal(length(SimplePos22("검색엔진 개발자 모임. 그룹 스터디 하자!")),8)
         expect_equal(length(SimplePos22("검색엔진 개발자 모임. 그룹 스터디 하자!. 그런데 어머니께서 밥을 하셨는지 모르겠어.")), 14)
          })
+
+print("dictionary function test")
 
 test_that("dictionary function test", {
         expect_that(useSejongDic(), prints_text("words were added to dic_user.txt"))

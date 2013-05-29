@@ -28,7 +28,15 @@
   if(is.null(jopt)){
     options(java.parameters = initopt)
   }else{
-    options(java.parameters=c(jopt, initopt))
+    if(rJava:::.jniInitialized & !any(grepl("-Dfile\\.encoding=UTF-8", jopt, ignore.case=TRUE))){
+      stop("You cann't parse resource files based on UTF-8 on rJava. Please reload KoNLP first than any other packages connected with rJava.")
+    }
+    memjopt <- jopt[which(grepl("^-Xmx",jopt))]
+    if(length(memjopt) > 0){
+      options(java.parameters=c(memjopt, initopt[2]))
+    }else{
+      options(java.parameters=c(jopt, initopt))
+    }
   }
   .jpackage(pkgname, lib.loc = libname)
 }
