@@ -23,7 +23,13 @@
 
 
 .onLoad <- function(libname, pkgname) {
-  options( java.parameters = c("-Xmx1g", "-Dfile.encoding=UTF-8"))
+  initopt <- c("-Xmx512m", "-Dfile.encoding=UTF-8")
+  jopt <- getOption("java.parameters")
+  if(is.null(jopt)){
+    options(java.parameters = initopt)
+  }else{
+    options(java.parameters=c(jopt, initopt))
+  }
   .jpackage(pkgname, lib.loc = libname)
 }
 
