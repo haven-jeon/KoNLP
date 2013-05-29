@@ -23,15 +23,7 @@
 
 
 .onLoad <- function(libname, pkgname) {
-  jopt <- getOption("java.parameters")
-  if(is.null(jopt)){
-    ret <- .jinit(parameters="-Dfile.encoding=UTF-8")
-  }else{
-    ret <- .jinit(parameters=c(jopt, "-Dfile.encoding=UTF-8"))
-  }
-  if(ret < 0){
-    stop("Could not create VM.")
-  }
+  options( java.parameters = c("-Xmx1g", "-Dfile.encoding=UTF-8"))
   .jpackage(pkgname, lib.loc = libname)
 }
 
