@@ -20,7 +20,9 @@
 }
 \examples{
 \dontrun{
-## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8).
+## This codes can not be run
+##  if you don't have encoding system which can en/decode
+##  Hangul(ex) CP949, EUC-KR, UTF-8).
 dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
 newdic <- read.table(conn, sep="\\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)

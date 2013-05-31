@@ -29,7 +29,8 @@
     options(java.parameters = initopt)
   }else{
     if(rJava:::.jniInitialized & !any(grepl("-Dfile\\.encoding=UTF-8", jopt, ignore.case=TRUE))){
-      stop("You cann't parse resource files based on UTF-8 on rJava. Please reload KoNLP first than any other packages connected with rJava.")
+      warning("Please reload KoNLP first than any other packages based on rJava.\n
+              You can't use some functions if you don't.")
     }
     memjopt <- jopt[which(grepl("^-Xmx",jopt))]
     if(length(memjopt) > 0){
