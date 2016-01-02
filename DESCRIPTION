@@ -3,6 +3,10 @@ Maintainer: Heewon Jeon <madjakarta@gmail.com>
 License: GPL-3
 Title: Korean NLP Package
 Author: Heewon Jeon
+Authors@R: c(
+    person("Heewon", "Jeon", email = "madjakarta@gmail.com", role = c("aut", "cre")),
+    person("Taekyung", "Kim", role = "ctb")
+    )
 Description: Korean language processing package. Morphological analyzer, POS
     tagger, Keystroke converter, Hangul automata, Concordance, Mutual
     Information..
