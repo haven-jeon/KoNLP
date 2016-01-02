@@ -30,7 +30,6 @@
 #' @importFrom stringr str_match_all regex
 #' @export
 concordance_str <- function(string, pattern, span=5){
-  #res <- str_match_all(string, ignore.case(sprintf(".{0,%d}%s.{0,%d}", span, pattern, span)))
   res <- str_match_all(string, regex(sprintf(".{0,%d}%s.{0,%d}", span, pattern, span),ignore_case=TRUE))
   return(Filter(function(x){length(x) != 0}, res))
 }
