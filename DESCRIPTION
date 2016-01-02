@@ -14,10 +14,11 @@ Date/Publication: 2011-10-12 07:49:45
 Packaged: 2011-10-12 20:53:27 UTC; gogamza
 Date: 2011-10-12
 Encoding: UTF-8
+Suggests: testthat (>= 0.11)
 Depends:
-    R (>= 2.14.0),
+    R(>= 3.1.2)
+Imports:
     rJava (>= 0.9-0),
-    testthat (>= 0.5),
     utils (>= 2.14.0),
     stringr (>= 0.6.2),
     hash (>= 2.2.6),
@@ -30,3 +31,4 @@ Collate:
     'koAnalyzerRun.R'
     'tagdata.R'
     'Concordances.R'
+RoxygenNote: 5.0.1

@@ -82,9 +82,16 @@ print("dictionary function test")
 test_that("dictionary function test", {
         expect_that(useSejongDic(), prints_text("words were added to dic_user.txt"))
         expect_that(useSystemDic(), prints_text("words were added to dic_user.txt"))
-        expect_that(statDic(n=100), prints_text(c("tail", "summary", "head")))
+        #expect_that(statDic(n=100), prints_text(c("tail", "summary", "head")))
          })
 
+
+
+print('concordance function test')
+
+test_that('concordance function test', {
+  expect_equal(concordance_str('apple orange grapes', "ran", span=1)[[1]][1],  "orang")
+  })
 
 
 

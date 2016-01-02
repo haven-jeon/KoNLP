@@ -42,7 +42,8 @@
 }
 
 
-
+#' @importFrom utils localeToCharset
+#' @import Sejong
 .onAttach <- function(libname, pkgname){
   DicConfPath <- file.path(system.file(package=.DicPkgName),"dics")
   dics <- file.path(DicConfPath,"handic.zip")
