@@ -30,6 +30,8 @@ import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAna
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.PosTagger.HmmPosTagger.KoNLPHMMTagger;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.MorphemeProcessor.UnknownMorphProcessor.UnknownProcessor;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.InformalSentenceFilter.InformalSentenceFilter;
+import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.InformalEojeolSentenceFilter;
+import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.SentenceSegmentor2.SentenceSegmentor2;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.SentenceSegmentor.SentenceSegmentor;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.NounExtractor.NounExtractor;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.SimplePOSResult09.SimplePOSResult09;
@@ -107,11 +109,14 @@ public class HannanumInterface {
 	}
 	
 	//This function is not for dictionary updating.plz use reloadUserDic functions.
+	// TODO : added force apply user inputted noun to output 
 	public String[] extractNoun(String basedir, String sentence, String userDicFile) {
 		if (wfNoun == null) {
 			wfNoun = new Workflow(basedir);
-			wfNoun.appendPlainTextProcessor(new SentenceSegmentor(), null);
+			wfNoun.appendPlainTextProcessor(new SentenceSegmentor2(), null);
 			wfNoun.appendPlainTextProcessor(new InformalSentenceFilter(), null);
+			//wfNoun.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
+			
 			wfNoun.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wfNoun.setMorphUserDic(userDicFile);
@@ -174,7 +179,7 @@ public class HannanumInterface {
 	public String MorphAnalyzer(String basedir, String sentence, String userDicFile) {
 		if (wfMorphAnalyzer == null) {
 			wfMorphAnalyzer = new Workflow(basedir);
-			wfMorphAnalyzer.appendPlainTextProcessor(new SentenceSegmentor(),
+			wfMorphAnalyzer.appendPlainTextProcessor(new SentenceSegmentor2(),
 					null);
 			wfMorphAnalyzer.appendPlainTextProcessor(
 					new InformalSentenceFilter(), null);
@@ -215,7 +220,7 @@ public class HannanumInterface {
 	public String SimplePos22(String basedir, String sentence, String userDicFile) {
 		if (wf22 == null) {
 			wf22 = new Workflow(basedir);
-			wf22.appendPlainTextProcessor(new SentenceSegmentor(), null);
+			wf22.appendPlainTextProcessor(new SentenceSegmentor2(), null);
 			wf22.appendPlainTextProcessor(new InformalSentenceFilter(), null);
 
 			wf22.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
@@ -258,7 +263,7 @@ public class HannanumInterface {
 	public String SimplePos09(String basedir, String sentence, String userDicFile) {
 		if (wf09 == null) {
 			wf09 = new Workflow(basedir);
-			wf09.appendPlainTextProcessor(new SentenceSegmentor(), null);
+			wf09.appendPlainTextProcessor(new SentenceSegmentor2(), null);
 			wf09.appendPlainTextProcessor(new InformalSentenceFilter(), null);
 
 			wf09.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
@@ -304,18 +309,24 @@ public class HannanumInterface {
 			System.out.println(ret[i]);
 		}*/
 		
+		System.out.println("test");
+		System.out.println(hi.SimplePos22("C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic.zip",
+				"죽어도 못 보내 버스 타요. 장미 그리고 술.이게 어떻게 된 것인가?", 
+				"C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic/data/kE/dic_user2.txt"));
 		
-		System.out.println(hi.SimplePos22("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요. 장미 그리고 술.", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt"));
 		
-		
-		System.out.println(hi.SimplePos09("D:/opensource/Sejong/inst/dics/handics.zip","죽어도 못 보내 버스 타요....장미 컵", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user2.txt"));
+		System.out.println(hi.SimplePos09("C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic.zip",
+				"'인터넷 소설이 등장하면서' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. 그러나 이후 국내 소설계에서 무시할 수 없는 비중을 차지하게 된 양판소와 귀여니류 연애소설은 불쏘시개 취급 받으며 시간때우기에 불과하다는 평가를 자주 받곤 하지만, 애초에 시간때우기 용이라는 말은 바꿔 말하면 시간을 때울 정도는 된다는 이야기다. 결국 아무리 까여도 보는 사람이 있기 때문에 쓰고 그것이 출판으로 이어지는 것이다. 특히 귀여니의 소설들은 인터넷 소설이 본격적으로 텍스트화, 즉 출판이 되는 시발점이 되었다는 점에서 여러모로 의의가 있다고 할 수 있다. 사실 문학계에서 온라인의 글이 이모티콘과 맞춤법.을 안 지키고 그대로. 활자화 된 것은 엄청난 혁명이라고 말할 수 있다. 까는거야 까여야 하는 거지만 일단 이런 의의가 있다는건 알아두자.  U.S. A. Introduction. I'm fine... 12.42", 
+				"C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic/data/kE/dic_user2.txt"));
 	
-		int i = hi.reloadUserDic("D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt", "extractNoun");
-		System.out.println(String.valueOf(i));
+		//int i = hi.reloadUserDic("D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt", "extractNoun");
+		//System.out.println(String.valueOf(i));
 		
-		System.out.println("end");
+		//System.out.println("end");
 		
-		String[] ret1 = hi.extractNoun("C:/R/R-2.15.1/library/Sejong/dics/handics.zip", "성긴털제비꽃은 근무중이다.", "D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt");
+		String[] ret1 = hi.extractNoun("C:/R/R-3.3.1/library/Sejong/dics/handic.zip", 
+				"'인터넷 소설이 등장하면서' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. 그러나 이후 국내 소설계에서 무시할 수 없는 비중을 차지하게 된 양판소와 귀여니류 연애소설은 불쏘시개 취급 받으며 시간때우기에 불과하다는 평가를 자주 받곤 하지만, 애초에 시간때우기 용이라는 말은 바꿔 말하면 시간을 때울 정도는 된다는 이야기다. 결국 아무리 까여도 보는 사람이 있기 때문에 쓰고 그것이 출판으로 이어지는 것이다. 특히 귀여니의 소설들은 인터넷 소설이 본격적으로 텍스트화, 즉 출판이 되는 시발점이 되었다는 점에서 여러모로 의의가 있다고 할 수 있다. 사실 문학계에서 온라인의 글이 이모티콘과 맞춤법.을 안 지키고 그대로. 활자화 된 것은 엄청난 혁명이라고 말할 수 있다. 까는거야 까여야 하는 거지만 일단 이런 의의가 있다는건 알아두자.  U.S. A. Introduction. I'm fine... 12.42", 
+				"C:/R/R-3.3.1/library/KoNLP/../KoNLP_dic/current/dic_user.txt");
 		for(int i1= 0; i1 < ret1.length; i1++){
 			System.out.println(ret1[i1]);
 		}

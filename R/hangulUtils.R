@@ -17,6 +17,7 @@
 
 
 # if unable to process, this will return FALSE
+# this function will be removed because InformalSentenceFilter will do this job.
 preprocessing <- function(inputs){
   if(!is.character(inputs)) {
     warning("Input must be legitimate character!")
