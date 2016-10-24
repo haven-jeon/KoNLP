@@ -168,7 +168,8 @@ public class HannanumInterface {
 		}
 
 		/* Shutdown the work flow */
-		wfNoun.close();
+		wfNoun.clear();
+		//wfNoun.close();
 		return list.toArray(new String[0]);
 	}
 
@@ -329,6 +330,15 @@ public class HannanumInterface {
 				"C:/R/R-3.3.1/library/KoNLP/../KoNLP_dic/current/dic_user.txt");
 		for(int i1= 0; i1 < ret1.length; i1++){
 			System.out.println(ret1[i1]);
+		}
+		
+		System.out.println("2 time\n");
+
+		String[] ret2 = hi.extractNoun("C:/R/R-3.3.1/library/Sejong/dics/handic.zip", 
+				"'인터넷 소설이 등장하면서  ' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. \n그러나 이후 국내 소설계에서 무시할 수 없는 비중을 차지하게 된 양판소와 귀여니류 연애소설은 불쏘시개 취급 받으며 시간때우기에 불과하다는 평가를 자주 받곤 하지만, 애초에 시간때우기 용이라는 말은 바꿔 말하면 시간을 때울 정도는 된다는 이야기다. 결국 아무리 까여도 보는 사람이 있기 때문에 쓰고 그것이 출판으로 이어지는 것이다. 특히 귀여니의 소설들은 인터넷 소설이 본격적으로 텍스트화, 즉 출판이 되는 시발점이 되었다는 점에서 여러모로 의의가 있다고 할 수 있다. 사실 문학계에서 온라인의 글이 이모티콘과 맞춤법.을 안 지키고 그대로. 활자화 된 것은 엄청난 혁명이라고 말할 수 있다. 까는거야 까여야 하는 거지만 일단 이런 의의가 있다는건 알아두자.  U.S. A. Introduction. I'm fine... 12.42", 
+				"C:/R/R-3.3.1/library/KoNLP/../KoNLP_dic/current/dic_user.txt");
+		for(int i1= 0; i1 < ret2.length; i1++){
+			System.out.println(ret2[i1]);
 		}
 		//String[] ret2 = KoNLPUtil.readZipDic("C:/R/R-2.15.1/library/Sejong/dics/handic.zip", "data/kE/dic_user2.txt");
 		//for(int i1= 0; i1 < ret2.length; i1++){
