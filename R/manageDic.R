@@ -117,8 +117,10 @@ useSejongDic <- function(backup=T){
 # internal function to change dictionary
 useDic <- function(dicname, backup=T){
   if(dicname == "Sejong"){
+    #actually Sejong + System Dictionary 
     relpath <- file.path("data","kE","dic_user2.txt")
   }else if(dicname == "System"){
+    #actually user dictionary 
     relpath <- file.path("data","kE","dic_user.txt") 
   }else{
     stop("wrong dictionary name!")

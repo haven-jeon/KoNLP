@@ -29,63 +29,47 @@ import kr.ac.kaist.swrc.jhannanum.hannanum.Workflow;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.KoNLPChartMorphAnalyzer;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.PosTagger.HmmPosTagger.KoNLPHMMTagger;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.MorphemeProcessor.UnknownMorphProcessor.UnknownProcessor;
-import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.InformalSentenceFilter.InformalSentenceFilter;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.InformalEojeolSentenceFilter;
+import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.InformalSentenceFilter.InformalSentenceFilter;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.SentenceSegmentor2.SentenceSegmentor2;
-import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.SentenceSegmentor.SentenceSegmentor;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.NounExtractor.NounExtractor;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.SimplePOSResult09.SimplePOSResult09;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.SimplePOSResult22.SimplePOSResult22;
-import kr.pe.freesearch.KoNLP.KoNLPUtil;
 
 public class HannanumInterface {
-	private Workflow wfNoun = null;
-	private Workflow wfMorphAnalyzer = null;
-	private Workflow wf22 = null;
-	private Workflow wf09 = null;
+	private static Workflow wf = null;
 
 	public void reloadAllDic() {
-		if(wfNoun != null){
-			wfNoun.clear();
-			wfNoun = null;
+		if(wf != null){
+			wf.clear();
+			wf = null;
 		}
-		if(wfMorphAnalyzer != null){
-			wfMorphAnalyzer.clear();
-			wfMorphAnalyzer = null;
-		}
-		
-		if(wf22 != null){
-			wf22.clear();
-			wf22 = null;
-		}
-		if(wf09 != null){
-			wf09.clear();
-			wf09 = null;
-		}
+
+		System.gc();
 	}
 
 	public int reloadUserDic(String dicPath, String work) throws IOException{
 		if(work.equals("extractNoun")){
-			if(wfNoun != null){
-				wfNoun.reloadUserDic(dicPath);
+			if(wf != null){
+				wf.reloadUserDic(dicPath);
 				return 0;
 			}
 			return -1;
 		}else if(work.equals("SimplePos09")){
-			if(wf09 != null){
-				wf09.reloadUserDic(dicPath);
+			if(wf != null){
+				wf.reloadUserDic(dicPath);
 				return 0;
 			}
 			return -1;
 		}else if(work.equals("SimplePos22")){
-			if(wf22 != null){
-				wf22.reloadUserDic(dicPath);
+			if(wf != null){
+				wf.reloadUserDic(dicPath);
 				return 0;
 			}
 			return -1;
 		}else if(work.equals("MorphAnalyzer")){
-			if(wfMorphAnalyzer != null){
-				wfMorphAnalyzer.reloadUserDic(dicPath);
+			if(wf != null){
+				wf.reloadUserDic(dicPath);
 				return 0;
 			}
 			return -1;
@@ -94,45 +78,46 @@ public class HannanumInterface {
 	}
 	
 	public void reloadUserDic(String dicPath) throws IOException{
-		if(wfNoun != null){
-			wfNoun.reloadUserDic(dicPath);
+		if(wf != null){
+			wf.reloadUserDic(dicPath);
 		}
-		if(wf09 != null){
-			wf09.reloadUserDic(dicPath);
-		}
-		if(wf22 != null){
-			wf22.reloadUserDic(dicPath);
-		}
-		if(wfMorphAnalyzer != null){
-			wfMorphAnalyzer.reloadUserDic(dicPath);
-		}
+		
+		System.gc();
 	}
 	
 	//This function is not for dictionary updating.plz use reloadUserDic functions.
 	// TODO : added force apply user inputted noun to output 
 	public String[] extractNoun(String basedir, String sentence, String userDicFile) {
-		if (wfNoun == null) {
-			wfNoun = new Workflow(basedir);
-			wfNoun.appendPlainTextProcessor(new SentenceSegmentor2(), null);
-			wfNoun.appendPlainTextProcessor(new InformalSentenceFilter(), null);
-			//wfNoun.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
+		if(wf != null){
+			if(wf.getCtx() != "extractNoun"){
+				wf.clear();
+				wf = null;
+			}
+		}
+		
+		
+		if (wf == null) {
+			wf = new Workflow(basedir, "extractNoun");
+			wf.appendPlainTextProcessor(new SentenceSegmentor2(), null);
+			wf.appendPlainTextProcessor(new InformalSentenceFilter(), null);
+			wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
 			
-			wfNoun.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
+			wf.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
-			wfNoun.setMorphUserDic(userDicFile);
+			wf.setMorphUserDic(userDicFile);
 			
-			wfNoun.appendMorphemeProcessor(new UnknownProcessor(), null);
+			wf.appendMorphemeProcessor(new UnknownProcessor(), null);
 
-			wfNoun.setPosTagger(new KoNLPHMMTagger(),
+			wf.setPosTagger(new KoNLPHMMTagger(),
 					"conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
-			wfNoun.appendPosProcessor(new NounExtractor(), null);
+			wf.appendPosProcessor(new NounExtractor(), null);
 			try {
-				wfNoun.activateWorkflow(false);
+				wf.activateWorkflow(false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				wfNoun.close();
-				wfNoun = null;
+				wf.close();
+				wf = null;
 				return null;
 			}
 		}
@@ -143,9 +128,9 @@ public class HannanumInterface {
 			/* Activate the work flow in the thread mode */
 
 			/* Analysis using the work flow */
-			wfNoun.analyze(sentence);
+			wf.analyze(sentence);
 
-			LinkedList<Sentence> resultList = wfNoun
+			LinkedList<Sentence> resultList = wf
 					.getResultOfDocument(new Sentence(0, 0, false));
 			list = new ArrayList<String>();
 			for (Sentence s : resultList) {
@@ -159,17 +144,16 @@ public class HannanumInterface {
 					}
 				}
 			}
-			wfNoun.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			wfNoun.close();
+			wf.close();
 			return null;
 		}
 
 		/* Shutdown the work flow */
-		wfNoun.clear();
-		//wfNoun.close();
+		wf.close();
+		//wf.close();
 		return list.toArray(new String[0]);
 	}
 
@@ -178,67 +162,84 @@ public class HannanumInterface {
 	 */
 
 	public String MorphAnalyzer(String basedir, String sentence, String userDicFile) {
-		if (wfMorphAnalyzer == null) {
-			wfMorphAnalyzer = new Workflow(basedir);
-			wfMorphAnalyzer.appendPlainTextProcessor(new SentenceSegmentor2(),
+		if(wf != null){
+			if(wf.getCtx() != "MorphAnalyzer"){
+				wf.clear();
+				wf = null;
+			}
+		}
+		
+		
+		if (wf == null) {
+			wf = new Workflow(basedir, "MorphAnalyzer");
+			wf.appendPlainTextProcessor(new SentenceSegmentor2(),
 					null);
-			wfMorphAnalyzer.appendPlainTextProcessor(
+			wf.appendPlainTextProcessor(
 					new InformalSentenceFilter(), null);
-
-			wfMorphAnalyzer
+			wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
+			wf
 					.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 							"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
-			wfMorphAnalyzer.setMorphUserDic(userDicFile);
-			wfMorphAnalyzer.appendMorphemeProcessor(new UnknownProcessor(),
+			wf.setMorphUserDic(userDicFile);
+			wf.appendMorphemeProcessor(new UnknownProcessor(),
 					null);
 			// Workflow workflow =
 			// WorkflowFactory.getPredefinedWorkflow(WorkflowFactory.WORKFLOW_MORPH_ANALYZER);
 			try {
-				wfMorphAnalyzer.activateWorkflow(false);
+				wf.activateWorkflow(false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				wfMorphAnalyzer.close();
-				wfMorphAnalyzer = null;
+				wf.close();
+				wf = null;
 				return null;
 			}
 		}
 		String morphs = null;
 		try {
-			wfMorphAnalyzer.analyze(sentence);
-			morphs = wfMorphAnalyzer.getResultOfDocument();
-			wfMorphAnalyzer.close();
+			wf.analyze(sentence);
+			morphs = wf.getResultOfDocument();
+			wf.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			wfMorphAnalyzer.close();
+			wf.close();
 			return null;
 		}
-
+		wf.close();
 		return morphs;
 	}
 
 	public String SimplePos22(String basedir, String sentence, String userDicFile) {
-		if (wf22 == null) {
-			wf22 = new Workflow(basedir);
-			wf22.appendPlainTextProcessor(new SentenceSegmentor2(), null);
-			wf22.appendPlainTextProcessor(new InformalSentenceFilter(), null);
-
-			wf22.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
+		if(wf != null){
+			if(wf.getCtx() != "SimplePos22"){
+				wf.clear();
+				wf = null;
+			}
+		}
+		
+		
+		if (wf == null) {
+			wf = new Workflow(basedir, "SimplePos22");
+			wf.appendPlainTextProcessor(new SentenceSegmentor2(), null);
+			wf.appendPlainTextProcessor(new InformalSentenceFilter(), null);
+			wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
+			
+			wf.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
-			wf22.setMorphUserDic(userDicFile);
-			wf22.appendMorphemeProcessor(new UnknownProcessor(), null);
+			wf.setMorphUserDic(userDicFile);
+			wf.appendMorphemeProcessor(new UnknownProcessor(), null);
 
-			wf22.setPosTagger(new KoNLPHMMTagger(),
+			wf.setPosTagger(new KoNLPHMMTagger(),
 					"conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
-			wf22.appendPosProcessor(new SimplePOSResult22(), null);
+			wf.appendPosProcessor(new SimplePOSResult22(), null);
 			try {
-				wf22.activateWorkflow(false);
+				wf.activateWorkflow(false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				wf22.close();
-				wf22 = null;
+				wf.close();
+				wf = null;
 				return null;
 			}
 			// Workflow workflow =
@@ -246,60 +247,69 @@ public class HannanumInterface {
 		}
 		String morphs = null;
 		try {
-			wf22.analyze(sentence);
+			wf.analyze(sentence);
 
-			morphs = wf22.getResultOfDocument();
+			morphs = wf.getResultOfDocument();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			wf22.close();
+			wf.close();
 			return null;
 		}
 
 		/* Shutdown the work flow */
-		wf22.close();
+		wf.close();
 		return morphs;
 	}
 
 	public String SimplePos09(String basedir, String sentence, String userDicFile) {
-		if (wf09 == null) {
-			wf09 = new Workflow(basedir);
-			wf09.appendPlainTextProcessor(new SentenceSegmentor2(), null);
-			wf09.appendPlainTextProcessor(new InformalSentenceFilter(), null);
+		//need to reuse memory when run different analyzer 
+		if(wf != null){
+			if(wf.getCtx() != "SimplePos09"){
+				wf.clear();
+				wf = null;
+			}
+		}
+		
+		if (wf == null) {
+			wf = new Workflow(basedir, "SimplePos09");
+			wf.appendPlainTextProcessor(new SentenceSegmentor2(), null);
+			wf.appendPlainTextProcessor(new InformalSentenceFilter(), null);
+			wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
 
-			wf09.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
+			wf.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
-			wf09.setMorphUserDic(userDicFile);
-			wf09.appendMorphemeProcessor(new UnknownProcessor(), null);
+			wf.setMorphUserDic(userDicFile);
+			wf.appendMorphemeProcessor(new UnknownProcessor(), null);
 
-			wf09.setPosTagger(new KoNLPHMMTagger(),
+			wf.setPosTagger(new KoNLPHMMTagger(),
 					"conf/plugin/MajorPlugin/PosTagger/HmmPosTagger.json");
-			wf09.appendPosProcessor(new SimplePOSResult09(), null);
+			wf.appendPosProcessor(new SimplePOSResult09(), null);
 			// Workflow workflow =
 			// WorkflowFactory.getPredefinedWorkflow(WorkflowFactory.WORKFLOW_POS_SIMPLE_09);
 			try {
-				wf09.activateWorkflow(false);
+				wf.activateWorkflow(false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				wf09.close();
-				wf09 = null;
+				wf.close();
+				wf = null;
 				return null;
 			}
 		}
 		String morphs = null;
 		try {
 			/* Analysis using the work flow */
-			wf09.analyze(sentence);
-			morphs = wf09.getResultOfDocument();
+			wf.analyze(sentence);
+			morphs = wf.getResultOfDocument();
 		} catch (Exception e) {
 			e.printStackTrace();
-			wf09.close();
+			wf.close();
 			return null;
 		}
 
 		/* Shutdown the work flow */
-		wf09.close();
+		wf.close();
 		return morphs;
 	}
 
@@ -326,7 +336,7 @@ public class HannanumInterface {
 		//System.out.println("end");
 		
 		String[] ret1 = hi.extractNoun("C:/R/R-3.3.1/library/Sejong/dics/handic.zip", 
-				"'인터넷 소설이 등장하면서' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. 그러나 이후 국내 소설계에서 무시할 수 없는 비중을 차지하게 된 양판소와 귀여니류 연애소설은 불쏘시개 취급 받으며 시간때우기에 불과하다는 평가를 자주 받곤 하지만, 애초에 시간때우기 용이라는 말은 바꿔 말하면 시간을 때울 정도는 된다는 이야기다. 결국 아무리 까여도 보는 사람이 있기 때문에 쓰고 그것이 출판으로 이어지는 것이다. 특히 귀여니의 소설들은 인터넷 소설이 본격적으로 텍스트화, 즉 출판이 되는 시발점이 되었다는 점에서 여러모로 의의가 있다고 할 수 있다. 사실 문학계에서 온라인의 글이 이모티콘과 맞춤법.을 안 지키고 그대로. 활자화 된 것은 엄청난 혁명이라고 말할 수 있다. 까는거야 까여야 하는 거지만 일단 이런 의의가 있다는건 알아두자.  U.S. A. Introduction. I'm fine... 12.42", 
+				"'인터넷 소설이 등장하면서' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. ", 
 				"C:/R/R-3.3.1/library/KoNLP/../KoNLP_dic/current/dic_user.txt");
 		for(int i1= 0; i1 < ret1.length; i1++){
 			System.out.println(ret1[i1]);
@@ -334,18 +344,16 @@ public class HannanumInterface {
 		
 		System.out.println("2 time\n");
 
-		String[] ret2 = hi.extractNoun("C:/R/R-3.3.1/library/Sejong/dics/handic.zip", 
+		String ret2 = hi.MorphAnalyzer("C:/R/R-3.3.1/library/Sejong/dics/handic.zip", 
 				"'인터넷 소설이 등장하면서  ' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. \n그러나 이후 국내 소설계에서 무시할 수 없는 비중을 차지하게 된 양판소와 귀여니류 연애소설은 불쏘시개 취급 받으며 시간때우기에 불과하다는 평가를 자주 받곤 하지만, 애초에 시간때우기 용이라는 말은 바꿔 말하면 시간을 때울 정도는 된다는 이야기다. 결국 아무리 까여도 보는 사람이 있기 때문에 쓰고 그것이 출판으로 이어지는 것이다. 특히 귀여니의 소설들은 인터넷 소설이 본격적으로 텍스트화, 즉 출판이 되는 시발점이 되었다는 점에서 여러모로 의의가 있다고 할 수 있다. 사실 문학계에서 온라인의 글이 이모티콘과 맞춤법.을 안 지키고 그대로. 활자화 된 것은 엄청난 혁명이라고 말할 수 있다. 까는거야 까여야 하는 거지만 일단 이런 의의가 있다는건 알아두자.  U.S. A. Introduction. I'm fine... 12.42", 
 				"C:/R/R-3.3.1/library/KoNLP/../KoNLP_dic/current/dic_user.txt");
-		for(int i1= 0; i1 < ret2.length; i1++){
-			System.out.println(ret2[i1]);
-		}
+		
+		System.out.println(ret2);
+		
 		//String[] ret2 = KoNLPUtil.readZipDic("C:/R/R-2.15.1/library/Sejong/dics/handic.zip", "data/kE/dic_user2.txt");
 		//for(int i1= 0; i1 < ret2.length; i1++){
 		//	System.out.println(ret2[i1]);
 		//}
-		
-		System.out.println("adsd".matches("[a-zA-Z]+"));
 		
 	}
 	
