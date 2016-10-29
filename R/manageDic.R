@@ -57,16 +57,17 @@ reloadAllDic <- function(){
 
 
 
-# reload dictionaries for specific functions
-#
-# This function for reloading user dictionary for specific functions,
-# after you have updated user dictionary on KoNLP_dic/current/user_dic.txt.
-# 
-# @param whichDics character vector which can be "extractNoun", "SimplePos09", "SimplePos22", "SimplePos22"
-# @examples 
-# \dontrun{
-# reloadUserDic(c("extractNoun", "SimplePos22"))} 
-# @export
+#' reload dictionaries for specific functions
+#'
+#' This function for reloading user dictionary for specific functions,
+#' after you have updated user dictionary on KoNLP_dic/current/user_dic.txt.
+#' 
+#' @param whichDics character vector which can be "extractNoun", "SimplePos09", "SimplePos22", "SimplePos22"
+#' @examples 
+#' \dontrun{
+#' reloadUserDic(c("extractNoun", "SimplePos22"))} 
+#' @export
+#' @import RSQLite
 reloadUserDic <- function(whichDics){
   if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
     assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"),KoNLP:::.KoNLPEnv)

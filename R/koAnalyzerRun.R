@@ -50,7 +50,7 @@
 #' @param sentence input
 #' @return Noun of sentence
 #' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
-#' @import "rJava"
+#' @import rJava
 #' @export
 extractNoun <- function(sentence){
   sentence_pre <- preprocessing(sentence)

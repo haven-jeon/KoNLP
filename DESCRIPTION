@@ -11,22 +11,23 @@ Description: Korean language processing package. Morphological analyzer, POS
     Information..
 SystemRequirements: Java (>= 1.6)
 URL: https://github.com/haven-jeon/KoNLP
-Version: 0.76.9
+Version: 0.80.0
 Repository: CRAN
 Date/Publication: 2011-10-12 07:49:45
 Packaged: 2011-10-12 20:53:27 UTC; gogamza
 Date: 2011-10-12
 Encoding: UTF-8
-Suggests: testthat (>= 0.11)
+Suggests: testthat (>= 1.0.2)
 Depends:
-    R(>= 3.1.2)
+    R(>= 3.3.1)
 Imports:
-    rJava (>= 0.9-0),
-    utils (>= 2.14.0),
-    stringr (>= 0.6.2),
+    rJava (>= 0.9-9),
+    utils (>= 3.3.1),
+    stringr (>= 1.1.0),
     hash (>= 2.2.6),
-    tau (>= 0.0-15),
-    Sejong (>= 0.01)
+    tau (>= 0.0-18),
+    Sejong (>= 0.01),
+    RSQLite (>= 1.0.0)
 Collate:
     'onLoad.R'
     'manageDic.R'
