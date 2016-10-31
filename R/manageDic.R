@@ -375,6 +375,108 @@ statDic <- function(which="current", n=6){
 
 
 
+#' buildDictionary
+#'
+#' @param ext_dic 
+#' @param category_dic_ids 
+#' @param user_dic 
+#' @param replace_usr_dic 
+#'
+#' @export
+#'
+#' @examples
+buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F){
+  han_db_path <- file.path(system.file(package="NIADic"), "hangul.db")
+  
+  conn <- dbConnect(SQLite(), han_db_path)
+
+  ext_dic_df <- data.frame()
+  
+  for(dic in unique(ext_dic)){
+    switch(dic, 
+           sejong={
+              dic_df <- dbGetQuery(conn, "select term, tag,  'sejong' as dic from sejong")
+              ext_dic_df <- rbind(ext_dic_df, dic_df)
+             },
+           insighter={
+              dic_df <- dbGetQuery(conn, "select term, tag, 'insighter' as dic from insighter")
+              ext_dic_df <- rbind(ext_dic_df, dic_df)
+             },
+           woorimalsam={
+              dic_df <- dbGetQuery(conn, "select term, tag, 'woorimalsam' as dic from woorimalsam where eng_cate = 'general'")
+              ext_dic_df <- rbind(ext_dic_df, dic_df)
+             },
+              {
+              stop(sprintf("No %s dictionary!", ext_dic))
+            }
+    )
+  }
+  cate_dic_df <- data.frame()
+  if(is.character(category_dic_nms) & length(category_dic_nms) > 0){
+    cate_dic_df <- dbGetQuery(conn, sprintf("select term, tag, eng_cate as dic from woorimalsam where eng_cate in (%s)",
+                                            paste0("'",category_dic_nms,"'", collapse=',')))  
+  }
+  
+  user_dic_tot <- data.frame()
+  
+  #uer dic processing 
+  if(is.data.frame(user_dic) == TRUE & ncol(user_dic) == 2 & nrow(user_dic) > 0 ){
+    if(class(user_dic[,2]) == "factor"){
+      user_dic[,2] <- as.character(user_dic[,2])
+    }
+    if(class(user_dic[,1]) == "factor"){
+      user_dic[,1] <- as.character(user_dic[,1])
+    }
+    
+    
+    usrDicEnc <- unique(Encoding(user_dic[,1]))
+    if(length(usrDicEnc) > 1){
+      stop("check user_dic encodings!\n")
+    }
+    
+    #encoding problems 
+    localCharset <- localeToCharset()[1]
+    if(localCharset != "UTF-8"){
+      if(usrDicEnc != "UTF-8"){
+        user_dic[,1] <- iconv(user_dic[,1],from=localCharset, to="UTF-8")
+      }
+    }
+  
+    
+    #check tag is valid for user dic
+    errorTags <- Filter(function(x){is.na(tags[x])}, user_dic[,2])
+    if(length(errorTags) > 0){
+      cat(errorTags,"\n" ,sep="\t")
+      stop("Unsupported tag names on user_dic!\n")
+    }
+    
+    names(user_dic) <- c("term","tag")
+  
+    dbWriteTable(conn, "user_dic", user_dic,append=!replace_usr_dic)
+    
+    user_dic_tot <- dbGetQuery(conn, "select *, 'user' as dic from user_dic")
+      
+  }
+  
+  result_dic <- rbind(ext_dic_df, cate_dic_df, user_dic_tot)
+  
+  #check tag is valid for user dic
+  errorTags <- Filter(function(x){is.na(tags[x])}, result_dic[,2])
+  if(length(errorTags) > 0){
+    cat(errorTags,"\n" ,sep="\t")
+    stop("Unsupported tag names on user_dic!\n")
+  }
+  
+  
+  Encoding(result_dic$term) <- 'UTF-8'
+ 
+  UserDic <- get("CurrentUserDic",envir=KoNLP:::.KoNLPEnv)
+  
+  write.table(unique(result_dic[,c('term', 'tag')]),file=UserDic,quote=F,row.names=F, sep="\t", col.names=F,fileEncoding="UTF-8")  
+  cat(sprintf("%s words dictionary was built on '%s'.\n", nrow(result_dic),UserDic ))
+  reloadAllDic()
+}
+
 
 
 
