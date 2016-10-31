@@ -28,7 +28,7 @@
   if(is.null(jopt)){
     options(java.parameters = initopt)
   }else{
-    if(rJava:::.jniInitialized & !any(grepl("-Dfile\\.encoding=UTF-8", jopt, ignore.case=TRUE))){
+    if(rJava::.jniInitialized & !any(grepl("-Dfile\\.encoding=UTF-8", jopt, ignore.case=TRUE))){
       stop("You cann't parse resource files based on UTF-8 on rJava. Please reload KoNLP first than any other packages connected with rJava.")
     }
     memjopt <- jopt[which(grepl("^-Xmx",jopt))]
@@ -67,21 +67,21 @@
 
     if(ret != T && ret2 != T){
       warning(sprintf("Could not create %s\n", DicUser))
-      assign("CopyedUserDic", FALSE, KoNLP:::.KoNLPEnv)
+      assign("CopyedUserDic", FALSE, .KoNLPEnv)
     }
-    assign("CopyedUserDic", TRUE, KoNLP:::.KoNLPEnv)
+    assign("CopyedUserDic", TRUE, .KoNLPEnv)
   }else{
     packageStartupMessage("Checking user defined dictionary!\n")
-    assign("CopyedUserDic", TRUE, KoNLP:::.KoNLPEnv)
+    assign("CopyedUserDic", TRUE, .KoNLPEnv)
   }
-  assign("DicRelPath", UserDic, KoNLP:::.KoNLPEnv)
-  assign("SejongDicPath", DicConfPath, KoNLP:::.KoNLPEnv)
-  assign("UserDicPathinSejongZip", UserDic, KoNLP:::.KoNLPEnv)
-  assign("CurrentUserDic", currentUserDic, KoNLP:::.KoNLPEnv)
-  assign("CurrentUserDicPath", CurrentUserDicPath, KoNLP:::.KoNLPEnv)
-  assign("SejongDicsZip", dics, KoNLP:::.KoNLPEnv)
-  assign("backupUserDicPath", backupUserDicPath, KoNLP:::.KoNLPEnv)
-  assign("backupUserDic", file.path(backupUserDicPath,DicUser), KoNLP:::.KoNLPEnv)
+  assign("DicRelPath", UserDic, .KoNLPEnv)
+  assign("SejongDicPath", DicConfPath, .KoNLPEnv)
+  assign("UserDicPathinSejongZip", UserDic, .KoNLPEnv)
+  assign("CurrentUserDic", currentUserDic, .KoNLPEnv)
+  assign("CurrentUserDicPath", CurrentUserDicPath, .KoNLPEnv)
+  assign("SejongDicsZip", dics, .KoNLPEnv)
+  assign("backupUserDicPath", backupUserDicPath, .KoNLPEnv)
+  assign("backupUserDic", file.path(backupUserDicPath,DicUser), .KoNLPEnv)
 
   if(all((localeToCharset()[1] == c("UTF-8", "CP949", "EUC-KR")) == FALSE)){
     packageStartupMessage("This R shell doesn't contain any Hangul encoding.\nFor fully use, any of 'UTF-8', 'CP949', 'EUC-KR' needs to be used for R shell encoding.")

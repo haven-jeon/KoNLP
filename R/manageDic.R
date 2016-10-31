@@ -36,7 +36,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8).  
+#' ## This codes can not be run if you don't have encoding system 
+#' ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8).  
 #' dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 #' conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
 #' newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
@@ -49,10 +50,10 @@
 #' reloadAllDic()}
 #' @export
 reloadAllDic <- function(){
-  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"),KoNLP:::.KoNLPEnv)
+  if(!exists("HannanumObj", envir=.KoNLPEnv)){
+    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"),.KoNLPEnv)
   }
-  .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), "V", "reloadAllDic")
+  .jcall(get("HannanumObj",envir=.KoNLPEnv), "V", "reloadAllDic")
 }
 
 
@@ -69,15 +70,15 @@ reloadAllDic <- function(){
 #' @export
 #' @import RSQLite
 reloadUserDic <- function(whichDics){
-  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"),KoNLP:::.KoNLPEnv)
+  if(!exists("HannanumObj", envir=.KoNLPEnv)){
+    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"),.KoNLPEnv)
   }
   if(!is.character(whichDics)){
     stop("'whichDics' must be character!")
   }
   for(dic in whichDics){
-    ret <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                  "I", "reloadUserDic", get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv), dic)
+    ret <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
+                  "I", "reloadUserDic", get("CurrentUserDic", envir=.KoNLPEnv), dic)
     if(ret < 0){
       cat(sprintf("Dictionaries in %s was not reloaded\n", dic))
     }
@@ -126,7 +127,7 @@ useDic <- function(dicname, backup=T){
   }else{
     stop("wrong dictionary name!")
   }
-  newdic <- readZipDic(get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv), relpath)
+  newdic <- readZipDic(get("SejongDicsZip", envir=.KoNLPEnv), relpath)
   if(backup == T){
     backupUsrDic(ask=F)
   }
@@ -149,7 +150,8 @@ useSystemDic <- function(backup=T){
 #'
 #' @examples
 #' \dontrun{
-#' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
+#' ## This codes can not be run if you don't have encoding system 
+#' ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 #' conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
 #' newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
@@ -163,8 +165,8 @@ useSystemDic <- function(backup=T){
 #' @param ask ask to confirm backup
 #' @export
 backupUsrDic <- function(ask=TRUE){
-  UserDic <- get("CurrentUserDic",envir=KoNLP:::.KoNLPEnv)
-  alteredUserDicPath <- get("backupUserDicPath", KoNLP:::.KoNLPEnv)
+  UserDic <- get("CurrentUserDic",envir=.KoNLPEnv)
+  alteredUserDicPath <- get("backupUserDicPath", .KoNLPEnv)
   response <- "Y"
   if(ask){
     response <- readline("Would you backup your current 'dic_user.txt' file to backup directory? (Y/n): ")
@@ -179,7 +181,7 @@ backupUsrDic <- function(ask=TRUE){
       cat("Backup was just finished!\n")  
     }else{
       warning(sprintf("Could not copy %s\n", UserDic))
-      assign("CopyedUserDic", FALSE, KoNLP:::.KoNLPEnv)
+      assign("CopyedUserDic", FALSE, .KoNLPEnv)
     }
   }
 }
@@ -192,7 +194,8 @@ backupUsrDic <- function(ask=TRUE){
 #'
 #' @examples
 #' \dontrun{
-#' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
+#' ## This codes can not be run if you don't have encoding system 
+#' ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 #' conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
 #' newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
@@ -206,14 +209,14 @@ backupUsrDic <- function(ask=TRUE){
 #' @param ask ask to confirm backup
 #' @export
 restoreUsrDic <- function(ask=TRUE){
-  if(!get("CopyedUserDic", KoNLP:::.KoNLPEnv)){
+  if(!get("CopyedUserDic", .KoNLPEnv)){
     stop("There is no backuped dic_user.txt!\n")
   }
-  if(!file.exists(get("backupUserDic", KoNLP:::.KoNLPEnv))){
+  if(!file.exists(get("backupUserDic", .KoNLPEnv))){
     stop("There is no backuped dic_user.txt to restore!\n")
   }
-  UserDicPath <- get("CurrentUserDicPath",envir=KoNLP:::.KoNLPEnv)
-  alteredUserDicPath <- get("backupUserDic", KoNLP:::.KoNLPEnv)
+  UserDicPath <- get("CurrentUserDicPath",envir=.KoNLPEnv)
+  alteredUserDicPath <- get("backupUserDic", .KoNLPEnv)
   response <- "Y"
   if(ask){
     response <- readline("Would you restore your backuped 'dic_user.txt' file to current dictionary directory? (Y/n): ")
@@ -237,7 +240,8 @@ restoreUsrDic <- function(ask=TRUE){
 #'
 #' @examples
 #' \dontrun{
-#' ## This codes can not be run if you don't have encoding system which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
+#' ## This codes can not be run if you don't have encoding system 
+#' ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 #' conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
 #' newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
@@ -253,6 +257,7 @@ restoreUsrDic <- function(ask=TRUE){
 #' @param verbose see detail error logs
 #' @param ask ask to backup
 #' @export
+#'@importFrom utils read.table write.table
 mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE, ask=FALSE){
 
   if(is.data.frame(newUserDic) == FALSE | ncol(newUserDic) != 2 | nrow(newUserDic) == 0 ){
@@ -289,7 +294,7 @@ mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE, ask=FALSE){
     stop("Unsupported tag names!\n")
   }
   #combine with current dic_user.txt or replace them all.   
-  UserDic <- get("CurrentUserDic",envir=KoNLP:::.KoNLPEnv)
+  UserDic <- get("CurrentUserDic",envir=.KoNLPEnv)
   oldUserDic <- read.table(UserDic, sep="\t", header=F, fileEncoding="UTF-8", stringsAsFactors=F)
 
   newDicEnc <- unique(Encoding(newUserDic[,1]))
@@ -345,9 +350,9 @@ statDic <- function(which="current", n=6){
   UserDic <- ""
 
   if(which == "current"){
-    UserDic <- get("CurrentUserDic",envir=KoNLP:::.KoNLPEnv)
+    UserDic <- get("CurrentUserDic",envir=.KoNLPEnv)
   }else if(which == "backup"){
-    UserDic <- get("backupUserDic", envir=KoNLP:::.KoNLPEnv)
+    UserDic <- get("backupUserDic", envir=.KoNLPEnv)
   }else{
     stop("No dictionary to summary!")    
   }
@@ -368,23 +373,90 @@ statDic <- function(which="current", n=6){
   UserDicView[,2] <- as.factor(UserDicView[,2])
   
   res <- list(summary=summary(UserDicView), head=head(UserDicView, n=n), tail=tail(UserDicView, n=n))
-
-  return(res)
-}
-
-
-
-
-#' buildDictionary
-#'
-#' @param ext_dic 
-#' @param category_dic_ids 
-#' @param user_dic 
-#' @param replace_usr_dic 
+  
+    return(res)
+}  
+  
+  
+  
+  
+#'   buildDictionary
+#'  
+#' @param ext_dic external dictionary name which can be 'woorimalsam', 'insighter', 'sejong'.
+#' @param category_dic_nms category dictionary will be used. 
+#'    \itemize{
+#'  \item general
+#'  \item chemical
+#'  \item language
+#'  \item music
+#'  \item history
+#'  \item education
+#'  \item society in general
+#'  \item life
+#'  \item physical
+#'  \item information and communication
+#'  \item medicine
+#'  \item earth
+#'  \item construction
+#'  \item veterinary science
+#'  \item business
+#'  \item law
+#'  \item plant
+#'  \item buddhism
+#'  \item engineering general
+#'  \item folk
+#'  \item administration
+#'  \item economic
+#'  \item math
+#'  \item korean medicine
+#'  \item military
+#'  \item literature
+#'  \item clothes
+#'  \item religion normal
+#'  \item animal
+#'  \item agriculture
+#'  \item astronomy
+#'  \item transport
+#'  \item natural plain
+#'  \item industry
+#'  \item medium
+#'  \item political
+#'  \item geography
+#'  \item mining
+#'  \item hearing
+#'  \item fishing
+#'  \item machinery
+#'  \item catholic
+#'  \item book title
+#'  \item named
+#'  \item electrical and electronic
+#'  \item pharmacy
+#'  \item art, music and physical
+#'  \item useless
+#'  \item ocean
+#'  \item forestry
+#'  \item christian
+#'  \item craft
+#'  \item service
+#'  \item sports
+#'  \item food
+#'  \item art
+#'  \item environment
+#'  \item video
+#'  \item natural resources
+#'  \item industry general
+#'  \item smoke
+#'  \item philosophy
+#'  \item health general
+#'  \item proper names general
+#'  \item welfare
+#'  \item material
+#'  \item humanities general
+#' }
+#' @param user_dic \code{data.frame} which include 'word' and 'tag' fields.
+#' @param replace_usr_dic A logical scala. Should user dictionary needs to be replaced with new 'user_dic' or appended.
 #'
 #' @export
-#'
-#' @examples
 buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F){
   han_db_path <- file.path(system.file(package="NIADic"), "hangul.db")
   
@@ -470,7 +542,7 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
   
   Encoding(result_dic$term) <- 'UTF-8'
  
-  UserDic <- get("CurrentUserDic",envir=KoNLP:::.KoNLPEnv)
+  UserDic <- get("CurrentUserDic",envir=.KoNLPEnv)
   
   write.table(unique(result_dic[,c('term', 'tag')]),file=UserDic,quote=F,row.names=F, sep="\t", col.names=F,fileEncoding="UTF-8")  
   cat(sprintf("%s words dictionary was built on '%s'.\n", nrow(result_dic),UserDic ))

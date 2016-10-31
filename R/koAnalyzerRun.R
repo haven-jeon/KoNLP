@@ -32,10 +32,10 @@
 #  if(!is.character(sentence) | nchar(sentence) == 0) {
 #    stop("Input must be legitimate character!")
 #  }else{
-#    if(!exists("KoMorphObj", envir=KoNLP:::.KoNLPEnv)){
-#      assign("KoMorphObj",.jnew("Ko"),KoNLP:::.KoNLPEnv)
+#    if(!exists("KoMorphObj", envir=.KoNLPEnv)){
+#      assign("KoMorphObj",.jnew("Ko"),.KoNLPEnv)
 #    }
-#    out <- .jcall(get("KoMorphObj",envir=KoNLP:::.KoNLPEnv), "[S", "KoAnalyze", sentence)
+#    out <- .jcall(get("KoMorphObj",envir=.KoNLPEnv), "[S", "KoAnalyze", sentence)
 #    Encoding(out) <- "UTF-8"
 #    return(out)
 #  }
@@ -57,12 +57,12 @@ extractNoun <- function(sentence){
   if(sentence_pre == FALSE){
     return(sentence)
   }
-  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), KoNLP:::.KoNLPEnv)
+  if(!exists("HannanumObj", envir=.KoNLPEnv)){
+    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
   }
-	out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                "[S", "extractNoun",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
-                get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
+	out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
+                "[S", "extractNoun",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
+                get("CurrentUserDic", envir=.KoNLPEnv))
   Encoding(out) <- "UTF-8"
   return(out)
 }
@@ -83,12 +83,12 @@ MorphAnalyzer <- function(sentence){
   if(sentence_pre == FALSE){
     return(sentence)
   }
-  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), KoNLP:::.KoNLPEnv)
+  if(!exists("HannanumObj", envir=.KoNLPEnv)){
+    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
   }
-  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv),
-                "S", "MorphAnalyzer", get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
-                get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
+  out <- .jcall(get("HannanumObj",envir=.KoNLPEnv),
+                "S", "MorphAnalyzer", get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
+                get("CurrentUserDic", envir=.KoNLPEnv))
   Encoding(out) <- "UTF-8"
   return(makeTagList(out))
 }
@@ -107,12 +107,12 @@ SimplePos22 <- function(sentence){
   if(sentence_pre == FALSE){
     return(sentence)
   }
-  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), KoNLP:::.KoNLPEnv)
+  if(!exists("HannanumObj", envir=.KoNLPEnv)){
+    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
   }
-  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                "S", "SimplePos22",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
-                get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
+  out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
+                "S", "SimplePos22",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
+                get("CurrentUserDic", envir=.KoNLPEnv))
   Encoding(out) <- "UTF-8"
   return(makeTagList(out))
 }
@@ -133,12 +133,12 @@ SimplePos09 <- function(sentence){
   if(sentence_pre == FALSE){
     return(sentence)
   }
-  if(!exists("HannanumObj", envir=KoNLP:::.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), KoNLP:::.KoNLPEnv)
+  if(!exists("HannanumObj", envir=.KoNLPEnv)){
+    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
   }
-  out <- .jcall(get("HannanumObj",envir=KoNLP:::.KoNLPEnv), 
-                "S", "SimplePos09",get("SejongDicsZip", envir=KoNLP:::.KoNLPEnv),sentence_pre,
-                get("CurrentUserDic", envir=KoNLP:::.KoNLPEnv))
+  out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
+                "S", "SimplePos09",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
+                get("CurrentUserDic", envir=.KoNLPEnv))
   Encoding(out) <- "UTF-8"
   return(makeTagList(out))
 }

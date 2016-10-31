@@ -4,17 +4,86 @@
 \alias{buildDictionary}
 \title{buildDictionary}
 \usage{
-buildDictionary(ext_dic = "sejong", category_dic_nms = "",
+buildDictionary(ext_dic = "woorimalsam", category_dic_nms = "",
   user_dic = data.frame(), replace_usr_dic = F)
 }
 \arguments{
-\item{ext_dic}{}
+\item{ext_dic}{external dictionary name which can be 'woorimalsam', 'insighter', 'sejong'.}
 
-\item{user_dic}{}
+\item{category_dic_nms}{category dictionary will be used. 
+   \itemize{
+ \item general
+ \item chemical
+ \item language
+ \item music
+ \item history
+ \item education
+ \item society in general
+ \item life
+ \item physical
+ \item information and communication
+ \item medicine
+ \item earth
+ \item construction
+ \item veterinary science
+ \item business
+ \item law
+ \item plant
+ \item buddhism
+ \item engineering general
+ \item folk
+ \item administration
+ \item economic
+ \item math
+ \item korean medicine
+ \item military
+ \item literature
+ \item clothes
+ \item religion normal
+ \item animal
+ \item agriculture
+ \item astronomy
+ \item transport
+ \item natural plain
+ \item industry
+ \item medium
+ \item political
+ \item geography
+ \item mining
+ \item hearing
+ \item fishing
+ \item machinery
+ \item catholic
+ \item book title
+ \item named
+ \item electrical and electronic
+ \item pharmacy
+ \item art, music and physical
+ \item useless
+ \item ocean
+ \item forestry
+ \item christian
+ \item craft
+ \item service
+ \item sports
+ \item food
+ \item art
+ \item environment
+ \item video
+ \item natural resources
+ \item industry general
+ \item smoke
+ \item philosophy
+ \item health general
+ \item proper names general
+ \item welfare
+ \item material
+ \item humanities general
+}}
 
-\item{replace_usr_dic}{}
+\item{user_dic}{\code{data.frame} which include 'word' and 'tag' fields.}
 
-\item{category_dic_ids}{}
+\item{replace_usr_dic}{A logical scala. Should user dictionary needs to be replaced with new 'user_dic' or appended.}
 }
 \description{
 buildDictionary

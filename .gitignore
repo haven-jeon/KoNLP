@@ -6,3 +6,4 @@ KoNLP.Rproj
 *.class
 .cache-main
 .classpath.bak
+inst/doc

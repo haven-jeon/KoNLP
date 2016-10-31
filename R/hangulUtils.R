@@ -312,18 +312,18 @@ HangulAutomata <- function(input, isKeystroke=F, isForceConv=F){
   
   #check whether keystroke input or Jamo
   if(isKeystroke){
-    if(!exists("KoKeystrokeAutomata", envir=KoNLP:::.KoNLPEnv)){
+    if(!exists("KoKeystrokeAutomata", envir=.KoNLPEnv)){
       assign("KoKeystrokeAutomata",.jnew("kr/pe/freesearch/korean/KoKeystrokeAutomata", isForceConv),
-             KoNLP:::.KoNLPEnv)
+             .KoNLPEnv)
     }
-    keyAuto <- get("KoKeystrokeAutomata",envir=KoNLP:::.KoNLPEnv)
+    keyAuto <- get("KoKeystrokeAutomata",envir=.KoNLPEnv)
     KoHangulAuto <- .jcast(keyAuto, "kr/pe/freesearch/korean/KoHangulAutomata")
   }else{
-    if(!exists("KoJamoAutomata", envir=KoNLP:::.KoNLPEnv)){
+    if(!exists("KoJamoAutomata", envir=.KoNLPEnv)){
       assign("KoJamoAutomata",.jnew("kr/pe/freesearch/korean/KoJamoAutomata", isForceConv),
-             KoNLP:::.KoNLPEnv)
+             .KoNLPEnv)
     }
-    JamoAuto <- get("KoJamoAutomata",envir=KoNLP:::.KoNLPEnv)
+    JamoAuto <- get("KoJamoAutomata",envir=.KoNLPEnv)
     KoHangulAuto <- .jcast(JamoAuto, "kr/pe/freesearch/korean/KoHangulAutomata")
   }
 
