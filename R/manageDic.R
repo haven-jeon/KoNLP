@@ -456,33 +456,35 @@ statDic <- function(which="current", n=6){
 #' @param replace_usr_dic A logical scala. Should user dictionary needs to be replaced with new 'user_dic' or appended.
 #'
 #' @export
+#' @importFrom RSQLite dbConnect dbGetQuery dbWriteTable dbDisconnect
 buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F){
   #check 'NIAdic' package installed 
   #this code will remove after NIAdic located on CRAN.
 
   if(file.path(system.file(package="NIADic")) != ''){
-    
+    ## file download
   }
                       
   
   han_db_path <- file.path(system.file(package="NIADic"), "hangul.db")
   
-  conn <- RSQLite::dbConnect(SQLite(), han_db_path)
+  conn <- dbConnect(SQLite(), han_db_path)
+  on.exit(dbDisconnect(conn))
 
   ext_dic_df <- data.frame()
   
   for(dic in unique(ext_dic)){
     switch(dic, 
            sejong={
-              dic_df <- RSQLite::dbGetQuery(conn, "select term, tag,  'sejong' as dic from sejong")
+              dic_df <- dbGetQuery(conn, "select term, tag,  'sejong' as dic from sejong")
               ext_dic_df <- rbind(ext_dic_df, dic_df)
              },
            insighter={
-              dic_df <- RSQLite::dbGetQuery(conn, "select term, tag, 'insighter' as dic from insighter")
+              dic_df <- dbGetQuery(conn, "select term, tag, 'insighter' as dic from insighter")
               ext_dic_df <- rbind(ext_dic_df, dic_df)
              },
            woorimalsam={
-              dic_df <- RSQLite::dbGetQuery(conn, "select term, tag, 'woorimalsam' as dic from woorimalsam where eng_cate = 'general'")
+              dic_df <- dbGetQuery(conn, "select term, tag, 'woorimalsam' as dic from woorimalsam where eng_cate = 'general'")
               ext_dic_df <- rbind(ext_dic_df, dic_df)
              },
               {
@@ -492,7 +494,7 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
   }
   cate_dic_df <- data.frame()
   if(is.character(category_dic_nms) & length(category_dic_nms) > 0){
-    cate_dic_df <- RSQLite::dbGetQuery(conn, sprintf("select term, tag, eng_cate as dic from woorimalsam where eng_cate in (%s)",
+    cate_dic_df <- dbGetQuery(conn, sprintf("select term, tag, eng_cate as dic from woorimalsam where eng_cate in (%s)",
                                             paste0("'",category_dic_nms,"'", collapse=',')))  
   }
   
@@ -531,9 +533,9 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
     
     names(user_dic) <- c("term","tag")
   
-    RSQLite::dbWriteTable(conn, "user_dic", user_dic,append=!replace_usr_dic)
+    dbWriteTable(conn, "user_dic", user_dic,append=!replace_usr_dic)
     
-    user_dic_tot <- RSQLite::dbGetQuery(conn, "select *, 'user' as dic from user_dic")
+    user_dic_tot <- dbGetQuery(conn, "select *, 'user' as dic from user_dic")
       
   }
   
