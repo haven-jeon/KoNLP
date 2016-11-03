@@ -11,7 +11,7 @@ vignette: >
 
 This page is for showing simple example about KoNLP with some Hangul.
 
-# Introduction to API
+# Introduction to KoNLP API
 
 ## extractNoun 
 
