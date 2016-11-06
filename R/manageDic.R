@@ -457,16 +457,18 @@ statDic <- function(which="current", n=6){
 #'
 #' @export
 #' @importFrom RSQLite dbConnect dbGetQuery dbWriteTable dbDisconnect
+#' @importFrom devtools install_github
 buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F){
   #check 'NIAdic' package installed 
   #this code will remove after NIAdic located on CRAN.
 
-  if(file.path(system.file(package="NIADic")) != ''){
+  if(file.path(system.file(package="NIAdic")) != ''){
     ## file download
+    install_github('haven_jeon/NIAdic/NIAdic')
   }
                       
   
-  han_db_path <- file.path(system.file(package="NIADic"), "hangul.db")
+  han_db_path <- file.path(system.file(package="NIAdic"), "hangul.db")
   
   conn <- dbConnect(SQLite(), han_db_path)
   on.exit(dbDisconnect(conn))
