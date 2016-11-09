@@ -40,7 +40,7 @@
 #' ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8).  
 #' dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 #' conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
-#' newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
+#' newdic <- read.csv(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
 #' backupUsrDic(ask=FALSE)
@@ -111,8 +111,53 @@ convertTag <-function(fromTag, toTag, tag){
 #' @references \url{http://www.sejong.or.kr/}
 #' @export
 useSejongDic <- function(backup=T){
-  useDic("Sejong", backup)
+  if(backup == T){
+    backupUsrDic(ask=F)
+  }
+  buildDictionary(ext_dic="sejong")
 }
+
+
+#' use Insighter dictionary
+#'
+#' @param backup will backup current working dictionary?
+#'
+#' @export
+useInsighterDic <- function(backup=T){
+  if(backup == T){
+    backupUsrDic(ask=F)
+  }
+  buildDictionary(ext_dic="insighter")
+}
+
+
+#' use Woorimalsam dictionary
+#'
+#' @param backup will backup current working dictionary?
+#'
+#' @export
+useWoorimalsamDic <- function(backup=T){
+  if(backup == T){
+    backupUsrDic(ask=F)
+  }
+  buildDictionary(ext_dic="woorimalsam")
+}
+
+
+
+
+#' use Insighter and Woorimalsam dictionary
+#'
+#' @param backup will backup current working dictionary?
+#'
+#' @export
+useNIADic <- function(backup=T){
+  if(backup == T){
+    backupUsrDic(ask=F)
+  }
+  buildDictionary(ext_dic=c("woorimalsam", "insighter"))
+}
+
 
 
 # internal function to change dictionary
@@ -140,6 +185,7 @@ useDic <- function(dicname, backup=T){
 #' @param backup will backup current dictionary?
 #' @export
 useSystemDic <- function(backup=T){
+  .Deprecated("buildDictionary")
   useDic("System", backup)
 }
 
@@ -153,7 +199,7 @@ useSystemDic <- function(backup=T){
 #' ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 #' conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
-#' newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
+#' newdic <- read.csv(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
 #' backupUsrDic(ask=FALSE)
@@ -164,6 +210,7 @@ useSystemDic <- function(backup=T){
 #' @param ask ask to confirm backup
 #' @export
 backupUsrDic <- function(ask=TRUE){
+  
   UserDic <- get("CurrentUserDic",envir=.KoNLPEnv)
   alteredUserDicPath <- get("backupUserDicPath", .KoNLPEnv)
   response <- "Y"
@@ -197,7 +244,7 @@ backupUsrDic <- function(ask=TRUE){
 #' ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 #' conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
-#' newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
+#' newdic <- read.csv(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
 #' backupUsrDic(ask=FALSE)
@@ -208,6 +255,7 @@ backupUsrDic <- function(ask=TRUE){
 #' @param ask ask to confirm backup
 #' @export
 restoreUsrDic <- function(ask=TRUE){
+  
   if(!get("CopyedUserDic", .KoNLPEnv)){
     stop("There is no backuped dic_user.txt!\n")
   }
@@ -243,7 +291,7 @@ restoreUsrDic <- function(ask=TRUE){
 #' ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 #' dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 #' conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
-#' newdic <- read.table(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
+#' newdic <- read.csv(conn, sep="\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 #' mergeUserDic(newdic)
 #' ## backup merged new dictionary
 #' backupUsrDic(ask=FALSE)
@@ -256,7 +304,7 @@ restoreUsrDic <- function(ask=TRUE){
 #' @param verbose see detail error logs
 #' @param ask ask to backup
 #' @export
-#'@importFrom utils read.table write.table
+#'@importFrom utils read.csv write.table
 mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE, ask=FALSE){
 
   if(is.data.frame(newUserDic) == FALSE | ncol(newUserDic) != 2 | nrow(newUserDic) == 0 ){
@@ -294,7 +342,7 @@ mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE, ask=FALSE){
   }
   #combine with current dic_user.txt or replace them all.   
   UserDic <- get("CurrentUserDic",envir=.KoNLPEnv)
-  oldUserDic <- read.table(UserDic, sep="\t", header=F, fileEncoding="UTF-8", stringsAsFactors=F)
+  oldUserDic <- read.csv(UserDic, sep="\t", header=F, fileEncoding="UTF-8", stringsAsFactors=F, comment.char="")
 
   newDicEnc <- unique(Encoding(newUserDic[,1]))
   if(length(newDicEnc) > 1){
@@ -361,7 +409,7 @@ statDic <- function(which="current", n=6){
   }
     
   
-  UserDicView <- read.table(UserDic, sep="\t", header=F, fileEncoding="UTF-8", stringsAsFactors=F)
+  UserDicView <- read.csv(UserDic, sep="\t", header=F, fileEncoding="UTF-8", stringsAsFactors=F, comment.char="", colClasses='character')
 
   #encoding problems 
   localCharset <- localeToCharset()[1]
@@ -452,19 +500,24 @@ statDic <- function(which="current", n=6){
 #'  \item material
 #'  \item humanities general
 #' }
-#' @param user_dic \code{data.frame} which include 'word' and 'tag' fields.
-#' @param replace_usr_dic A logical scala. Should user dictionary needs to be replaced with new 'user_dic' or appended.
+#' @param user_dic \code{data.frame} which include 'word' and 'tag' fields. User can add more user defined terms and tags.
+#' @param replace_usr_dic A logical scala. Should user dictionary needs to be replaced with new user defined dictionary or appended.
+#' @param verbose will print detail progress. default \code{FALSE}
 #'
 #' @export
-#' @importFrom RSQLite dbConnect dbGetQuery dbWriteTable dbDisconnect
-#' @importFrom devtools install_github
-buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F){
+#' @importFrom RSQLite dbConnect dbGetQuery dbWriteTable dbDisconnect SQLite 
+#' @importFrom devtools install_url
+buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F, verbose=F){
   #check 'NIAdic' package installed 
   #this code will remove after NIAdic located on CRAN.
 
-  if(file.path(system.file(package="NIAdic")) != ''){
-    ## file download
-    install_github('haven_jeon/NIAdic/NIAdic')
+  if (!nzchar(system.file(package = 'NIAdic'))){
+    if(all(c('ggplot2', 'data.table', 'scales', 'rmarkdown', 'knitr') %in% installed.packages()[,1])){
+      install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIAdic_0.0.1.tar.gz", dependencies=TRUE, build_vignettes=TRUE)
+    }else{
+      install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIAdic_0.0.1.tar.gz", dependencies=TRUE)
+    }
+    if(!require('NIAdic',character.only = TRUE)) stop("'NIAdic' Package not found")
   }
                       
   
@@ -556,7 +609,7 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
   UserDic <- get("CurrentUserDic",envir=.KoNLPEnv)
   
   write.table(unique(result_dic[,c('term', 'tag')]),file=UserDic,quote=F,row.names=F, sep="\t", col.names=F,fileEncoding="UTF-8")  
-  cat(sprintf("%s words dictionary was built on '%s'.\n", nrow(result_dic),UserDic ))
+  cat(sprintf("%s words dictionary was built.\n", nrow(result_dic)))
   reloadAllDic()
 }
 

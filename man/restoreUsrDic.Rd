@@ -18,7 +18,7 @@ Utility function for restoring dic_user.txt file to dictionary directory.
 ## which can en/decode Hangul(ex) CP949, EUC-KR, UTF-8). 
 dicpath <- file.path(system.file(package="Sejong"), "dics", "handic.zip")
 conn <- unz(dicpath, file.path("data","kE","dic_user2.txt"))
-newdic <- read.table(conn, sep="\\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
+newdic <- read.csv(conn, sep="\\t", header=FALSE, fileEncoding="UTF-8", stringsAsFactors=FALSE)
 mergeUserDic(newdic)
 ## backup merged new dictionary
 backupUsrDic(ask=FALSE)

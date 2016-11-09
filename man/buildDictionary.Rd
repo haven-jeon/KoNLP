@@ -5,7 +5,7 @@
 \title{buildDictionary}
 \usage{
 buildDictionary(ext_dic = "woorimalsam", category_dic_nms = "",
-  user_dic = data.frame(), replace_usr_dic = F)
+  user_dic = data.frame(), replace_usr_dic = F, verbose = F)
 }
 \arguments{
 \item{ext_dic}{external dictionary name which can be 'woorimalsam', 'insighter', 'sejong'.}
@@ -81,9 +81,11 @@ buildDictionary(ext_dic = "woorimalsam", category_dic_nms = "",
  \item humanities general
 }}
 
-\item{user_dic}{\code{data.frame} which include 'word' and 'tag' fields.}
+\item{user_dic}{\code{data.frame} which include 'word' and 'tag' fields. User can add more user defined terms and tags.}
 
-\item{replace_usr_dic}{A logical scala. Should user dictionary needs to be replaced with new 'user_dic' or appended.}
+\item{replace_usr_dic}{A logical scala. Should user dictionary needs to be replaced with new user defined dictionary or appended.}
+
+\item{verbose}{will print detail progress. default \code{FALSE}}
 }
 \description{
 buildDictionary

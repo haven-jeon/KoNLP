@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+
 import kr.ac.kaist.swrc.jhannanum.comm.Eojeol;
 import kr.ac.kaist.swrc.jhannanum.comm.Sentence;
 import kr.ac.kaist.swrc.jhannanum.hannanum.Workflow;

@@ -23,7 +23,7 @@
 
 
 .onLoad <- function(libname, pkgname) {
-  initopt <- c("-Xmx512m", "-Dfile.encoding=UTF-8")
+  initopt <- c("-Xmx768m", "-Dfile.encoding=UTF-8")
   jopt <- getOption("java.parameters")
   if(is.null(jopt)){
     options(java.parameters = initopt)
@@ -32,8 +32,22 @@
       stop("You cann't parse resource files based on UTF-8 on rJava. Please reload KoNLP first than any other packages connected with rJava.")
     }
     memjopt <- jopt[which(grepl("^-Xmx",jopt))]
+    
     if(length(memjopt) > 0){
-      options(java.parameters=c(memjopt, initopt[2]))
+      memsize <- tolower(gsub("^-Xmx", "", memjopt))
+      memunit <- gsub("[[:digit:]]","",memsize)
+      memnum <-  gsub("[m|g]$","",memsize)
+       
+      if(memunit == 'g'){
+        memsizemega <- as.numeric(memnum) * 1024
+      }else{
+        memsizemega <- as.numeric(memnum)
+      }
+      if(memsizemega < 768){
+        options(java.parameters=c(initopt[1], initopt[2]))
+      }else{
+        options(java.parameters=c(memjopt, initopt[2])) 
+      }
     }else{
       options(java.parameters=c(jopt, initopt))
     }
