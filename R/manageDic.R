@@ -185,7 +185,7 @@ useDic <- function(dicname, backup=T){
 #' @param backup will backup current dictionary?
 #' @export
 useSystemDic <- function(backup=T){
-  .Deprecated("buildDictionary")
+  #.Deprecated("buildDictionary")
   useDic("System", backup)
 }
 
