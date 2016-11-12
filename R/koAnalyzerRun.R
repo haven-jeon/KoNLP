@@ -54,7 +54,7 @@
 #' @export
 extractNoun <- function(sentence){
   sentence_pre <- preprocessing(sentence)
-  if(sentence_pre == FALSE){
+  if(sentence_pre == FALSE || sentence_pre == ""){
     return(sentence)
   }
   if(!exists("HannanumObj", envir=.KoNLPEnv)){
@@ -80,8 +80,10 @@ extractNoun <- function(sentence){
 #' @export
 MorphAnalyzer <- function(sentence){
   sentence_pre <- preprocessing(sentence)
-  if(sentence_pre == FALSE){
-    return(sentence)
+  if(sentence_pre == FALSE || sentence_pre == ""){
+    ret_list <- list()
+    ret_list[[sentence]]=sentence
+    return(ret_list)
   }
   if(!exists("HannanumObj", envir=.KoNLPEnv)){
     assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
@@ -104,8 +106,10 @@ MorphAnalyzer <- function(sentence){
 #' @export
 SimplePos22 <- function(sentence){
   sentence_pre <- preprocessing(sentence)
-  if(sentence_pre == FALSE){
-    return(sentence)
+  if(sentence_pre == FALSE || sentence_pre == ""){
+    ret_list <- list()
+    ret_list[[sentence]]=sentence
+    return(ret_list)
   }
   if(!exists("HannanumObj", envir=.KoNLPEnv)){
     assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
@@ -130,8 +134,10 @@ SimplePos22 <- function(sentence){
 #' @export
 SimplePos09 <- function(sentence){
   sentence_pre <- preprocessing(sentence)
-  if(sentence_pre == FALSE){
-    return(sentence)
+  if(sentence_pre == FALSE || sentence_pre == ""){
+    ret_list <- list()
+    ret_list[[sentence]]=sentence
+    return(ret_list)
   }
   if(!exists("HannanumObj", envir=.KoNLPEnv)){
     assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)

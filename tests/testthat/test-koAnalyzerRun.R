@@ -4,14 +4,14 @@ print("Hannanum test")
 
 test_that("Hannanum test", {
         expect_equal(length(SimplePos09("검색엔진 개발자 모임. 그룹 스터디 하자!")),8)
-        expect_warning(extractNoun("굉장히긴문장을넣었을때에러를내놓아야된다."))
-        expect_warning(SimplePos09("굉장히긴문장을넣었을때에러를내놓아야된다."))
-        expect_warning(SimplePos22("굉장히긴문장을넣었을때에러를내놓아야된다."))
+        expect_equal(extractNoun("굉장히긴문장을넣었을때에러를내놓아야된다."), "굉장히긴문장을넣었을때에러를내놓아야된다")
+        expect_equal(length(SimplePos09("굉장히긴문장을넣었을때에러를내놓아야된다.")), 2)
+        expect_equal(length(SimplePos22("굉장히긴문장을넣었을때에러를내놓아야된다.")), 2)
         expect_equal(extractNoun("슈퍼마켓이 판매하고 있는 흑마늘 양념 치킨이 논란이 되고 있다."), 
                     c("슈퍼마켓","판매","흑마늘","양념","치킨","논란"))
-        expect_warning(extractNoun("          "))
-        expect_warning(SimplePos09("  "))
-        expect_warning(SimplePos22("   \t\t\t\t\t\t\t    "))
+        expect_equal(extractNoun("          "), "          ")
+        expect_equal(SimplePos09("  "), "  ")
+        expect_equal(SimplePos22("   \t\t\t\t\t\t\t    "), "   \t\t\t\t\t\t\t    ")
         #expect_equal(length(SimplePos22("검색엔진 개발자 모임. 그룹 스터디 하자!")),8)
         #expect_equal(length(SimplePos22("검색엔진 개발자 모임. 그룹 스터디 하자!. 그런데 어머니께서 밥을 하셨는지 모르겠어.")), 14)
          })
@@ -80,7 +80,7 @@ test_that("is.jamo is.hangul test", {
 print("dictionary function test")
 
 test_that("dictionary function test", {
-        expect_that(useSejongDic(), prints_text("words were added to dic_user.txt"))
+        expect_that(useSejongDic(), prints_text("words dictionary was built"))
         expect_that(useSystemDic(), prints_text("words were added to dic_user.txt"))
         #expect_that(statDic(n=100), prints_text(c("tail", "summary", "head")))
          })
