@@ -1,9 +1,21 @@
+Version 0.80.0
+------------------------------------------------------------------------------
+  * make more effective memory management for big dictionaries.
+  * up to one million words can be used for text analysis using new NIAdic package.
+  * added 'buildDictionary()', 'useInsighterDic()', 'useWoorimalsamDic()'
+  * SQLite for dictionary management.
+  * apply new sentence segmentation plugins(using scala).
+  * disable warning for long Eojeol sentence inputs. 
+  * fix infinite wait when input abnormal sentences.
+  * fix 'concordance_str()', thanks Taekyung Kim. 
+
+
 Version 0.76.9
 ------------------------------------------------------------------------------
   * new functions added(concordance_*, mutualinformation).
   * fix OutOfMemoryError on mac osx with R 3.0.x.
   * added references on manual. 
-  * supress one NOTE.
+  * suppress one NOTE.
 
 Version 0.76.8
 ------------------------------------------------------------------------------
