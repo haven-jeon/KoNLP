@@ -517,7 +517,7 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
     }else{
       install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIAdic_0.0.1.tar.gz", dependencies=TRUE)
     }
-    if(!require('NIAdic',character.only = TRUE)) stop("'NIAdic' Package not found")
+    if(!nzchar(system.file(package = 'NIAdic'))) stop("'NIAdic' Package not found")
   }
                       
   
