@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+cran-comments.md
+inst/javasrc
+inst/java/org.scala-lang.scala-library_2.11.8.jar

@@ -1,7 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
-.Rbuildignore
 KoNLP.Rproj
 *.class
 .cache-main
