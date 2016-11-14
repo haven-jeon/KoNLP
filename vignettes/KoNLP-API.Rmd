@@ -1,7 +1,7 @@
 ---
 title: "Introduction to KoNLP API"
 author: "Heewon Jeon"
-date: "`r Sys.Date()`"
+date: "2016-11-15"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -128,7 +128,17 @@ MorphAnalyzer("성긴털제비꽃은 너무 예쁘다.")
 
 ## buildDictionary
 
-KoNLP has two three dictionaries.... (추가 필요)
+User can make own dictionary using NIAdic and Sejong additional packages. 
+
+```{r}
+txt <- '미국 싱크탱크 전략국제문제연구소(CSIS)의 빅터 차 한국석좌는 9일(현지시간) 미국의 제45대 대통령으로 당선된 도널드 트럼프가 전시작전통제권(전작권)을 한국에 조기에 넘길 가능성이 있다고 전망했다.'
+
+
+buildDictionary(ext_dic = c('sejong', 'woorimalsam'),user_dic = data.frame(term="전작권", tag='ncn'), category_dic_nms=c('political'))
+
+extractNoun(txt)
+```
+
 
 
 
