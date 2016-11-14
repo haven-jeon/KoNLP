@@ -507,6 +507,7 @@ statDic <- function(which="current", n=6){
 #' @export
 #' @importFrom RSQLite dbConnect dbGetQuery dbWriteTable dbDisconnect SQLite 
 #' @importFrom devtools install_url
+#' @importFrom utils installed.packages
 buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F, verbose=F){
   #check 'NIAdic' package installed 
   #this code will remove after NIAdic located on CRAN.
