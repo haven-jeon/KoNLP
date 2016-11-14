@@ -21,6 +21,8 @@
 
 .DicPkgName <- "Sejong"
 
+.ScalaVer <- '2.11.8'
+
 
 .onLoad <- function(libname, pkgname) {
   initopt <- c("-Xmx768m", "-Dfile.encoding=UTF-8")
@@ -52,8 +54,16 @@
       options(java.parameters=c(jopt, initopt))
     }
   }
+  #scala runtime install on-the-fly 
+  scala_path <- file.path(system.file(package="KoNLP"),"java", 
+                  sprintf("scala-library-%s.jar", .ScalaVer))
+  if(file.exists(scala_path) == FALSE | file.size(scala_path) <= 3072){
+      scala_library_install(.ScalaVer)
+  }
   .jpackage(pkgname, lib.loc = libname)
 }
+
+
 
 
 #' @importFrom utils localeToCharset
@@ -96,7 +106,9 @@
   assign("SejongDicsZip", dics, .KoNLPEnv)
   assign("backupUserDicPath", backupUserDicPath, .KoNLPEnv)
   assign("backupUserDic", file.path(backupUserDicPath,DicUser), .KoNLPEnv)
+  assign("ScalaVer", .ScalaVer, .KoNLPEnv)
 
+  
   if(all((localeToCharset()[1] == c("UTF-8", "CP949", "EUC-KR")) == FALSE)){
     packageStartupMessage("This R shell doesn't contain any Hangul encoding.\nFor fully use, any of 'UTF-8', 'CP949', 'EUC-KR' needs to be used for R shell encoding.")
   }

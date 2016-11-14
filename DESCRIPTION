@@ -39,5 +39,6 @@ Collate:
     'koAnalyzerRun.R'
     'tagdata.R'
     'Concordances.R'
+    'utils.R'
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
