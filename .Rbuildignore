@@ -2,4 +2,4 @@
 ^\.Rproj\.user$
 cran-comments.md
 inst/javasrc
-inst/java/org.scala-lang.scala-library_2.11.8.jar
+inst/java/scala-library-2.11.8.jar

@@ -25,6 +25,12 @@
 
 
 .onLoad <- function(libname, pkgname) {
+  #scala runtime install on-the-fly 
+  scala_path <- file.path(system.file(package="KoNLP"),"java", 
+                  sprintf("scala-library-%s.jar", .ScalaVer))
+  if(file.exists(scala_path) == FALSE | file.size(scala_path) <= 3072){
+      scala_library_install(.ScalaVer)
+  }
   initopt <- c("-Xmx768m", "-Dfile.encoding=UTF-8")
   jopt <- getOption("java.parameters")
   if(is.null(jopt)){
@@ -54,12 +60,7 @@
       options(java.parameters=c(jopt, initopt))
     }
   }
-  #scala runtime install on-the-fly 
-  scala_path <- file.path(system.file(package="KoNLP"),"java", 
-                  sprintf("scala-library-%s.jar", .ScalaVer))
-  if(file.exists(scala_path) == FALSE | file.size(scala_path) <= 3072){
-      scala_library_install(.ScalaVer)
-  }
+
   .jpackage(pkgname, lib.loc = libname)
 }
 

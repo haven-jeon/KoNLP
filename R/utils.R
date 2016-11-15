@@ -12,17 +12,17 @@ scala_library_install <- function(ver = '2.11.8') {
     if(file.exists(destfile)) file.remove(destfile)
     url <- sprintf("http://downloads.lightbend.com/scala/%s/scala-%s.zip", ver, ver)
     destfilez <- file.path(installPath,basename(url))
-    tempfile <- tempfile()
-    result <- download.file(url,tempfile,method='internal')
-    if ( result != 0 | file.exists(tempfile) == FALSE  | file.size(tempfile) <= 3072  ) return(invisible(result))
-    file.rename(tempfile, destfilez)
+    tempfilez <- tempfile()
+    result <- download.file(url,tempfilez, mode='wb', method='internal')
+    if ( result != 0 | file.exists(tempfilez) == FALSE  | file.size(tempfilez) <= 3072  ) return(invisible(result))
+    file.rename(tempfilez, destfilez)
     result <- unzip(destfilez, files=file.path(sprintf('scala-%s', ver),'lib', 'scala-library.jar'), 
                     exdir=installPath)
     file.copy(file.path(installPath,file.path(sprintf('scala-%s', ver),'lib', 'scala-library.jar' )), 
               file.path(installPath, sprintf("scala-library-%s.jar", ver)))
     unlink(file.path(installPath,sprintf('scala-%s', ver)), recursive = T)
     unlink(destfilez)
-    unlink(tempfile)
+    unlink(tempfilez)
     return(0)
   }
   
@@ -32,11 +32,11 @@ scala_library_install <- function(ver = '2.11.8') {
     {
       destfile <- file.path(installPath,basename(url))
       tempf <- tempfile()
-      result <- download.file(url,tempf, method='internal')
+      result <- download.file(url,tempf, mode='wb', method='internal')
       if ( result != 0  | file.exists(tempf) == FALSE  | file.size(tempf) <= 3072){
         warning(sprintf("unable to locate %s", destfile))
       }
-      file.rename(tempf, destfile)
+      file.copy(tempf, destfile)
       unlink(tempf)
       return(0)
     }, 
