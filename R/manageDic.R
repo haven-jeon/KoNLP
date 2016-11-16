@@ -581,12 +581,24 @@ statDic <- function(which="current", n=6){
 buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F, verbose=F){
   #check 'NIADic' package installed 
   #this code will remove after NIADic located on CRAN.
-
+  
   if (!nzchar(system.file(package = 'NIADic'))){
+    niadic_pkg_url <- "https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIADic_0.0.1.tar.gz"
     if(all(c('ggplot2', 'data.table', 'scales', 'rmarkdown', 'knitr') %in% installed.packages()[,1])){
-      install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIADic_0.0.1.tar.gz", dependencies=TRUE, build_vignettes=TRUE)
+      tryCatch({
+        install_url(niadic_pkg_url, dependencies=TRUE, build_vignettes=TRUE)
+      },
+      #some case system doesn't have Pandoc or pandoc-citeproc
+      error=function(cond){
+        message(cond)
+        install_url(niadic_pkg_url, dependencies=TRUE)
+      },finally={
+        if(!nzchar(system.file(package = 'NIADic'))){
+          stop("can't install NIADic package!\n Please refer 'https://github.com/haven-jeon/NIADic' to install.")
+        }
+      })
     }else{
-      install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIADic_0.0.1.tar.gz", dependencies=TRUE)
+      install_url(niadic_pkg_url, dependencies=TRUE)
     }
     if(!nzchar(system.file(package = 'NIADic'))) stop("'NIADic' Package not found")
   }
