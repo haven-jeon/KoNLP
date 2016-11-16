@@ -18,8 +18,7 @@ Date/Publication: 2011-10-12 07:49:45
 Packaged: 2011-10-12 20:53:27 UTC; gogamza
 Date: 2011-10-12
 Encoding: UTF-8
-Suggests: testthat (>= 1.0.2),
-    knitr,
+Suggests: knitr,
     rmarkdown
 Depends:
     R(>= 3.3.1)
