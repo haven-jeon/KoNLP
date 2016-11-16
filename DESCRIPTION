@@ -19,7 +19,7 @@ Encoding: UTF-8
 Suggests: knitr,
     rmarkdown
 Depends:
-    R(>= 3.3.2)
+    R(>= 3.3.1)
 Imports:
     rJava (>= 0.9-8),
     utils (>= 3.3.1),
