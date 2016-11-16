@@ -118,44 +118,114 @@ useSejongDic <- function(backup=T){
 }
 
 
-#' use Insighter dictionary
-#'
-#' @param backup will backup current working dictionary?
-#'
-#' @export
-useInsighterDic <- function(backup=T){
-  if(backup == T){
-    backupUsrDic(ask=F)
-  }
-  buildDictionary(ext_dic="insighter")
-}
+# use Insighter dictionary
+#
+# @param backup will backup current working dictionary?
+#
+# @export
+# useInsighterDic <- function(backup=T){
+#   if(backup == T){
+#     backupUsrDic(ask=F)
+#   }
+#   buildDictionary(ext_dic="insighter")
+# }
 
 
-#' use Woorimalsam dictionary
-#'
-#' @param backup will backup current working dictionary?
-#'
-#' @export
-useWoorimalsamDic <- function(backup=T){
-  if(backup == T){
-    backupUsrDic(ask=F)
-  }
-  buildDictionary(ext_dic="woorimalsam")
-}
+# use Woorimalsam dictionary
+#
+# @param backup will backup current working dictionary?
+#
+# @export
+# useWoorimalsamDic <- function(backup=T){
+#   if(backup == T){
+#     backupUsrDic(ask=F)
+#   }
+#   buildDictionary(ext_dic="woorimalsam")
+# }
 
 
 
 
 #' use Insighter and Woorimalsam dictionary
 #'
-#' @param backup will backup current working dictionary?
-#'
+#' @param backup boolean will backup current working dictionary?
+#' @param which_dic character vectors. 'woorimalsam', 'insighter' can be apply.  
+#' @param category_dic_nms character vectors. category dictionary will be used. 
+#'    \itemize{
+#'  \item general
+#'  \item chemical
+#'  \item language
+#'  \item music
+#'  \item history
+#'  \item education
+#'  \item society in general
+#'  \item life
+#'  \item physical
+#'  \item information and communication
+#'  \item medicine
+#'  \item earth
+#'  \item construction
+#'  \item veterinary science
+#'  \item business
+#'  \item law
+#'  \item plant
+#'  \item buddhism
+#'  \item engineering general
+#'  \item folk
+#'  \item administration
+#'  \item economic
+#'  \item math
+#'  \item korean medicine
+#'  \item military
+#'  \item literature
+#'  \item clothes
+#'  \item religion normal
+#'  \item animal
+#'  \item agriculture
+#'  \item astronomy
+#'  \item transport
+#'  \item natural plain
+#'  \item industry
+#'  \item medium
+#'  \item political
+#'  \item geography
+#'  \item mining
+#'  \item hearing
+#'  \item fishing
+#'  \item machinery
+#'  \item catholic
+#'  \item book title
+#'  \item named
+#'  \item electrical and electronic
+#'  \item pharmacy
+#'  \item art, music and physical
+#'  \item useless
+#'  \item ocean
+#'  \item forestry
+#'  \item christian
+#'  \item craft
+#'  \item service
+#'  \item sports
+#'  \item food
+#'  \item art
+#'  \item environment
+#'  \item video
+#'  \item natural resources
+#'  \item industry general
+#'  \item smoke
+#'  \item philosophy
+#'  \item health general
+#'  \item proper names general
+#'  \item welfare
+#'  \item material
+#'  \item humanities general
+#' }
 #' @export
-useNIADic <- function(backup=T){
+useNIADic <- function(which_dic=c("woorimalsam", "insighter"), category_dic_nms='', backup=T){
   if(backup == T){
     backupUsrDic(ask=F)
   }
-  buildDictionary(ext_dic=c("woorimalsam", "insighter"))
+  buildDictionary(ext_dic=which_dic,category_dic_nms = category_dic_nms)
 }
 
 
@@ -429,8 +499,8 @@ statDic <- function(which="current", n=6){
   
 #'   buildDictionary
 #'  
-#' @param ext_dic external dictionary name which can be 'woorimalsam', 'insighter', 'sejong'.
-#' @param category_dic_nms category dictionary will be used. 
+#' @param ext_dic external dictionary character name which can be 'woorimalsam', 'insighter', 'sejong'.
+#' @param category_dic_nms character vectors. category dictionary will be used. 
 #'    \itemize{
 #'  \item general
 #'  \item chemical
@@ -509,20 +579,20 @@ statDic <- function(which="current", n=6){
 #' @importFrom devtools install_url
 #' @importFrom utils installed.packages
 buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F, verbose=F){
-  #check 'NIAdic' package installed 
-  #this code will remove after NIAdic located on CRAN.
+  #check 'NIADic' package installed 
+  #this code will remove after NIADic located on CRAN.
 
-  if (!nzchar(system.file(package = 'NIAdic'))){
+  if (!nzchar(system.file(package = 'NIADic'))){
     if(all(c('ggplot2', 'data.table', 'scales', 'rmarkdown', 'knitr') %in% installed.packages()[,1])){
-      install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIAdic_0.0.1.tar.gz", dependencies=TRUE, build_vignettes=TRUE)
+      install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIADic_0.0.1.tar.gz", dependencies=TRUE, build_vignettes=TRUE)
     }else{
-      install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIAdic_0.0.1.tar.gz", dependencies=TRUE)
+      install_url("https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIADic_0.0.1.tar.gz", dependencies=TRUE)
     }
-    if(!nzchar(system.file(package = 'NIAdic'))) stop("'NIAdic' Package not found")
+    if(!nzchar(system.file(package = 'NIADic'))) stop("'NIADic' Package not found")
   }
                       
   
-  han_db_path <- file.path(system.file(package="NIAdic"), "hangul.db")
+  han_db_path <- file.path(system.file(package="NIADic"), "hangul.db")
   
   conn <- dbConnect(SQLite(), han_db_path)
   on.exit(dbDisconnect(conn))
@@ -549,7 +619,7 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
     )
   }
   cate_dic_df <- data.frame()
-  if(is.character(category_dic_nms) & length(category_dic_nms) > 0){
+  if(is.character(category_dic_nms) & nchar(category_dic_nms[1]) > 0){
     cate_dic_df <- dbGetQuery(conn, sprintf("select term, tag, eng_cate as dic from woorimalsam where eng_cate in (%s)",
                                             paste0("'",category_dic_nms,"'", collapse=',')))  
   }

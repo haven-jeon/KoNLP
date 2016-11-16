@@ -4,6 +4,7 @@ print("Hannanum test")
 
 useSystemDic()
 
+
 test_that("Hannanum test", {
         expect_equal(length(SimplePos09("검색엔진 개발자 모임. 그룹 스터디 하자!")),8)
         expect_equal(extractNoun("굉장히긴문장을넣었을때에러를내놓아야된다."), "굉장히긴문장을넣었을때에러를내놓아야된다")
@@ -84,6 +85,7 @@ print("dictionary function test")
 test_that("dictionary function test", {
         expect_that(useSejongDic(), prints_text("words dictionary was built"))
         expect_that(useSystemDic(), prints_text("words were added to dic_user.txt"))
+        expect_that(useNIADic(),    prints_text("words dictionary was built"))
         #expect_that(statDic(n=100), prints_text(c("tail", "summary", "head")))
          })
 

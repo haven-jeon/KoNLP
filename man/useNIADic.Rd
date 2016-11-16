@@ -4,10 +4,84 @@
 \alias{useNIADic}
 \title{use Insighter and Woorimalsam dictionary}
 \usage{
-useNIADic(backup = T)
+useNIADic(which_dic = c("woorimalsam", "insighter"), category_dic_nms = "",
+  backup = T)
 }
 \arguments{
-\item{backup}{will backup current working dictionary?}
+\item{which_dic}{character vectors. 'woorimalsam', 'insighter' can be apply.}
+
+\item{category_dic_nms}{character vectors. category dictionary will be used. 
+   \itemize{
+ \item general
+ \item chemical
+ \item language
+ \item music
+ \item history
+ \item education
+ \item society in general
+ \item life
+ \item physical
+ \item information and communication
+ \item medicine
+ \item earth
+ \item construction
+ \item veterinary science
+ \item business
+ \item law
+ \item plant
+ \item buddhism
+ \item engineering general
+ \item folk
+ \item administration
+ \item economic
+ \item math
+ \item korean medicine
+ \item military
+ \item literature
+ \item clothes
+ \item religion normal
+ \item animal
+ \item agriculture
+ \item astronomy
+ \item transport
+ \item natural plain
+ \item industry
+ \item medium
+ \item political
+ \item geography
+ \item mining
+ \item hearing
+ \item fishing
+ \item machinery
+ \item catholic
+ \item book title
+ \item named
+ \item electrical and electronic
+ \item pharmacy
+ \item art, music and physical
+ \item useless
+ \item ocean
+ \item forestry
+ \item christian
+ \item craft
+ \item service
+ \item sports
+ \item food
+ \item art
+ \item environment
+ \item video
+ \item natural resources
+ \item industry general
+ \item smoke
+ \item philosophy
+ \item health general
+ \item proper names general
+ \item welfare
+ \item material
+ \item humanities general
+}}
+
+\item{backup}{boolean will backup current working dictionary?}
 }
 \description{
 use Insighter and Woorimalsam dictionary

@@ -20,6 +20,6 @@ To install from GitHub, use
     install_github('haven-jeon/KoNLP')
 
 
-
+[![Travis-CI Build Status](https://travis-ci.org/haven-jeon/KoNLP.svg?branch=master)](https://travis-ci.org/haven-jeon/KoNLP)
 
 

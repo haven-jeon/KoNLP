@@ -8,9 +8,9 @@ buildDictionary(ext_dic = "woorimalsam", category_dic_nms = "",
   user_dic = data.frame(), replace_usr_dic = F, verbose = F)
 }
 \arguments{
-\item{ext_dic}{external dictionary name which can be 'woorimalsam', 'insighter', 'sejong'.}
+\item{ext_dic}{external dictionary character name which can be 'woorimalsam', 'insighter', 'sejong'.}
 
-\item{category_dic_nms}{category dictionary will be used. 
+\item{category_dic_nms}{character vectors. category dictionary will be used. 
    \itemize{
  \item general
  \item chemical

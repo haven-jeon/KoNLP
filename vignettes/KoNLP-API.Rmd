@@ -109,7 +109,7 @@ HangulAutomata(str2)
 
 ## useSejongDic, useSystemDic
 
-change to Sejong, System, NIAdic(Woorimalsam and Insighter dictionary).
+change to [Sejong](https://github.com/haven-jeon/Sejong), Hannanum System, [NIADic](https://github.com/haven-jeon/NIADic).
 
 ```{R}
 useSystemDic()
@@ -124,9 +124,12 @@ SimplePos09("성긴털제비꽃은 너무 예쁘다.")
 SimplePos22("성긴털제비꽃은 너무 예쁘다.")
 MorphAnalyzer("성긴털제비꽃은 너무 예쁘다.")
 
-#useWoorimalsamDic()
-#useInsighterDic()
+
 useNIADic()
+extractNoun("성긴털제비꽃은 너무 예쁘다.")
+SimplePos09("성긴털제비꽃은 너무 예쁘다.")
+SimplePos22("성긴털제비꽃은 너무 예쁘다.")
+MorphAnalyzer("성긴털제비꽃은 너무 예쁘다.")
 ```
 
 
