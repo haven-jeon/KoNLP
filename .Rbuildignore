@@ -4,3 +4,4 @@ cran-comments.md
 inst/javasrc
 inst/java/scala-library-2.11.8.jar
 ^\.travis\.yml$
+README.md
