@@ -6,9 +6,7 @@ Authors@R: c(
     person("Heewon", "Jeon", email = "madjakarta@gmail.com", role = c("aut", "cre")),
     person("Taekyung", "Kim", role = "ctb")
     )
-Description: Korean language processing package. Morphological analyzer, POS
-    tagger, Keystroke converter, Hangul automata, Concordance, Mutual
-    Information..
+Description: This package provides POS Tagger and Morphlogical Analysis functions for Hangul text based research. It provides tools for corpus linguistics research such as Keystroke converter, Hangul automata, Concordance, and Mutual Information. It also provides a convenient interface for users to apply, edit and add morphological dictionary selectively.
 SystemRequirements: Java (>= 1.6)
 URL: https://github.com/haven-jeon/KoNLP
 BugReports: https://github.com/haven-jeon/KoNLP/issues
@@ -21,7 +19,7 @@ Encoding: UTF-8
 Suggests: knitr,
     rmarkdown
 Depends:
-    R(>= 3.3.1)
+    R(>= 3.3.2)
 Imports:
     rJava (>= 0.9-8),
     utils (>= 3.3.1),
