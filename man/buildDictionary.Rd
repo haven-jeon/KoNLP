@@ -81,7 +81,7 @@ buildDictionary(ext_dic = "woorimalsam", category_dic_nms = "",
  \item humanities general
 }}
 
-\item{user_dic}{\code{data.frame} which include 'word' and 'tag' fields. User can add more user defined terms and tags.}
+\item{user_dic}{\code{data.frame} which include 'word' and 'tag(KAIST)' fields. User can add more user defined terms and tags.}
 
 \item{replace_usr_dic}{A logical scala. Should user dictionary needs to be replaced with new user defined dictionary or appended.}
 
@@ -89,5 +89,17 @@ buildDictionary(ext_dic = "woorimalsam", category_dic_nms = "",
 }
 \description{
 buildDictionary
+}
+\examples{
+\dontrun{
+dics <- c('sejong','woorimalsam')
+category <- c('sports')
+user_d <- data.frame(term="apple", tag='ncn')
+buildDictionary(ext_dic = dics,category_dic_nms = category, user_dic = user_d, replace_usr_dic=F)
+#accumulate user dictionary only
+buildDictionary(ext_dic= "", user_dic = user_d, replace_usr_dic=F)
+#get user dictionary as data.frame
+usr_words  <- get_dictionary('user_dic')
+}
 }
 

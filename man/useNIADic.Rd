@@ -86,4 +86,9 @@ useNIADic(which_dic = c("woorimalsam", "insighter"), category_dic_nms = "",
 \description{
 use Insighter and Woorimalsam dictionary
 }
+\examples{
+\dontrun{
+useNIADic(which_dic=c('woorimalsam','insighter'), category_dic_nms=c('art', 'food'))
+} 
+}
 

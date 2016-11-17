@@ -84,9 +84,9 @@ print("dictionary function test")
 
 test_that("dictionary function test", {
         expect_that(useSejongDic(), prints_text("words dictionary was built"))
-        expect_that(useSystemDic(), prints_text("words were added to dic_user.txt"))
+        expect_that(useSystemDic(), prints_text("words dictionary was built"))
         expect_that(useNIADic(),    prints_text("words dictionary was built"))
-        #expect_that(statDic(n=100), prints_text(c("tail", "summary", "head")))
+        expect_that(buildDictionary(ext_dic = 'woorimalsam',category_dic_nms = 'life', user_dic = data.frame(term="apple", tag='ncn'), replace_usr_dic=F), prints_text("words dictionary was built"))
          })
 
 

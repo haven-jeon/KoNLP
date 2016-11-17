@@ -27,7 +27,7 @@
 # @references \url{www.sejong.or.kr}
 # @keywords dictionary
 
-
+.SystemDicRec <- 283949
 
 #' reload all Hannanum analyzer dictionary 
 #'
@@ -221,6 +221,10 @@ useSejongDic <- function(backup=T){
 #'  \item humanities general
 #' }
 #' @export
+#' @examples
+#' \dontrun{
+#' useNIADic(which_dic=c('woorimalsam','insighter'), category_dic_nms=c('art', 'food'))
+#' } 
 useNIADic <- function(which_dic=c("woorimalsam", "insighter"), category_dic_nms='', backup=T){
   if(backup == T){
     backupUsrDic(ask=F)
@@ -255,8 +259,10 @@ useDic <- function(dicname, backup=T){
 #' @param backup will backup current dictionary?
 #' @export
 useSystemDic <- function(backup=T){
-  #.Deprecated("buildDictionary")
-  useDic("System", backup)
+  if(backup == T){
+    backupUsrDic(ask=F)
+  }
+  buildDictionary(ext_dic="")
 }
 
 #' use for backup current dic_user.txt
@@ -374,9 +380,9 @@ restoreUsrDic <- function(ask=TRUE){
 #' @param verbose see detail error logs
 #' @param ask ask to backup
 #' @export
-#'@importFrom utils read.csv write.table
+#' @importFrom utils read.csv write.table
 mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE, ask=FALSE){
-
+  .Deprecated("buidDictionary()")
   if(is.data.frame(newUserDic) == FALSE | ncol(newUserDic) != 2 | nrow(newUserDic) == 0 ){
     stop("check 'newUserDic'.\n")
   }
@@ -570,39 +576,26 @@ statDic <- function(which="current", n=6){
 #'  \item material
 #'  \item humanities general
 #' }
-#' @param user_dic \code{data.frame} which include 'word' and 'tag' fields. User can add more user defined terms and tags.
+#' @param user_dic \code{data.frame} which include 'word' and 'tag(KAIST)' fields. User can add more user defined terms and tags.
 #' @param replace_usr_dic A logical scala. Should user dictionary needs to be replaced with new user defined dictionary or appended.
 #' @param verbose will print detail progress. default \code{FALSE}
 #'
 #' @export
 #' @importFrom RSQLite dbConnect dbGetQuery dbWriteTable dbDisconnect SQLite 
-#' @importFrom devtools install_url
 #' @importFrom utils installed.packages
+#' @examples 
+#' \dontrun{
+#' dics <- c('sejong','woorimalsam')
+#' category <- c('sports')
+#' user_d <- data.frame(term="apple", tag='ncn')
+#' buildDictionary(ext_dic = dics,category_dic_nms = category, user_dic = user_d, replace_usr_dic=F)
+#' #accumulate user dictionary only
+#' buildDictionary(ext_dic= "", user_dic = user_d, replace_usr_dic=F)
+#' #get user dictionary as data.frame
+#' usr_words  <- get_dictionary('user_dic')
+#' }
 buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic=data.frame(), replace_usr_dic=F, verbose=F){
-  #check 'NIADic' package installed 
-  #this code will remove after NIADic located on CRAN.
-  
-  if (!nzchar(system.file(package = 'NIADic'))){
-    niadic_pkg_url <- "https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIADic_0.0.1.tar.gz"
-    if(all(c('ggplot2', 'data.table', 'scales', 'rmarkdown', 'knitr') %in% installed.packages()[,1])){
-      tryCatch({
-        install_url(niadic_pkg_url, dependencies=TRUE, build_vignettes=TRUE)
-      },
-      #some case system doesn't have Pandoc or pandoc-citeproc
-      error=function(cond){
-        message(cond)
-        install_url(niadic_pkg_url, dependencies=TRUE)
-      },finally={
-        if(!nzchar(system.file(package = 'NIADic'))){
-          stop("can't install NIADic package!\n Please refer 'https://github.com/haven-jeon/NIADic' to install.")
-        }
-      })
-    }else{
-      install_url(niadic_pkg_url, dependencies=TRUE)
-    }
-    if(!nzchar(system.file(package = 'NIADic'))) stop("'NIADic' Package not found")
-  }
-                      
+  install_NIADic()     
   
   han_db_path <- file.path(system.file(package="NIADic"), "hangul.db")
   
@@ -626,7 +619,7 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
               ext_dic_df <- rbind(ext_dic_df, dic_df)
              },
               {
-              stop(sprintf("No %s dictionary!", ext_dic))
+              #stop(sprintf("No %s dictionary!", ext_dic))
             }
     )
   }
@@ -671,7 +664,7 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
     
     names(user_dic) <- c("term","tag")
   
-    dbWriteTable(conn, "user_dic", user_dic,append=!replace_usr_dic)
+    dbWriteTable(conn, "user_dic", user_dic,append=!replace_usr_dic, overwrite=replace_usr_dic)
     
     user_dic_tot <- dbGetQuery(conn, "select *, 'user' as dic from user_dic")
       
@@ -686,16 +679,80 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
     stop("Unsupported tag names on user_dic!\n")
   }
   
-  
-  Encoding(result_dic$term) <- 'UTF-8'
+  if(nrow(result_dic) >= 1){
+    Encoding(result_dic$term) <- 'UTF-8'
+  }
  
   UserDic <- get("CurrentUserDic",envir=.KoNLPEnv)
   
   write.table(unique(result_dic[,c('term', 'tag')]),file=UserDic,quote=F,row.names=F, sep="\t", col.names=F,fileEncoding="UTF-8")  
-  cat(sprintf("%s words dictionary was built.\n", nrow(result_dic)))
+  cat(sprintf("%s words dictionary was built.\n", nrow(result_dic) + .SystemDicRec))
   reloadAllDic()
 }
 
+
+
+
+#' install_NIADic
+#'
+#' @importFrom devtools install_url
+install_NIADic <- function(){
+  #check 'NIADic' package installed 
+  #this code will remove after NIADic located on CRAN.
+  
+  if (!nzchar(system.file(package = 'NIADic'))){
+    niadic_pkg_url <- "https://github.com/haven-jeon/NIADic/releases/download/0.0.1/NIADic_0.0.1.tar.gz"
+    if(all(c('ggplot2', 'data.table', 'scales', 'rmarkdown', 'knitr') %in% installed.packages()[,1])){
+      tryCatch({
+        install_url(niadic_pkg_url, dependencies=TRUE, build_vignettes=TRUE)
+      },
+      #some case system doesn't have Pandoc or pandoc-citeproc
+      error=function(cond){
+        message(cond)
+        install_url(niadic_pkg_url, dependencies=TRUE)
+      },finally={
+        if(!nzchar(system.file(package = 'NIADic'))){
+          stop("can't install NIADic package!\n Please refer 'https://github.com/haven-jeon/NIADic' to install.")
+        }
+      })
+    }else{
+      install_url(niadic_pkg_url, dependencies=TRUE)
+    }
+    if(!nzchar(system.file(package = 'NIADic'))) stop("'NIADic' Package not found")
+  }
+}
+
+
+
+#' Get Dictionary
+#'
+#' @param dic_name one of dictionary name(character), \strong{woorimalsam}, \strong{insighter}, \strong{sejong}, \strong{user_dic}
+#'
+#' @return The \code{data.frame} object contains tags and terms
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'    dic_df <- get_dictionary('sejong')
+#' }
+#' @importFrom  RSQLite dbGetQuery SQLite dbDisconnect dbListTables
+get_dictionary <- function(dic_name){
+  #chaeck and install NIADic
+  install_NIADic()
+  
+  dic_path <- file.path(system.file(package='NIADic'), "hangul.db")
+  conn <- dbConnect(SQLite(), dic_path)
+  on.exit({dbDisconnect(conn)})
+  if(!(dic_name %in% dbListTables(conn))){
+    stop(sprintf("NIADic does not contain '%s' dictionary!", dic_name))
+  }
+  dic <- dbGetQuery(conn, sprintf("select * from %s", dic_name))
+  Encoding(dic$term) <- 'UTF-8'
+  if(dic_name == 'woorimalsam'){
+    Encoding(dic$category) <- 'UTF-8'
+  }
+  return(dic)
+}
 
 
 
