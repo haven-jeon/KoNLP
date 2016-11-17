@@ -9,6 +9,7 @@ Version 0.80.0
   * disable warning for long Eojeol sentence inputs. 
   * fix infinite wait when input abnormal sentences.
   * fix 'concordance_str()', thanks Taekyung Kim. 
+  * deprecated 'mergeUserDic()'
 
 
 Version 0.76.9
