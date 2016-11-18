@@ -6,3 +6,6 @@ inst/java/scala-library-2.11.8.jar
 ^\.travis\.yml$
 README.md
 tests
+java/.classpath
+java/.project
+java/.settings
