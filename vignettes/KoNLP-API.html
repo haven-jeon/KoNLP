@@ -125,14 +125,15 @@ $(document).ready(function () {
 
 
 <p>This page is for showing simple example about KoNLP with some Hangul.</p>
+<p>Newest version of this document is on <a href="https://github.com/haven-jeon/KoNLP/blob/master/vignettes/KoNLP-API.md">KoNLP github</a></p>
 <div id="introduction-to-konlp-api" class="section level1">
 <h1>Introduction to KoNLP API</h1>
 <div id="extractnoun" class="section level2">
 <h2>extractNoun</h2>
 <p>function for extract Nouns from sentences. Internally, runs pos tagger and only select Noun from set.</p>
-<pre class="r"><code>library(KoNLP)</code></pre>
-<pre><code>## Checking user defined dictionary!</code></pre>
-<pre class="r"><code>useSystemDic()</code></pre>
+<pre class="r"><code>library(KoNLP)
+
+useSystemDic()</code></pre>
 <pre><code>## Backup was just finished!
 ## 283949 words dictionary was built.</code></pre>
 <pre class="r"><code>extractNoun(&quot;롯데마트가 판매하고 있는 흑마늘 양념 치킨이 논란이 되고 있다.&quot;)</code></pre>
