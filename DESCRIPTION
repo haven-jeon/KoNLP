@@ -6,7 +6,7 @@ Authors@R: c(
     person("Heewon", "Jeon", email = "madjakarta@gmail.com", role = c("aut", "cre")),
     person("Taekyung", "Kim", role = "ctb")
     )
-Description: POS Tagger and Morphlogical Analyzer for Korean text based research. It provides tools for corpus linguistics research such as Keystroke converter, Hangul automata, Concordance, and Mutual Information. It also provides a convenient interface for users to apply, edit and add morphological dictionary selectively.
+Description: POS Tagger and Morphological Analyzer for Korean text based research. It provides tools for corpus linguistics research such as Keystroke converter, Hangul automata, Concordance, and Mutual Information. It also provides a convenient interface for users to apply, edit and add morphological dictionary selectively. 
 SystemRequirements: Java (>= 1.6)
 URL: https://github.com/haven-jeon/KoNLP
 BugReports: https://github.com/haven-jeon/KoNLP/issues
