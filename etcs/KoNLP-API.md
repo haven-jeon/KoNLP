@@ -1,7 +1,7 @@
 This page is for showing simple example about KoNLP with some Hangul.
 
 Newest version of this document is on [KoNLP
-github](https://github.com/haven-jeon/KoNLP/blob/master/vignettes/KoNLP-API.md)
+github](https://github.com/haven-jeon/KoNLP/blob/master/etcs/KoNLP-API.md)
 
 Introduction to KoNLP API
 =========================
