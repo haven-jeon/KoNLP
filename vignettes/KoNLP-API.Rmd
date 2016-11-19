@@ -8,6 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
 This page is for showing simple example about KoNLP with some Hangul.
 
 Newest version of this document is on [KoNLP
@@ -618,5 +619,3 @@ Korean Twitter Analysis
     }
 
 ![dendrogram](figures/dendgram.png)
-
-

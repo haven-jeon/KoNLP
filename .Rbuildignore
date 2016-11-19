@@ -9,5 +9,6 @@ tests
 java/.classpath
 java/.project
 java/.settings
-vignettes/KoNLP-API.Rmd
-
+vignettes/KoNLP-API.md
+vignettes/KoNLP-API.html
+vignettes/KoNLP-API_RAW.Rmd
