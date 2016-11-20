@@ -1,3 +1,7 @@
+Version 0.80.1
+------------------------------------------------------------------------------
+  * fix duplicated Morphological results cause by duplicated word in large dictionaries.
+
 Version 0.80.0
 ------------------------------------------------------------------------------
   * make more effective memory management for big dictionaries.
