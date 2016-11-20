@@ -23,7 +23,7 @@ Internally, runs pos tagger and only select Noun from set.
 ```{r}
 library(KoNLP)
 
-useSystemDic()
+useSejongDic()
 
 extractNoun("롯데마트가 판매하고 있는 흑마늘 양념 치킨이 논란이 되고 있다.")
 
