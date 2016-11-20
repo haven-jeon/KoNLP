@@ -159,15 +159,15 @@ extractNoun(txt)
 Function can be usually used for appending new terms to user dictionary.
 
 ```{R}
-useSystemDic()
+#Rather than simply using the system dictionary, 
+#it is better to extract nouns based on the rich vocabulary of the Korean dictionary(wooromalsam).
+buildDictionary(ext_dic = "woorimalsam")
 
-buildDictionary(ext_dic = "",user_dic = data.frame("삼성전자", "ncn"), replace_usr_dic = T)
+extractNoun("할리우드 톱스타 레오나르도 디카프리오는 '선행 전도사'다운 행보를 이어갔다.")
 
-extractNoun("삼성전자에서는 아이폰에 대항할 무기를 준비하고 있다.")
+buildDictionary(ext_dic = "woorimalsam", user_dic=data.frame("디카프리오", "ncn"),replace_usr_dic = T)
 
-buildDictionary(ext_dic = "",user_dic=data.frame("아이폰", "ncn"),replace_usr_dic = F)
-
-extractNoun("삼성전자에서는 아이폰에 대항할 무기를 준비하고 있다.")
+extractNoun("할리우드 톱스타 레오나르도 디카프리오는 '선행 전도사'다운 행보를 이어갔다.")
 
 
 # get dictionary as data.frame
