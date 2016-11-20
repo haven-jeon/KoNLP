@@ -237,7 +237,7 @@ makeTagList <- function(tagstr){
   for(i in 1:length(tagset)){
     if(substr(tagset[i],1,1) != "\t"){
       if(!is.null(h)){
-        taglist[[length(taglist) + 1]] <- unlist(sapply(morphs,function(x) substr(x,2,nchar(x)), USE.NAMES=F))
+        taglist[[length(taglist) + 1]] <- unique(unlist(sapply(morphs,function(x) substr(x,2,nchar(x)), USE.NAMES=F)))
         names(taglist)[length(taglist)] <- h
       }
       h <- tagset[i]
@@ -246,7 +246,7 @@ makeTagList <- function(tagstr){
       morphs <- append(morphs, tagset[i])
     }
   }
-  taglist[[length(taglist) + 1]] <- unlist(sapply(morphs,function(x) substr(x,2,nchar(x)), USE.NAMES=F))
+  taglist[[length(taglist) + 1]] <- unique(unlist(sapply(morphs,function(x) substr(x,2,nchar(x)), USE.NAMES=F)))
   names(taglist)[length(taglist)] <- h
   return(taglist)
 }
