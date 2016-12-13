@@ -4,10 +4,12 @@
 \alias{MorphAnalyzer}
 \title{Hannanum morphological analyzer interface function}
 \usage{
-MorphAnalyzer(sentence)
+MorphAnalyzer(sentence, autoSpacing = FALSE)
 }
 \arguments{
 \item{sentence}{input}
+
+\item{autoSpacing}{boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}}
 }
 \value{
 result of analysis

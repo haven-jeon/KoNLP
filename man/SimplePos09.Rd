@@ -4,10 +4,12 @@
 \alias{SimplePos09}
 \title{POS tagging by using 9 KAIST tags}
 \usage{
-SimplePos09(sentence)
+SimplePos09(sentence, autoSpacing = FALSE)
 }
 \arguments{
 \item{sentence}{input}
+
+\item{autoSpacing}{boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}}
 }
 \value{
 results of tagged analysis

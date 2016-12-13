@@ -4,10 +4,12 @@
 \alias{extractNoun}
 \title{Noun extractor for Hangul}
 \usage{
-extractNoun(sentence)
+extractNoun(sentence, autoSpacing = FALSE)
 }
 \arguments{
 \item{sentence}{input}
+
+\item{autoSpacing}{boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}}
 }
 \value{
 Noun of sentence

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.text.Normalizer;
 
 import kr.ac.kaist.swrc.jhannanum.comm.Eojeol;
 import kr.ac.kaist.swrc.jhannanum.comm.Sentence;
@@ -30,7 +30,7 @@ import kr.ac.kaist.swrc.jhannanum.hannanum.Workflow;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.MorphAnalyzer.ChartMorphAnalyzer.KoNLPChartMorphAnalyzer;
 import kr.ac.kaist.swrc.jhannanum.plugin.MajorPlugin.PosTagger.HmmPosTagger.KoNLPHMMTagger;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.MorphemeProcessor.UnknownMorphProcessor.UnknownProcessor;
-//import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.InformalEojeolSentenceFilter;
+import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.Spacing;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.InformalSentenceFilter.InformalSentenceFilter;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PlainTextProcessor.SentenceSegmentor2.SentenceSegmentor2;
 import kr.ac.kaist.swrc.jhannanum.plugin.SupplementPlugin.PosProcessor.NounExtractor.NounExtractor;
@@ -88,9 +88,14 @@ public class HannanumInterface {
 	
 	//This function is not for dictionary updating.plz use reloadUserDic functions.
 	// TODO : added force apply user inputted noun to output 
-	public String[] extractNoun(String basedir, String sentence, String userDicFile) {
+	public String[] extractNoun(String basedir, String sentence, String userDicFile, boolean isSpacing) {
+		String ctx = "extractNoun";
+		if(isSpacing == true){
+			ctx = ctx + "_sp";
+		}
+
 		if(wf != null){
-			if(wf.getCtx() != "extractNoun"){
+			if(!wf.getCtx().equals(ctx)){
 				wf.clear();
 				wf = null;
 			}
@@ -98,10 +103,13 @@ public class HannanumInterface {
 		
 		
 		if (wf == null) {
-			wf = new Workflow(basedir, "extractNoun");
+			wf = new Workflow(basedir, ctx);
 			wf.appendPlainTextProcessor(new SentenceSegmentor2(), null);
+			if(ctx.equals("extractNoun_sp") ){
+				wf.appendPlainTextProcessor(new Spacing(), "");
+			}
 			wf.appendPlainTextProcessor(new InformalSentenceFilter(), null);
-//			wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
+			//wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
 			
 			wf.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
@@ -129,7 +137,8 @@ public class HannanumInterface {
 			/* Activate the work flow in the thread mode */
 
 			/* Analysis using the work flow */
-			wf.analyze(sentence);
+			String n_sentence = Normalizer.normalize(sentence, Normalizer.Form.NFKC);
+			wf.analyze(n_sentence);
 
 			LinkedList<Sentence> resultList = wf
 					.getResultOfDocument(new Sentence(0, 0, false));
@@ -162,24 +171,32 @@ public class HannanumInterface {
 	 * @param args
 	 */
 
-	public String MorphAnalyzer(String basedir, String sentence, String userDicFile) {
+	public String MorphAnalyzer(String basedir, String sentence, String userDicFile, boolean isSpacing) {
+		String ctx = "MorphAnalyzer";
+		if(isSpacing == true){
+			ctx = ctx + "_sp";
+		}
+
 		if(wf != null){
-			if(wf.getCtx() != "MorphAnalyzer"){
+			if(!wf.getCtx().equals(ctx)){
 				wf.clear();
 				wf = null;
 			}
 		}
 		
+	
 		
 		if (wf == null) {
-			wf = new Workflow(basedir, "MorphAnalyzer");
-			wf.appendPlainTextProcessor(new SentenceSegmentor2(),
-					null);
-			wf.appendPlainTextProcessor(
-					new InformalSentenceFilter(), null);
-//			wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
-			wf
-					.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
+			wf = new Workflow(basedir, ctx);
+			wf.appendPlainTextProcessor(new SentenceSegmentor2(),null);
+			if(ctx.equals("MorphAnalyzer_sp") ){
+				wf.appendPlainTextProcessor(new Spacing(), "");
+			}
+			wf.appendPlainTextProcessor(new InformalSentenceFilter(), null);
+			//wf.appendPlainTextProcessor(new Spacing(), "");
+			
+			//wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
+			wf.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 							"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
 			wf.setMorphUserDic(userDicFile);
 			wf.appendMorphemeProcessor(new UnknownProcessor(),
@@ -198,7 +215,8 @@ public class HannanumInterface {
 		}
 		String morphs = null;
 		try {
-			wf.analyze(sentence);
+			String n_sentence = Normalizer.normalize(sentence, Normalizer.Form.NFKC);
+			wf.analyze(n_sentence);
 			morphs = wf.getResultOfDocument();
 			wf.close();
 
@@ -211,9 +229,15 @@ public class HannanumInterface {
 		return morphs;
 	}
 
-	public String SimplePos22(String basedir, String sentence, String userDicFile) {
+	public String SimplePos22(String basedir, String sentence, String userDicFile, boolean isSpacing) {
+		String ctx = "SimplePos22";
+		if(isSpacing == true){
+			ctx = ctx + "_sp";
+		}
+		
+		
 		if(wf != null){
-			if(wf.getCtx() != "SimplePos22"){
+			if(!wf.getCtx().equals(ctx)){
 				wf.clear();
 				wf = null;
 			}
@@ -221,10 +245,13 @@ public class HannanumInterface {
 		
 		
 		if (wf == null) {
-			wf = new Workflow(basedir, "SimplePos22");
+			wf = new Workflow(basedir, ctx);
 			wf.appendPlainTextProcessor(new SentenceSegmentor2(), null);
+			if(ctx.equals("SimplePos22_sp") ){
+				wf.appendPlainTextProcessor(new Spacing(), "");
+			}
 			wf.appendPlainTextProcessor(new InformalSentenceFilter(), null);
-//			wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
+			//wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
 			
 			wf.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
@@ -248,7 +275,8 @@ public class HannanumInterface {
 		}
 		String morphs = null;
 		try {
-			wf.analyze(sentence);
+			String n_sentence = Normalizer.normalize(sentence, Normalizer.Form.NFKC);
+			wf.analyze(n_sentence);
 
 			morphs = wf.getResultOfDocument();
 
@@ -263,20 +291,27 @@ public class HannanumInterface {
 		return morphs;
 	}
 
-	public String SimplePos09(String basedir, String sentence, String userDicFile) {
-		//need to reuse memory when run different analyzer 
+	public String SimplePos09(String basedir, String sentence, String userDicFile, boolean isSpacing) {
+		String ctx = "SimplePos09";
+		if(isSpacing == true){
+			ctx = ctx + "_sp";
+		}
+		 
 		if(wf != null){
-			if(wf.getCtx() != "SimplePos09"){
+			if(!wf.getCtx().equals(ctx)){
 				wf.clear();
 				wf = null;
 			}
 		}
 		
 		if (wf == null) {
-			wf = new Workflow(basedir, "SimplePos09");
+			wf = new Workflow(basedir, ctx);
 			wf.appendPlainTextProcessor(new SentenceSegmentor2(), null);
+			if(ctx.equals("SimplePos09_sp") ){
+				wf.appendPlainTextProcessor(new Spacing(), "");
+			}
 			wf.appendPlainTextProcessor(new InformalSentenceFilter(), null);
-//			wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
+			//wf.appendPlainTextProcessor(new InformalEojeolSentenceFilter(), null);
 
 			wf.setMorphAnalyzer(new KoNLPChartMorphAnalyzer(),
 					"conf/plugin/MajorPlugin/MorphAnalyzer/ChartMorphAnalyzer.json");
@@ -301,7 +336,8 @@ public class HannanumInterface {
 		String morphs = null;
 		try {
 			/* Analysis using the work flow */
-			wf.analyze(sentence);
+			String n_sentence = Normalizer.normalize(sentence, Normalizer.Form.NFKC);
+			wf.analyze(n_sentence);
 			morphs = wf.getResultOfDocument();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -321,41 +357,50 @@ public class HannanumInterface {
 			System.out.println(ret[i]);
 		}*/
 		
-		System.out.println("test");
-		System.out.println(hi.SimplePos22("C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic.zip",
-				"죽어도 못 보내 버스 타요. 장미 그리고 술.이게 어떻게 된 것인가?", 
-				"C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic/data/kE/dic_user2.txt"));
-		
-		
-		System.out.println(hi.SimplePos09("C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic.zip",
-				"'인터넷 소설이 등장하면서' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. 그러나 이후 국내 소설계에서 무시할 수 없는 비중을 차지하게 된 양판소와 귀여니류 연애소설은 불쏘시개 취급 받으며 시간때우기에 불과하다는 평가를 자주 받곤 하지만, 애초에 시간때우기 용이라는 말은 바꿔 말하면 시간을 때울 정도는 된다는 이야기다. 결국 아무리 까여도 보는 사람이 있기 때문에 쓰고 그것이 출판으로 이어지는 것이다. 특히 귀여니의 소설들은 인터넷 소설이 본격적으로 텍스트화, 즉 출판이 되는 시발점이 되었다는 점에서 여러모로 의의가 있다고 할 수 있다. 사실 문학계에서 온라인의 글이 이모티콘과 맞춤법.을 안 지키고 그대로. 활자화 된 것은 엄청난 혁명이라고 말할 수 있다. 까는거야 까여야 하는 거지만 일단 이런 의의가 있다는건 알아두자.  U.S. A. Introduction. I'm fine... 12.42", 
-				"C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic/data/kE/dic_user2.txt"));
-	
-		//int i = hi.reloadUserDic("D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt", "extractNoun");
-		//System.out.println(String.valueOf(i));
-		
-		//System.out.println("end");
-		
 		String[] ret1 = hi.extractNoun("C:/R/R-3.3.2/library/Sejong/dics/handic.zip", 
-				"'인터넷 소설이 등장하면서' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. ", 
-				"C:/R/R-3.3.2/library/KoNLP/../KoNLP_dic/current/dic_user.txt");
+				"공보관통상진흥국장전자공업국장무역조사실장제 1차관보.", 
+				"C:/R/R-3.3.2/library/KoNLP/../KoNLP_dic/current/dic_user.txt", true);
 		for(int i1= 0; i1 < ret1.length; i1++){
 			System.out.println(ret1[i1]);
 		}
 		
-		System.out.println("2 time\n");
-
-		String ret2 = hi.MorphAnalyzer("C:/R/R-3.3.2/library/Sejong/dics/handic.zip", 
-				"'인터넷 소설이 등장하면서  ' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. \n그러나 이후 국내 소설계에서 무시할 수 없는 비중을 차지하게 된 양판소와 귀여니류 연애소설은 불쏘시개 취급 받으며 시간때우기에 불과하다는 평가를 자주 받곤 하지만, 애초에 시간때우기 용이라는 말은 바꿔 말하면 시간을 때울 정도는 된다는 이야기다. 결국 아무리 까여도 보는 사람이 있기 때문에 쓰고 그것이 출판으로 이어지는 것이다. 특히 귀여니의 소설들은 인터넷 소설이 본격적으로 텍스트화, 즉 출판이 되는 시발점이 되었다는 점에서 여러모로 의의가 있다고 할 수 있다. 사실 문학계에서 온라인의 글이 이모티콘과 맞춤법.을 안 지키고 그대로. 활자화 된 것은 엄청난 혁명이라고 말할 수 있다. 까는거야 까여야 하는 거지만 일단 이런 의의가 있다는건 알아두자.  U.S. A. Introduction. I'm fine... 12.42", 
-				"C:/R/R-3.3.2/library/KoNLP/../KoNLP_dic/current/dic_user.txt");
-		
-		System.out.println(ret2);
-		
-		//String[] ret2 = KoNLPUtil.readZipDic("C:/R/R-2.15.1/library/Sejong/dics/handic.zip", "data/kE/dic_user2.txt");
-		//for(int i1= 0; i1 < ret2.length; i1++){
-		//	System.out.println(ret2[i1]);
-		//}
-		
+		String[] ret2 = hi.extractNoun("C:/R/R-3.3.2/library/Sejong/dics/handic.zip", 
+				"인터넷 소설이", 
+				"C:/R/R-3.3.2/library/KoNLP/../KoNLP_dic/current/dic_user.txt", true);
+		for(int i1= 0; i1 < ret2.length; i1++){
+			System.out.println(ret2[i1]);
+		}
+//		
+//		
+//		
+//		System.out.println("test");
+//		System.out.println(hi.SimplePos22("C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic.zip",
+//				"'인터넷 소설이 등장하면서' 소설을 쓰는 사람들이 늘어나긴 했지만 \t\t\t", 
+//				"C:/R/R-3.3.2/library/KoNLP/../KoNLP_dic/current/dic_user.txt"));
+//		
+//		
+//		System.out.println(hi.SimplePos09("C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic.zip",
+//				"'인터넷 소설이 등장하면서' 소설을 쓰는 사람들이 늘어나긴 했지만, 소설을 읽는 사람이 줄어들면서 그들만의 세계가 되어 버렸다. 그러나 이후 국내 소설계에서 무시할 수 없는 비중을 차지하게 된 양판소와 귀여니류 연애소설은 불쏘시개 취급 받으며 시간때우기에 불과하다는 평가를 자주 받곤 하지만, 애초에 시간때우기 용이라는 말은 바꿔 말하면 시간을 때울 정도는 된다는 이야기다. 결국 아무리 까여도 보는 사람이 있기 때문에 쓰고 그것이 출판으로 이어지는 것이다. 특히 귀여니의 소설들은 인터넷 소설이 본격적으로 텍스트화, 즉 출판이 되는 시발점이 되었다는 점에서 여러모로 의의가 있다고 할 수 있다. 사실 문학계에서 온라인의 글이 이모티콘과 맞춤법.을 안 지키고 그대로. 활자화 된 것은 엄청난 혁명이라고 말할 수 있다. 까는거야 까여야 하는 거지만 일단 이런 의의가 있다는건 알아두자.  U.S. A. Introduction. I'm fine... 12.42", 
+//				"C:/Users/gogamza/Documents/work/Sejong/inst/dics/handic/data/kE/dic_user2.txt"));
+//	
+//		//int i = hi.reloadUserDic("D:/opensource/Sejong/inst/dics/handics/data/kE/dic_user.txt", "extractNoun");
+//		//System.out.println(String.valueOf(i));
+//		
+//		System.out.println("end");
+//		
+//
+//		System.out.println("2 time\n");
+//
+//		String ret2 = hi.MorphAnalyzer("C:/R/R-3.3.2/library/Sejong/dics/handic.zip", 
+//				"미국 싱크탱크 전략국제문제연구소(CSIS)의 빅터 차 한국석좌는 9일(현지시간) 미국의 제45대 대통령으로 당선된 도널드 트럼프가 전시작전통제권(전작권)을 한국에 조기에 넘길 가능성이 있다고 전망했다.", 
+//				"C:/R/R-3.3.2/library/KoNLP/../KoNLP_dic/current/dic_user.txt");
+//		System.out.println(ret2);
+//		
+//		//String[] ret2 = KoNLPUtil.readZipDic("C:/R/R-2.15.1/library/Sejong/dics/handic.zip", "data/kE/dic_user2.txt");
+//		//for(int i1= 0; i1 < ret2.length; i1++){
+//		//	System.out.println(ret2[i1]);
+//		//}
+//		
 	}
 	
 	

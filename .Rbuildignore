@@ -9,4 +9,5 @@ tests
 java/.classpath
 java/.project
 java/.settings
+java/.cache-main
 etcs
