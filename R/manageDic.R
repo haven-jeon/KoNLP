@@ -464,8 +464,10 @@ readZipDic <- function(zipPath, dicPath){
 #' show summary, head and tail of current or backup dictionaries 
 #' 
 #' @examples 
+#' \dontrun{
 #' ## show current dictionary's summary, head, tail 
 #' statDic("current", 10)
+#' }
 #' @param which "current" or "backup" dictionary
 #' @param n a single integer. Size for the resulting object to view 
 #' @export

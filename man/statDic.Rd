@@ -15,7 +15,9 @@ statDic(which = "current", n = 6)
 show summary, head and tail of current or backup dictionaries
 }
 \examples{
+\dontrun{
 ## show current dictionary's summary, head, tail 
 statDic("current", 10)
+}
 }
 
