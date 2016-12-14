@@ -67,7 +67,7 @@ extractNoun <- function(sentences, autoSpacing=FALSE){
                   "[S", "extractNoun",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
                   get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing_)
     Encoding(out) <- "UTF-8"
-    return(out)
+    out
     }, error = function(e) {
       warning(sprintf("can't processing '%s'.", sentence_))
       sentence_
