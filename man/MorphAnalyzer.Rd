@@ -4,15 +4,15 @@
 \alias{MorphAnalyzer}
 \title{Hannanum morphological analyzer interface function}
 \usage{
-MorphAnalyzer(sentence, autoSpacing = FALSE)
+MorphAnalyzer(sentences, autoSpacing = FALSE)
 }
 \arguments{
-\item{sentence}{input}
+\item{sentences}{input character vector}
 
 \item{autoSpacing}{boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}}
 }
 \value{
-result of analysis
+morphemes of sentences
 }
 \description{
 Do the morphological analysis, not doing pos tagging uses Hannanum analyzer.

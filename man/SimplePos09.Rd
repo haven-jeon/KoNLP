@@ -4,15 +4,15 @@
 \alias{SimplePos09}
 \title{POS tagging by using 9 KAIST tags}
 \usage{
-SimplePos09(sentence, autoSpacing = FALSE)
+SimplePos09(sentences, autoSpacing = FALSE)
 }
 \arguments{
-\item{sentence}{input}
+\item{sentences}{input character vector}
 
 \item{autoSpacing}{boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}}
 }
 \value{
-results of tagged analysis
+KAIST tags of input sentence
 }
 \description{
 Do pos tagging using 9 tags uses Hannanum analyzer.

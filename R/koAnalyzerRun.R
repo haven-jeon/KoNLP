@@ -47,31 +47,40 @@
 #' see detail in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
-#' @param sentence input
+#' @param sentences input character vector
 #' @param autoSpacing boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}
-#' @return Noun of sentence
+#' @return Nouns of sentences, returns \code{list} if input is character vector of more than 2 sentences.
 #' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
 #' @import rJava
 #' @export
-extractNoun <- function(sentence, autoSpacing=FALSE){
-  sentence_pre <- preprocessing(sentence)
-  if(sentence_pre == FALSE || sentence_pre == ""){
-    return(sentence)
+extractNoun <- function(sentences, autoSpacing=FALSE){
+  extractNoun_ <- function(sentence_, autoSpacing_) {
+    sentence_pre <- preprocessing(sentence_)
+    if(sentence_pre == FALSE || sentence_pre == ""){
+      return(sentence_)
+    }
+    if(!exists("HannanumObj", envir=.KoNLPEnv)){
+      assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
+    }
+    res <- tryCatch({
+  	out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
+                  "[S", "extractNoun",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
+                  get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing_)
+    Encoding(out) <- "UTF-8"
+    return(out)
+    }, error = function(e) {
+      warning(sprintf("can't processing '%s'.", sentence_))
+      sentence_
+      })
+    return(res)
   }
-  if(!exists("HannanumObj", envir=.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
+  ress <- sapply(sentences, extractNoun_, autoSpacing_=autoSpacing, 
+         simplify = FALSE, USE.NAMES = FALSE )
+  if(length(ress) == 1){
+    return(ress[[1]])
+  }else{
+    return(ress)
   }
-  res <- tryCatch({
-	out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
-                "[S", "extractNoun",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
-                get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing)
-  Encoding(out) <- "UTF-8"
-  return(out)
-  }, error = function(e) {
-    warning(sprintf("can't processing '%s'.", sentence))
-    sentence
-    })
-  return(res)
 }
 
 #' Hannanum morphological analyzer interface function
@@ -80,34 +89,42 @@ extractNoun <- function(sentence, autoSpacing=FALSE){
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
-#' @param sentence input
+#' @param sentences input character vector
 #' @param autoSpacing boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}
-#' @return result of analysis
+#' @return morphemes of sentences
 #' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
 #'
 #' @export
-MorphAnalyzer <- function(sentence, autoSpacing=FALSE){
-  sentence_pre <- preprocessing(sentence)
-  if(sentence_pre == FALSE || sentence_pre == ""){
-    ret_list <- list()
-    ret_list[[sentence]]=sentence
-    return(ret_list)
+MorphAnalyzer <- function(sentences, autoSpacing=FALSE){
+  MorphAnalyzer_ <- function(sentence_, autoSpacing_){
+    sentence_pre <- preprocessing(sentence_)
+    if(sentence_pre == FALSE || sentence_pre == ""){
+      ret_list <- list()
+      ret_list[[sentence_]]=sentence_
+      return(ret_list)
+    }
+    if(!exists("HannanumObj", envir=.KoNLPEnv)){
+      assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
+    }
+    res <- tryCatch({
+      out <- .jcall(get("HannanumObj",envir=.KoNLPEnv),
+                  "S", "MorphAnalyzer", get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
+                  get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing_)
+      Encoding(out) <- "UTF-8"
+      out
+    },error = function(e) {
+      warning(sprintf("can't processing '%s'.", sentence_))
+      sentence_
+      })
+    return(makeTagList(res))
   }
-  if(!exists("HannanumObj", envir=.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
+  ress <- sapply(sentences, MorphAnalyzer_, autoSpacing_=autoSpacing, 
+         simplify = FALSE, USE.NAMES = FALSE )
+  if(length(ress) == 1){
+    return(ress[[1]])
+  }else{
+    return(ress)
   }
-  res <- tryCatch({
-    out <- .jcall(get("HannanumObj",envir=.KoNLPEnv),
-                "S", "MorphAnalyzer", get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
-                get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing)
-    Encoding(out) <- "UTF-8"
-    out
-    #return(makeTagList(out))
-  },error = function(e) {
-    warning(sprintf("can't processing '%s'.", sentence))
-    sentence
-    })
-  return(makeTagList(res))
 }
 #' POS tagging by using 22 KAIST tags
 #' 
@@ -115,32 +132,41 @@ MorphAnalyzer <- function(sentence, autoSpacing=FALSE){
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
-#' @param sentence input
+#' @param sentences input character vector
 #' @param autoSpacing boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}
 #' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
-#' @return results of tagged analysis
+#' @return KAIST tags of input sentence
 #' @export
-SimplePos22 <- function(sentence, autoSpacing=FALSE){
-  sentence_pre <- preprocessing(sentence)
-  if(sentence_pre == FALSE || sentence_pre == ""){
-    ret_list <- list()
-    ret_list[[sentence]]=sentence
-    return(ret_list)
+SimplePos22 <- function(sentences, autoSpacing=FALSE){
+  SimplePos22_ <- function(sentence_, autoSpacing_){
+    sentence_pre <- preprocessing(sentence_)
+    if(sentence_pre == FALSE || sentence_pre == ""){
+      ret_list <- list()
+      ret_list[[sentence_]]=sentence_
+      return(ret_list)
+    }
+    if(!exists("HannanumObj", envir=.KoNLPEnv)){
+      assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
+    }
+    res <- tryCatch({
+      out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
+                    "S", "SimplePos22",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
+                    get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing_)
+      Encoding(out) <- "UTF-8"
+      out
+    },error = function(e) {
+      warning(sprintf("can't processing '%s'.", sentence_))
+      sentence_
+    })
+    return(makeTagList(res))
   }
-  if(!exists("HannanumObj", envir=.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
+  ress <- sapply(sentences, SimplePos22_, autoSpacing_=autoSpacing, 
+         simplify = FALSE, USE.NAMES = FALSE )
+  if(length(ress) == 1){
+    return(ress[[1]])
+  }else{
+    return(ress)
   }
-  res <- tryCatch({
-    out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
-                  "S", "SimplePos22",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
-                  get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing)
-    Encoding(out) <- "UTF-8"
-    out
-  },error = function(e) {
-    warning(sprintf("can't processing '%s'.", sentence))
-    sentence
-  })
-  return(makeTagList(res))
 }
 
 #' POS tagging by using 9 KAIST tags
@@ -149,33 +175,42 @@ SimplePos22 <- function(sentence, autoSpacing=FALSE){
 #' see details in \href{http://semanticweb.kaist.ac.kr/home/index.php/HanNanum}{Hannanum}. 
 #' Example will be shown in \href{https://github.com/haven-jeon/KoNLP/wiki}{github wiki}.
 #' 
-#' @param sentence input
+#' @param sentences input character vector
 #' @param autoSpacing boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}
 #' @references Sangwon Park et al(2010). A Plug-In Component-based Korean Morphological Analyzer
-#' @return results of tagged analysis
+#' @return KAIST tags of input sentence
 #'
 #' @export
-SimplePos09 <- function(sentence, autoSpacing=FALSE){
-  sentence_pre <- preprocessing(sentence)
-  if(sentence_pre == FALSE || sentence_pre == ""){
-    ret_list <- list()
-    ret_list[[sentence]]=sentence
-    return(ret_list)
+SimplePos09 <- function(sentences, autoSpacing=FALSE){
+  SimplePos09_ <- function(sentence_, autoSpacing_){
+    sentence_pre <- preprocessing(sentence_)
+    if(sentence_pre == FALSE || sentence_pre == ""){
+      ret_list <- list()
+      ret_list[[sentence_]]=sentence_
+      return(ret_list)
+    }
+    if(!exists("HannanumObj", envir=.KoNLPEnv)){
+      assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
+    }
+    res <- tryCatch({
+      out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
+                    "S", "SimplePos09",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
+                    get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing_)
+      Encoding(out) <- "UTF-8"
+      out
+    },error = function(e) {
+      warning(sprintf("can't processing '%s'.", sentence_))
+      sentence_
+    })
+    return(makeTagList(res))
   }
-  if(!exists("HannanumObj", envir=.KoNLPEnv)){
-    assign("HannanumObj",.jnew("kr/pe/freesearch/jhannanum/comm/HannanumInterface"), .KoNLPEnv)
+  ress <- sapply(sentences, SimplePos09_, autoSpacing_=autoSpacing, 
+         simplify = FALSE, USE.NAMES = FALSE )
+  if(length(ress) == 1){
+    return(ress[[1]])
+  }else{
+    return(ress)
   }
-  res <- tryCatch({
-    out <- .jcall(get("HannanumObj",envir=.KoNLPEnv), 
-                  "S", "SimplePos09",get("SejongDicsZip", envir=.KoNLPEnv),sentence_pre,
-                  get("CurrentUserDic", envir=.KoNLPEnv), autoSpacing)
-    Encoding(out) <- "UTF-8"
-    out
-  },error = function(e) {
-    warning(sprintf("can't processing '%s'.", sentence))
-    sentence
-  })
-  return(makeTagList(res))
 }
 
 

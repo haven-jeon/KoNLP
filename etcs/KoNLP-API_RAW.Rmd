@@ -1,10 +1,10 @@
 ---
 title: "Introduction to KoNLP API"
 author: "Heewon Jeon"
-date: "2016-11-15"
+date: "2016-12-14"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Introduction to KoNLP API}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,7 +18,7 @@ Newest version of this document is on  [KoNLP github](https://github.com/haven-j
 ## extractNoun 
 
 function for extract Nouns from sentences.
-Internally, runs pos tagger and only select Noun from set.
+Internally, runs pos tagger and only select Nouns from set.
 
 ```{r}
 library(KoNLP)
@@ -173,6 +173,34 @@ extractNoun("할리우드 톱스타 레오나르도 디카프리오는 '선행 �
 # get dictionary as data.frame
 head(get_dictionary('user_dic'))
 ```
+
+
+
+## Auto-spacing 
+
+Sometimes it is necessary to analyze sentences that are not spatially separated. In this case, automatic spacing is provided.
+
+```{r, echo=F,message=F}
+useSystemDic()
+```
+
+
+```{r}
+extractNoun("아버지가방에들어가셨다.")
+
+extractNoun("아버지가방에들어가셨다.", autoSpacing = T)
+
+MorphAnalyzer("아버지가방에들어가셨다.", autoSpacing = T)
+
+#SimplePos09("아버지가방에들어가셨다.", autoSpacing = T)
+
+SimplePos22("아버지가방에들어가셨다.", autoSpacing = T)
+
+```
+
+
+
+
 
 # Examples
 

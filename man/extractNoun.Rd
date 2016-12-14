@@ -4,15 +4,15 @@
 \alias{extractNoun}
 \title{Noun extractor for Hangul}
 \usage{
-extractNoun(sentence, autoSpacing = FALSE)
+extractNoun(sentences, autoSpacing = FALSE)
 }
 \arguments{
-\item{sentence}{input}
+\item{sentences}{input character vector}
 
 \item{autoSpacing}{boolean dees it need to apply auto-spacing for input. defaul\code{FALSE}}
 }
 \value{
-Noun of sentence
+Nouns of sentences, returns \code{list} if input is character vector of more than 2 sentences.
 }
 \description{
 extract Nouns from Korean sentence uses Hannanum analyzer.

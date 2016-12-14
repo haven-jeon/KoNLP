@@ -1,14 +1,3 @@
----
-title: "Introduction to KoNLP API"
-author: "Heewon Jeon"
-date: "2016-12-14"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Introduction to KoNLP API}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
 This page is for showing simple example about KoNLP with some Hangul.
 
 Newest version of this document is on [KoNLP
@@ -659,5 +648,3 @@ Korean Twitter Analysis
     }
 
 ![dendrogram](figures/dendgram.png)
-
-
