@@ -10,7 +10,7 @@ extractNoun
 -----------
 
 function for extract Nouns from sentences. Internally, runs pos tagger
-and only select Noun from set.
+and only select Nouns from set.
 
     library(KoNLP)
 
@@ -383,7 +383,7 @@ packages.
 
     buildDictionary(ext_dic = c('sejong', 'woorimalsam'),user_dic = data.frame(term="전작권", tag='ncn'), category_dic_nms=c('political'))
 
-    ## 718105 words dictionary was built.
+    ## 718106 words dictionary was built.
 
     extractNoun(txt)
 
@@ -430,6 +430,63 @@ Function can be usually used for appending new terms to user dictionary.
 
     ##         term tag
     ## 1 디카프리오 ncn
+
+Auto-spacing
+------------
+
+Sometimes it is necessary to analyze sentences that are not spatially
+separated. In this case, automatic spacing is provided.
+
+    ## Backup was just finished!
+    ## 283949 words dictionary was built.
+
+    extractNoun("아버지가방에들어가셨다.")
+
+    ## [1] "아버지가방에들어가셨다"
+
+    extractNoun("아버지가방에들어가셨다.", autoSpacing = T)
+
+    ## [1] "아버지" "방"
+
+    MorphAnalyzer("아버지가방에들어가셨다.", autoSpacing = T)
+
+    ## $아버지가
+    ## [1] "아버지/ncn+가/jcc" "아버지/ncn+가/jcs"
+    ## 
+    ## $방에
+    ## [1] "방/nbu+에/jca" "방/ncn+에/jca"
+    ## 
+    ## $들어가
+    ## [1] "들/pvg+어/ecx+가/px+아/ecs" "들/pvg+어/ecx+가/px+아/ecx"
+    ## [3] "들/pvg+어/ecx+가/px+아/ef"  "듣/pvg+어/ecx+가/px+아/ecs"
+    ## [5] "듣/pvg+어/ecx+가/px+아/ecx" "듣/pvg+어/ecx+가/px+아/ef" 
+    ## [7] "들어가/pvg+아/ecs"          "들어가/pvg+아/ecx"         
+    ## [9] "들어가/pvg+아/ef"          
+    ## 
+    ## $셨다
+    ## [1] "시/paa+었/ep+다/ef"
+    ## 
+    ## $.
+    ## [1] "./sf" "./sy"
+
+    #SimplePos09("아버지가방에들어가셨다.", autoSpacing = T)
+
+    SimplePos22("아버지가방에들어가셨다.", autoSpacing = T)
+
+    ## $아버지가
+    ## [1] "아버지/NC+가/JC"
+    ## 
+    ## $방에
+    ## [1] "방/NC+에/JC"
+    ## 
+    ## $들어가
+    ## [1] "들/PV+어/EC+가/PX+아/EC"
+    ## 
+    ## $셨다
+    ## [1] "시/PA+었/EP+다/EF"
+    ## 
+    ## $.
+    ## [1] "./SF"
 
 Examples
 ========
