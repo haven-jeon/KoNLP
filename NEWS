@@ -1,8 +1,9 @@
 Version 0.80.1
 ------------------------------------------------------------------------------
-  * fix duplicated Morphological results cause by duplicated word on dictionaries.
+  * fix duplicated Morphological,POS results cause by duplicated word on dictionaries.
   * autoSpacing for input sentence(using unigram HMM).
-  * show information when unable to process sentences.
+  * show information when unable to process sentences on extractNoun, SimplePos22 ,SimplePos09, MorphAnalyzer and won't stop by error.  
+  * can apply multiple sentences with cahracter vector on extractNoun, SimplePos22 ,SimplePos09, MorphAnalyzer.
   
 
 Version 0.80.0
