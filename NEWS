@@ -1,3 +1,7 @@
+Version 0.80.2
+------------------------------------------------------------------------------
+  * fix NA prcessing on extractNoun, SimplePos22 ,SimplePos09, MorphAnalyzer 
+
 Version 0.80.1
 ------------------------------------------------------------------------------
   * fix duplicated Morphological,POS results cause by duplicated word on dictionaries.
