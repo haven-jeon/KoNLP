@@ -56,7 +56,7 @@
 extractNoun <- function(sentences, autoSpacing=FALSE){
   extractNoun_ <- function(sentence_, autoSpacing_) {
     sentence_pre <- preprocessing(sentence_)
-    if(sentence_pre == FALSE || sentence_pre == ""){
+    if(is.na(sentence_pre) || sentence_pre == FALSE || sentence_pre == ""){
       return(sentence_)
     }
     if(!exists("HannanumObj", envir=.KoNLPEnv)){
@@ -98,7 +98,7 @@ extractNoun <- function(sentences, autoSpacing=FALSE){
 MorphAnalyzer <- function(sentences, autoSpacing=FALSE){
   MorphAnalyzer_ <- function(sentence_, autoSpacing_){
     sentence_pre <- preprocessing(sentence_)
-    if(sentence_pre == FALSE || sentence_pre == ""){
+    if(is.na(sentence_pre) || sentence_pre == FALSE || sentence_pre == ""){
       ret_list <- list()
       ret_list[[sentence_]]=sentence_
       return(ret_list)
@@ -140,7 +140,7 @@ MorphAnalyzer <- function(sentences, autoSpacing=FALSE){
 SimplePos22 <- function(sentences, autoSpacing=FALSE){
   SimplePos22_ <- function(sentence_, autoSpacing_){
     sentence_pre <- preprocessing(sentence_)
-    if(sentence_pre == FALSE || sentence_pre == ""){
+    if(is.na(sentence_pre) || sentence_pre == FALSE || sentence_pre == ""){
       ret_list <- list()
       ret_list[[sentence_]]=sentence_
       return(ret_list)
@@ -184,7 +184,7 @@ SimplePos22 <- function(sentences, autoSpacing=FALSE){
 SimplePos09 <- function(sentences, autoSpacing=FALSE){
   SimplePos09_ <- function(sentence_, autoSpacing_){
     sentence_pre <- preprocessing(sentence_)
-    if(sentence_pre == FALSE || sentence_pre == ""){
+    if(is.na(sentence_pre) || sentence_pre == FALSE || sentence_pre == ""){
       ret_list <- list()
       ret_list[[sentence_]]=sentence_
       return(ret_list)
