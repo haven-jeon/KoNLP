@@ -2,7 +2,7 @@ KoNLP
 ---------------
 
 
-
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/KoNLP)](http://cran.r-project.org/package=KoNLP)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/KoNLP)](http://cran.r-project.org/package=KoNLP)
 ![CRAN Downloads Total](http://cranlogs.r-pkg.org/badges/grand-total/KoNLP?color=brightgreen)

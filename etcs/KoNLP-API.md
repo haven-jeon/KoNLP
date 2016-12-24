@@ -14,8 +14,6 @@ and only select Nouns from set.
 
     library(KoNLP)
 
-    ## Checking user defined dictionary!
-
     useSejongDic()
 
     ## Backup was just finished!
@@ -25,13 +23,18 @@ and only select Nouns from set.
 
     ## [1] "롯데마트" "판매"     "흑마늘"   "양념"     "치킨"     "논란"
 
-    sapply(c("R은 free 소프트웨어이고, [완전하게 무보증]입니다.", "일정한 조건에 따르면, 자유롭게 이것을 재배포할수가 있습니다."), extractNoun)
+    #now don't need to apply 'sapply' about multiple sentences
+    #sapply(c("R은 free 소프트웨어이고, [완전하게 무보증]입니다.", "일정한 조건에 따르면, 자유롭게 이것을 재배포할수가 있습니다."), extractNoun)
 
-    ## $`R은 free 소프트웨어이고, [완전하게 무보증]입니다.`
+    extractNoun(c("R은 free 소프트웨어이고, [완전하게 무보증]입니다.", 
+                  "일정한 조건에 따르면, 자유롭게 이것을 재배포할수가 있습니다.")
+                )
+
+    ## [[1]]
     ## [1] "R"          "free"       "소프트웨어" "완전"       "하게"      
     ## [6] "무보"       "증"        
     ## 
-    ## $`일정한 조건에 따르면, 자유롭게 이것을 재배포할수가 있습니다.`
+    ## [[2]]
     ## [1] "일정"         "한"           "조건"         "자유"        
     ## [5] "이것"         "재배포할수가"
 
@@ -383,7 +386,7 @@ packages.
 
     buildDictionary(ext_dic = c('sejong', 'woorimalsam'),user_dic = data.frame(term="전작권", tag='ncn'), category_dic_nms=c('political'))
 
-    ## 718106 words dictionary was built.
+    ## 718105 words dictionary was built.
 
     extractNoun(txt)
 
