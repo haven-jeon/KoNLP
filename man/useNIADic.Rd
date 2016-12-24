@@ -4,13 +4,13 @@
 \alias{useNIADic}
 \title{use Insighter and Woorimalsam dictionary}
 \usage{
-useNIADic(which_dic = c("woorimalsam", "insighter"), category_dic_nms = "",
-  backup = T)
+useNIADic(which_dic = c("woorimalsam", "insighter"),
+  category_dic_nms = "all", backup = T)
 }
 \arguments{
 \item{which_dic}{character vectors. 'woorimalsam', 'insighter' can be apply.}
 
-\item{category_dic_nms}{character vectors. category dictionary will be used. 
+\item{category_dic_nms}{character vectors. category dictionary will be used. default is 'all' which means all categories.
    \itemize{
  \item general
  \item chemical

@@ -10,8 +10,9 @@ buildDictionary(ext_dic = "woorimalsam", category_dic_nms = "",
 \arguments{
 \item{ext_dic}{external dictionary character name which can be 'woorimalsam', 'insighter', 'sejong'.}
 
-\item{category_dic_nms}{character vectors. category dictionary will be used. 
+\item{category_dic_nms}{character vectors. category dictionary will be used. 'all' means all categories will be added.
    \itemize{
+ \item all 
  \item general
  \item chemical
  \item language

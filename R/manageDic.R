@@ -150,7 +150,7 @@ useSejongDic <- function(backup=T){
 #'
 #' @param backup boolean will backup current working dictionary?
 #' @param which_dic character vectors. 'woorimalsam', 'insighter' can be apply.  
-#' @param category_dic_nms character vectors. category dictionary will be used. 
+#' @param category_dic_nms character vectors. category dictionary will be used. default is 'all' which means all categories.
 #'    \itemize{
 #'  \item general
 #'  \item chemical
@@ -225,7 +225,7 @@ useSejongDic <- function(backup=T){
 #' \dontrun{
 #' useNIADic(which_dic=c('woorimalsam','insighter'), category_dic_nms=c('art', 'food'))
 #' } 
-useNIADic <- function(which_dic=c("woorimalsam", "insighter"), category_dic_nms='', backup=T){
+useNIADic <- function(which_dic=c("woorimalsam", "insighter"), category_dic_nms='all', backup=T){
   if(backup == T){
     backupUsrDic(ask=F)
   }
@@ -508,8 +508,9 @@ statDic <- function(which="current", n=6){
 #'   buildDictionary
 #'  
 #' @param ext_dic external dictionary character name which can be 'woorimalsam', 'insighter', 'sejong'.
-#' @param category_dic_nms character vectors. category dictionary will be used. 
+#' @param category_dic_nms character vectors. category dictionary will be used. 'all' means all categories will be added.
 #'    \itemize{
+#'  \item all 
 #'  \item general
 #'  \item chemical
 #'  \item language
@@ -626,11 +627,22 @@ buildDictionary <- function(ext_dic='woorimalsam', category_dic_nms='', user_dic
     )
   }
   cate_dic_df <- data.frame()
-  if(is.character(category_dic_nms) & nchar(category_dic_nms[1]) > 0){
-    cate_dic_df <- dbGetQuery(conn, sprintf("select term, tag, eng_cate as dic from woorimalsam where eng_cate in (%s)",
-                                            paste0("'",category_dic_nms,"'", collapse=',')))  
+  
+  not_in_cate <- category_dic_nms[!(category_dic_nms %in% dbGetQuery(conn, "select DISTINCT eng_cate from woorimalsam")$eng_cate)]
+  
+  not_in_cate <- Filter(function(x) {x != 'all'}, not_in_cate)
+  
+  if(length(not_in_cate) >= 1 & !(length(not_in_cate) & nchar(not_in_cate[1]) == 0)){
+    warning(sprintf("%s are not on dictionary category. check '?buildDictionary'", paste0("'",not_in_cate,"'", collapse=',')))
   }
   
+  if(is.character(category_dic_nms) & nchar(category_dic_nms[1]) > 0 & !any(category_dic_nms %in%  'all')){
+    cate_dic_df <- dbGetQuery(conn, sprintf("select term, tag, eng_cate as dic from woorimalsam where eng_cate in (%s)",
+                                            paste0("'",category_dic_nms,"'", collapse=',')))  
+  }else if(is.character(category_dic_nms) & nchar(category_dic_nms[1]) > 0 &  any(category_dic_nms %in%  'all')){
+    cate_dic_df <- dbGetQuery(conn, "select term, tag, eng_cate as dic from woorimalsam where eng_cate != 'general'")
+  }
+
   user_dic_tot <- data.frame()
   
   #uer dic processing 
