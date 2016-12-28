@@ -49,7 +49,7 @@ scala_library_install <- function(ver = '2.11.8') {
         return(0)
       }else{
         if(file.exists(destfile)) file.remove(destfile)
-        message(sprintf('Fail to install scala-library-%s.jar. Recommand to install library manually in %s', ver, installPath))
+        message(sprintf("\nFail to locate 'scala-library-%s.jar'. Recommand to locate 'scala-library-%s.jar' manually on %s", ver, ver, installPath))
         return(1)
       }    
     }
