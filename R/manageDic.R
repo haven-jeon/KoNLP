@@ -382,7 +382,7 @@ restoreUsrDic <- function(ask=TRUE){
 #' @export
 #' @importFrom utils read.csv write.table
 mergeUserDic <- function(newUserDic, append=TRUE, verbose=FALSE, ask=FALSE){
-  .Deprecated("buidDictionary()")
+  .Deprecated("buildDictionary()")
   if(is.data.frame(newUserDic) == FALSE | ncol(newUserDic) != 2 | nrow(newUserDic) == 0 ){
     stop("check 'newUserDic'.\n")
   }
