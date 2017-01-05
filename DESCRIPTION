@@ -10,7 +10,7 @@ Description: POS Tagger and Morphological Analyzer for Korean text based researc
 SystemRequirements: Java (>= 1.6)
 URL: https://github.com/haven-jeon/KoNLP
 BugReports: https://github.com/haven-jeon/KoNLP/issues
-Version: 0.80.1
+Version: 0.80.2
 Repository: CRAN
 Date: 2016-11-21
 Encoding: UTF-8
