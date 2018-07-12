@@ -50,7 +50,7 @@ public class KoJamoAutomata extends KoHangulAutomata {
 						choSung = ch;
 					}
 				} else if (jongSung == 0) { // chosung 1 jungsung 1 jongsung 0
-					if (KoHangul.getJongsungIdx(ch) == -1) {
+					if (KoHangul.getJongsungIdx(ch) == null) {
 						pushcomp();
 						choSung = ch;
 					} else {

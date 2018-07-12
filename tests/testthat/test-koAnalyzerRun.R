@@ -33,6 +33,7 @@ test_that("HangulAutomata test", {
           expect_equal(HangulAutomata("rjatordpswlls",T,T), "검색엔지ㅣㄴ")
           expect_equal(HangulAutomata("ㅈㅓㄴㅎㅡㅣㅇㅜㅓㄴ"), "전희원")
           expect_equal(HangulAutomata("ㄷㅏㄹㅁㅇㅡㄴㄲㅗㄹ"), "닮은꼴")
+          expect_equal(HangulAutomata("ㅇㅗㅃㅏ"), "오빠")
           #expect_warning(HangulAutomata("abc"))
           })
 
