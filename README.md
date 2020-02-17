@@ -14,7 +14,7 @@ POS Tagger and Morphological Analyzer for Korean text based research. It provide
 
   - Interfacing with opensource [Hannanum analyzer](http://semanticweb.kaist.ac.kr/home/index.php/HanNanum).
   - Some twiks are applied on [Hannanum analyzer](https://github.com/haven-jeon/HanNanum-Analyzer) for bigger or flexible user dictionary for [Sejong project](http://www.sejong.or.kr/) and [NIADic](https://github.com/haven-jeon/NIADic). 
-  - Many other functions for Korean text analysis like keystroke conversion, is.jamo, is.hangul, Hangul antomata...   
+  - Many other functions for Korean text analysis like keystroke conversion, is.jamo, is.hangul, Hangul automata...   
 
 Some of Korean tutorials are on [my blog](http://freesearch.pe.kr), English pages are mainly on [wiki](https://github.com/haven-jeon/KoNLP/wiki).
 
