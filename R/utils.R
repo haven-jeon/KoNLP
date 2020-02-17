@@ -10,7 +10,7 @@ scala_library_install <- function(ver = '2.11.8') {
   when_error_warn <- function(cond){
     message(cond)
     if(file.exists(destfile)) file.remove(destfile)
-    url <- sprintf("http://downloads.lightbend.com/scala/%s/scala-%s.zip", ver, ver)
+    url <- sprintf("https://downloads.lightbend.com/scala/%s/scala-%s.zip", ver, ver)
     destfilez <- file.path(installPath,basename(url))
     tempfilez <- tempfile()
     result <- download.file(url,tempfilez, mode='wb', method='internal')
@@ -27,7 +27,7 @@ scala_library_install <- function(ver = '2.11.8') {
   }
   
   installPath <- file.path(system.file(package="KoNLP"),"java")
-  url <- sprintf("http://central.maven.org/maven2/org/scala-lang/scala-library/%s/scala-library-%s.jar", ver, ver)
+  url <- sprintf("https://central.maven.org/maven2/org/scala-lang/scala-library/%s/scala-library-%s.jar", ver, ver)
   ret <- tryCatch(
     {
       destfile <- file.path(installPath,basename(url))
