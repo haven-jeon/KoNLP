@@ -27,7 +27,7 @@ scala_library_install <- function(ver = '2.11.8') {
   }
   
   installPath <- file.path(system.file(package="KoNLP"),"java")
-  url <- sprintf("https://central.maven.org/maven2/org/scala-lang/scala-library/%s/scala-library-%s.jar", ver, ver)
+  url <- sprintf("https://repo1.maven.org/maven2/org/scala-lang/scala-library/%s/scala-library-%s.jar", ver, ver)
   ret <- tryCatch(
     {
       destfile <- file.path(installPath,basename(url))
